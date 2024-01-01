@@ -37,6 +37,7 @@
     <ClInclude Include="vendor\model\3DTexture.h" />
     <ClInclude Include="vendor\model\Model_3DS.h" />
     <ClInclude Include="Pillar.h" />
+    <ClInclude Include="qibaliMosque.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
