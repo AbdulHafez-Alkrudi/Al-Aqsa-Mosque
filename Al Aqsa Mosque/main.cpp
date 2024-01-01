@@ -66,7 +66,6 @@ int image, image2, marble;
 int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
 Model_3DS *tree;
 GLTexture Bark, Leaf;
-GLTexture Bark, Leaf, EmptyLeaf;
 int qibaliMosque;
 int mosquewindow;
 int carpet;
@@ -191,18 +190,6 @@ int InitGL(GLvoid)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	tree = new Model_3DS();
-	tree->Load("models/tree/Tree.3ds");
-	Leaf.LoadBMP("models/tree/leaf.bmp");
-	Bark.LoadBMP("models/tree/bark.bmp");
-	EmptyLeaf.LoadBMP("models/tree/empty_leaf.bmp");
-	tree->Materials[2].tex = Bark;
-	tree->Materials[0].tex = Leaf;
-	tree->Materials[1].tex = Leaf;
-	tree->Materials[2].tex = Leaf;
-	tree->Materials[3].tex = Leaf;
-	tree->Materials[4].tex = Leaf;
-	tree->Materials[5].tex = Leaf;
-
 	marble = LoadTexture("images/walls/marble.bmp", 255);
 
 	ball = LoadTexture("images/mosque/ball.bmp", 255);
