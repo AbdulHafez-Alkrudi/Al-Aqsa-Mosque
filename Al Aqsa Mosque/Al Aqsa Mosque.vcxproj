@@ -127,6 +127,7 @@
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="primitives.h" />
+    <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="RightFace.h" />
     <ClInclude Include="school.h" />
     <ClInclude Include="Skybox.h" />

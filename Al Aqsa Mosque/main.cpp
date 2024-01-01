@@ -293,7 +293,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	DomeOfTheRock* ro=new DomeOfTheRock();
 	House* h=new House();
 	qibaliMosquee* mosque = new qibaliMosquee();
-	mosque->drawQibaliMosque(150,5,30,mosquewindow,qibaliMosque,mosqueRoof2,
+	mosque->drawQibaliMosque(150,5,35,mosquewindow,qibaliMosque,mosqueRoof2,
 		mosquewindow2,mosqueRoof,mosaic,marble,house_wall,arch,carpet);
 
 	d->drawGround(Point(1,1,1),1000,2,1000,grass);
