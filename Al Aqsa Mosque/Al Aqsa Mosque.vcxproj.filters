@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DrawEntrance.cpp" />
+    <ClCompile Include="EntranceOfMosque.cpp" />
+    <ClCompile Include="grand.cpp" />
+    <ClCompile Include="LeftFace.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="minaret.cpp" />
+    <ClCompile Include="Pillar.cpp" />
+    <ClCompile Include="RightFace.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="vendor\model\3DTexture.cpp" />
+    <ClCompile Include="vendor\model\Model_3DS.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="around.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Dome Of The Rock.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="DrawEntrance.h" />
+    <ClInclude Include="DrawWall.h" />
+    <ClInclude Include="EntranceOfMosque.h" />
+    <ClInclude Include="grand.h" />
+    <ClInclude Include="House.h" />
+    <ClInclude Include="LeftFace.h" />
+    <ClInclude Include="minaret.h" />
+    <ClInclude Include="models\tree\house.h" />
+    <ClInclude Include="OutSide.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="primitives.h" />
+    <ClInclude Include="RightFace.h" />
+    <ClInclude Include="school.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="vendor\model\3DTexture.h" />
+    <ClInclude Include="vendor\model\Model_3DS.h" />
+    <ClInclude Include="Pillar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\House\door.bmp" />
+    <Image Include="Images\House\school_logo.bmp" />
+    <Image Include="Images\House\window.bmp" />
+    <Image Include="Images\House\window2.bmp" />
+    <Image Include="Images\mosque\Arch.bmp" />
+    <Image Include="Images\mosque\ball.bmp" />
+    <Image Include="Images\mosque\BigEntrance.bmp" />
+    <Image Include="Images\mosque\BigEntranceOuter.bmp" />
+    <Image Include="Images\mosque\bottom_wall.bmp" />
+    <Image Include="Images\mosque\carpet.bmp" />
+    <Image Include="Images\mosque\carpetMosque.bmp" />
+    <Image Include="Images\mosque\CylinderBody.bmp" />
+    <Image Include="Images\mosque\InsideEntrande.bmp" />
+    <Image Include="Images\mosque\up_wall.bmp" />
+    <Image Include="Images\walls\grass.bmp" />
+    <Image Include="Images\walls\ground.bmp" />
+    <Image Include="Images\walls\ground2.bmp" />
+    <Image Include="Images\walls\house_wall.bmp" />
+    <Image Include="Images\walls\marble.bmp" />
+    <Image Include="Images\walls\stone1.bmp" />
+    <Image Include="Images\walls\stone3.bmp" />
+    <Image Include="Images\walls\street.bmp" />
+    <Image Include="Images\walls\street1.bmp" />
+    <Image Include="Images\walls\wall1.bmp" />
+    <Image Include="Images\walls\wall5.bmp" />
+    <Image Include="Images\walls\wall_of_mosque.bmp" />
+    <Image Include="models\tree\bark.bmp" />
+    <Image Include="models\tree\bark_loo.jpg" />
+    <Image Include="models\tree\blatt1.jpg" />
+    <Image Include="models\tree\blatt1_a.jpg" />
+    <Image Include="models\tree\empty_leaf.bmp" />
+    <Image Include="models\tree\green.bmp" />
+    <Image Include="models\tree\leaf.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />
+    <None Include="Debug\Al Aqsa Mosque.unsuccessfulbuild" />
+    <None Include="Debug\cl.command.1.tlog" />
+    <None Include="Debug\CL.read.1.tlog" />
+    <None Include="Debug\CL.write.1.tlog" />
+    <None Include="Debug\link-cvtres.read.1.tlog" />
+    <None Include="Debug\link-cvtres.write.1.tlog" />
+    <None Include="Debug\link-rc.read.1.tlog" />
+    <None Include="Debug\link-rc.write.1.tlog" />
+    <None Include="Debug\link.12096-cvtres.read.1.tlog" />
+    <None Include="Debug\link.12096-cvtres.write.1.tlog" />
+    <None Include="Debug\link.12096-rc.read.1.tlog" />
+    <None Include="Debug\link.12096-rc.write.1.tlog" />
+    <None Include="Debug\link.12096.read.1.tlog" />
+    <None Include="Debug\link.12096.write.1.tlog" />
+    <None Include="Debug\link.command.1.tlog" />
+    <None Include="Debug\link.read.1.tlog" />
+    <None Include="Debug\link.write.1.tlog" />
+    <None Include="Debug\vc110.idb" />
+    <None Include="Debug\vc110.pdb" />
+    <None Include="Images\walls\Rkhameh.zip" />
+    <None Include="models\tree.zip" />
+    <None Include="models\tree\Tree.3ds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Debug\Al Aqsa Mosque.Build.CppClean.log" />
+    <Text Include="Debug\Al Aqsa Mosque.log" />
+  </ItemGroup>
+</Project>
