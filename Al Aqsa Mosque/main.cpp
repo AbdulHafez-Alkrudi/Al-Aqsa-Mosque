@@ -68,7 +68,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 int image, image2, marble, street, window, logo;
 int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
 Model_3DS *tree;
-GLTexture Bark, Leaf, EmptyLeaf;
+GLTexture Bark, Leaf;
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
 	// Center the Skybox around the given x,y,z position
@@ -185,15 +185,6 @@ int InitGL(GLvoid)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	tree = new Model_3DS();
-	tree->Load("models/tree/Tree.3ds");
-	Leaf.LoadBMP("models/tree/leaf.bmp");
-	Bark.LoadBMP("models/tree/bark.bmp");
-	EmptyLeaf.LoadBMP("models/tree/empty_leaf.bmp");
-	tree->Materials[2].tex = Bark;
-	tree->Materials[1].tex = EmptyLeaf;
-	tree->Materials[0].tex = Leaf;
-
 	marble = LoadTexture("images/walls/marble.bmp", 255);
 	street = LoadTexture("images/walls/street1.bmp", 255);
 
@@ -222,8 +213,19 @@ int InitGL(GLvoid)
 	SKYUP = LoadTexture("images/skybox/up.bmp", 255);
 	SKYDOWN = LoadTexture("images/skybox/down.bmp", 255);
 
-	// note if you load a image the opengl while on the GL_Texture_2D himself
-	glDisable(GL_TEXTURE_2D);
+	tree = new Model_3DS();
+	tree->Load("models/tree/Tree.3ds");
+	Leaf.LoadBMP("models/tree/green.bmp");
+	Bark.LoadBMP("models/tree/bark.bmp");
+	tree->Materials[0].tex = Bark;
+	tree->Materials[1].tex = Bark;
+	tree->Materials[2].tex = Bark;
+
+	tree->Materials[3].tex = Bark;
+	tree->Materials[4].tex = Leaf;
+	tree->Materials[5].tex = Leaf;
+	tree->Materials[6].tex = Leaf;
+	tree->Materials[7].tex = Leaf;
 
 	MyCamera = Camera();
 	MyCamera.Position.x = 0;
@@ -301,13 +303,12 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	Key(keys, 0.2);
 	// MyCamera.Render();
 
-
 	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
 
 	Draw_Skybox(0, 0, 0, 2000, 2000, 2000);
 
 	glTranslated(-200, 0, -200);
-	school *s = new school();
+	/*school *s = new school();
 
 	OutSide *Out = new OutSide();
 	OutSide *Street = new OutSide();
@@ -335,7 +336,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glTranslated(30, 0, 0);
 	s->DrawHousewithoutDome(Point(1, 1, 1), 30, 30, 10, 20, wall, wall, window);
 	glPopMatrix();
-	s->drawGround(Point(75, 0, 75), 20, 1, 20, grass);
+	s->drawGround(Point(75, 0, 75), 20, 1, 20, grass);*/
 
 	// Out->drawGround(Point(0, 0, 0), 1300, 1, 1300, ground);
 
@@ -387,9 +388,17 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	// }
 	// glPopMatrix();
 
-	Minaret mina(40 , 100);
-	mina.draw_minaret(Point(0 , 0 , 0)  , marble , marble, marble, marble );
+	Minaret mina(4, 100);
+	mina.draw_minaret(Point(0, 0, 0), marble, marble, marble, marble);
 
+	Minaret mina2(40, 100);
+
+	mina2.draw_minaret(Point(50, 0, 0), marble, marble, marble, marble);
+
+	/*tree->pos.x = 10 ;
+	tree->pos.y = 0  ;
+	tree->pos.z = 0  ;
+	tree->Draw();*/
 	return TRUE;
 }
 
