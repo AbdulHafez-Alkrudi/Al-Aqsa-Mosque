@@ -149,6 +149,7 @@
     <Image Include="Images\mosque\carpetMosque.bmp" />
     <Image Include="Images\mosque\CylinderBody.bmp" />
     <Image Include="Images\mosque\InsideEntrande.bmp" />
+    <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="Images\mosque\up_wall.bmp" />
     <Image Include="Images\walls\grass.bmp" />
     <Image Include="Images\walls\ground.bmp" />

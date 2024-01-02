@@ -35,6 +35,7 @@ Point bottom_left_back;
 int ground,wall,grass ;
 int  texture_wall,texture_door,CylinderBody;
 int ball,skybox,top,wall3,upwall,bottomwall;
+int outsideDoors;
 around* a;
 int house_door, house_window, house_wall,wallofmosque;
 int house_roof[4];
@@ -220,6 +221,7 @@ int InitGL(GLvoid)
 	mosqueRoof2 =  LoadTexture("images/mosque/mosqueroof2.bmp", 255);
 	arch =  LoadTexture("images/mosque/arch2.bmp", 255);
 	mosquewindow2 =  LoadTexture("images/mosque/mosquewindow2.bmp", 255);
+	outsideDoors = LoadTexture("images/mosque/outsidedoors2.bmp", 255);
 
 
 	// note if you load a image the opengl while on the GL_Texture_2D himself
@@ -294,7 +296,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	House* h=new House();
 	qibaliMosquee* mosque = new qibaliMosquee();
 	mosque->drawQibaliMosque(150,5,35,mosquewindow,qibaliMosque,mosqueRoof2,
-		mosquewindow2,mosqueRoof,mosaic,marble,house_wall,arch,carpet);
+		mosquewindow2,mosqueRoof,mosaic,marble,house_wall,arch,carpet,outsideDoors,house_door);
 
 	d->drawGround(Point(1,1,1),1000,2,1000,grass);
 	primitives p;
