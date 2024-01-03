@@ -634,6 +634,46 @@ public:
 	}
 
 
+void DrawQuad5(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
+{
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+    double t = 1;
+    if (repeat == 1)
+        t = 1;
+    if (reverse == 1)
+    {
+        // Reverse the order of vertices when reverse is 1
+        glTexCoord2f(0, 0);
+        glVertex3f(up_left.x, up_left.y, up_left.z);
+
+        glTexCoord2f(t, 0);
+        glVertex3f(up_right.x, up_right.y, up_right.z);
+
+        glTexCoord2f(t, t);
+        glVertex3f(bottom_right.x, bottom_right.y, bottom_right.z);
+
+        glTexCoord2f(0, t);
+        glVertex3f(bottom_left.x, bottom_left.y, bottom_left.z);
+    }
+    else
+    {
+        // Default order of vertices
+        glTexCoord2f(0, 0);
+        glVertex3f(bottom_left.x, bottom_left.y, bottom_left.z);
+
+        glTexCoord2f(t, 0);
+        glVertex3f(bottom_right.x, bottom_right.y, bottom_right.z);
+
+        glTexCoord2f(t, t);
+        glVertex3f(up_right.x, up_right.y, up_right.z);
+
+        glTexCoord2f(0, t);
+        glVertex3f(up_left.x, up_left.y, up_left.z);
+    }
+
+    glEnd();
+}
 void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
 {
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -674,7 +714,6 @@ void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_le
 
     glEnd();
 }
-
 
 
 };
