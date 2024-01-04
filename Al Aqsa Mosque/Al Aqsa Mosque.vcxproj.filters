@@ -43,6 +43,7 @@
 
     <ClInclude Include="Cylinder.h" />
 
+    <ClInclude Include="Marwani.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
