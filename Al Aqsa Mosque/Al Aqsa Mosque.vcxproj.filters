@@ -39,7 +39,10 @@
     <ClInclude Include="vendor\model\Model_3DS.h" />
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="qibaliMosque.h" />
+    <ClInclude Include="Marwani.h" />
+
     <ClInclude Include="Cylinder.h" />
+
     <ClInclude Include="Marwani.h" />
   </ItemGroup>
   <ItemGroup>
