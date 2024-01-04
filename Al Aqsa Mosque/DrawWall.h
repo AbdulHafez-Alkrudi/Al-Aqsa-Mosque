@@ -7,7 +7,7 @@
 #include <cmath>
 #include "texture.h"
 #include "primitives.h"
- 
+ #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 class DrawWall{
 	int ground,wall,grass ;
 
@@ -33,6 +33,7 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
 			glVertex3d(x, y, z-depth);
 
 		glEnd();
+		unbind;
 }
 	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture) {
 		glBindTexture(GL_TEXTURE_2D, texture);
@@ -55,7 +56,7 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
    glPopMatrix();
    glPopMatrix();
    glPopMatrix();
-  
+  unbind;
 }
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
@@ -79,6 +80,7 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
 		 
 			glEnd();
 			glPopMatrix();
+			unbind;
 	}
 	
 };
