@@ -1,7 +1,10 @@
 #include <iostream>
 #include <cmath>
 #include "Point.h"
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
 #pragma once
+
+
 class primitives
 {
 		
@@ -25,6 +28,7 @@ public:
 		glTexCoord2d(0 ,1);
 		glVertex2f(x, y + height);          // Top-left vertex
 		glEnd();  // End drawing quads
+		unbind;
 	}
 	static void Drawsquare(float x, float y, float size , int texture)
 	{
@@ -39,7 +43,8 @@ public:
 			glTexCoord2d(0 ,size*0.5);
 			glVertex2f(x, y + size);          // Top-left vertex
 		glEnd();  // End drawing quads
-		}
+		unbind;
+	}
 	static void DrawCircle(float cx, float cy, float radius, int numSegments)
 	{
 		glBegin(GL_TRIANGLE_FAN);
@@ -52,6 +57,7 @@ public:
 			glVertex2f(cx + x, cy + y);
 		}
 		glEnd();
+		unbind;
 	}
 	static void DrawLine(float x1, float y1, float x2, float y2)
 {
@@ -59,6 +65,7 @@ public:
     glVertex2f(x1, y1);  // Starting point
     glVertex2f(x2, y2);  // Ending point
     glEnd();
+	unbind;
 }
 
 
@@ -129,6 +136,7 @@ public:
 			  }
 		  }
 		  glPopMatrix();
+		  unbind;
 
 	}
 
@@ -180,6 +188,7 @@ public:
 			lastcenter=centeri;
 		}
 		glTranslated(-center.x,-center.y,-center.z);
+		unbind;
 
 	};
 	static void DrawCylinderBody(Point Base_center1, float Base_rad1, float Base_rad2, float height, int texture = -1)
@@ -252,6 +261,7 @@ public:
 				glEnd();
 			}
 		glPopMatrix( );
+		unbind;
 	};
 	
 	static void DrawCupe(Point bottom_left_back, float length, float hight, float depth, int texture = -1)
@@ -338,6 +348,7 @@ public:
 			glEnd();
 		
 		glTranslated(-bottom_left_back.x,-bottom_left_back.y,-bottom_left_back.z);
+		unbind;
 	};
 	
 	static void DrawWall(Point bottom_left_back, float length, float hight_cube, float depth, int texture_wall)
@@ -427,6 +438,7 @@ public:
 	glTexCoord2d(0, t);
 	glVertex3f(h.x,h.y,h.z);
 	glEnd();
+	unbind;
 };
 
 	static void DrawCupe(Point bottom_left_back, float length, float hight, float depth, int texture, 
@@ -522,6 +534,7 @@ public:
 		}
 
 	glTranslated(-bottom_left_back.x,-bottom_left_back.y,-bottom_left_back.z);
+	unbind;
 };
 
 	static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
@@ -611,7 +624,7 @@ public:
 	
 
 		glPopMatrix();
-
+		unbind;
 	}
 
 	static void DrawCoordinates(Point str , bool with_z = false ){
@@ -673,6 +686,7 @@ void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_le
     }
 
     glEnd();
+	unbind;
 }
 
 

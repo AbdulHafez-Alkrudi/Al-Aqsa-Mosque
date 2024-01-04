@@ -68,7 +68,7 @@
 		primitives::DrawCylinderBody(cylinder_center, last_rad , last_rad*0.9, 1 , pillar_texture);   
 		glTranslated(0 , 0.5 , 0);
 		
-		last_rad *= 0.93 ;
+		last_rad *= 0.95 ;
 	 }
 
 	 //primitives::DrawCylinderBody(cylinder_center, rad , rad*0.6, cylinder_height , pillar_texture);   

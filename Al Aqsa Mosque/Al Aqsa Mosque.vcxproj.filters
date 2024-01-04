@@ -13,6 +13,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="vendor\model\3DTexture.cpp" />
     <ClCompile Include="vendor\model\Model_3DS.cpp" />
+    <ClCompile Include="Cylinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="around.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="vendor\model\Model_3DS.h" />
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="qibaliMosque.h" />
+    <ClInclude Include="Cylinder.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
