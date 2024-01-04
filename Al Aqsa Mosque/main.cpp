@@ -34,8 +34,8 @@
 #define ppm glPopMatrix()
 
 
-const db srt = 1.414213562373095;
-const db pi = 3.1415926535897932384626433832795028;
+//const db srt = 1.414213562373095;
+//const db pi = 3.1415926535897932384626433832795028;
 
 
 
@@ -218,8 +218,8 @@ int InitGL(GLvoid)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	tree = new Model_3DS();
-	
-	//marble = LoadTexture("", 255);
+	// this one just to fix the bug of puting the first texture on the primitive if i didn't bind any textuer to it
+	marble = LoadTexture("", 255);
 	marble = LoadTexture("images/walls/marble.bmp", 255);
 
 	stone1 = LoadTexture("images/walls/stone1.bmp", 255);
@@ -315,189 +315,6 @@ void Key(bool *keys, float speed)
 float z = 0;
 
 
-void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1, int texture2, bool isHalf) {
-
-	//glEnable(GL_TEXTURE_2D);
-	pshm;
-	db x1, x2, x3, x4, y1, y2, y3, y4, angle; int div = 1;
-	if (isHalf) div =2;
-	for (float i = 0; i <sectorCnt/div ; i++) {
-		angle = 2 * (i / sectorCnt) * PI;
-		x1 = innerR * cos(angle);
-		y1 = innerR * sin(angle);
-		x2 = outerR * cos(angle);
-		y2 = outerR * sin(angle);
-		angle = 2 * (++i / sectorCnt) * PI;
-		x3 = innerR * cos(angle);
-		y3 = innerR * sin(angle);
-		x4 = outerR * cos(angle);
-		y4 = outerR * sin(angle);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glBegin(GL_QUADS);
-		txt(0, 0);
-		glVertex3d(x1, y1,height/ 2.0);
-		txt(0, 1);
-		glVertex3d(x2, y2, height/ 2.0);
-		txt(1, 1);
-		glVertex3d(x4, y4, height/ 2.0);
-		txt(1, 0);
-		glVertex3d(x3, y3, height/ 2.0);
-		glEnd();
-
-		angle = 2 * (++i / sectorCnt) * PI;
-		x1 = innerR * cos(angle);
-		y1 = innerR * sin(angle);
-		x2 = outerR * cos(angle);
-		y2 = outerR * sin(angle);
-
-		glBindTexture(GL_TEXTURE_2D, texture2);
-		glBegin(GL_QUADS);
-		txt(0, 0);
-		glVertex3d(x3, y3, height/ 2);
-		txt(0, 1);
-		glVertex3d(x4, y4, height/ 2);
-		txt(1, 1);
-		glVertex3d(x2, y2, height/ 2);
-		txt(1, 0);
-		glVertex3d(x1, y1, height/ 2);
-		glEnd();
-		i--;
-	}
-	ppm;
-	glDisable(GL_TEXTURE_2D);
-}
-
-
-
-void drawPipe(db innerR, db outerR, db height, int sectorCnt,int textures[4], bool isHalf, bool isArch = false) {
-
-#pragma region front ring
-	
-	pshm;
-	glNormal3f(0, 0, -1);
-	cull;
-	frontf;
-	drawRing(innerR, outerR, -height, sectorCnt, textures[0], textures[1], isHalf);
-	backf;
-	nocull;
-	ppm;
-#pragma endregion
-
-		if (!isArch) {
-#pragma region outer cylinder
-		pshm;
-	//	glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, textures[2]);
-		Cylinder outerC = Cylinder(outerR, outerR, height, sectorCnt);
-		outerC.setIsHalf(isHalf);
-		cull;
-		outerC.drawSide();
-		nocull;
-		ppm;
-#pragma endregion
-		}
-
-#pragma region inner cylinder
-	pshm;
-	glBindTexture(GL_TEXTURE_2D, textures[3]);
-	Cylinder innerC = Cylinder(innerR, innerR, height, sectorCnt);
-	innerC.setIsHalf(isHalf);
-	innerC.reverseNormals();
-	cull;
-	innerC.drawSide();
-	nocull;
-	//glDisable(GL_TEXTURE_2D);
-	ppm;
-#pragma endregion
-
-#pragma region back ring 
-	pshm;
-	glNormal3f(0, 0, 1);
-	cull;
-	drawRing(innerR, outerR, height, sectorCnt, textures[0], textures[1], isHalf);
-	nocull;
-	ppm;
-#pragma endregion
-	if (isHalf) {
-		glNormal3f(0, -1, 0);
-		cull;
-		glBegin(GL_QUADS);
-		glVertex3d(outerR,0,height/2.0);
-		glVertex3d(innerR, 0, height / 2.0);
-		glVertex3d(innerR, 0, -height / 2.0);
-		glVertex3d(outerR, 0, -height / 2.0);
-		glEnd();
-		frontf;
-		glBegin(GL_QUADS);
-		glVertex3d(-outerR, 0, height / 2.0);
-		glVertex3d(-innerR, 0, height / 2.0);
-		glVertex3d(-innerR, 0, -height / 2.0);
-		glVertex3d(-outerR, 0, -height / 2.0);
-		glEnd();
-		backf;
-		nocull;
-	}
-	unbind;
-}
-
-void Arch(db sectorCount , db radius, db thickness = 0) {
-
-	db length = 0;
-	pshm;
-	glTranslatef(0, 0, -length / 2);
-	glBegin(GL_TRIANGLE_STRIP);
-
-	for (int i = 0; i <= sectorCount; ++i) {
-		GLfloat angle = (static_cast<float>(i) / sectorCount) * PI;
-		GLfloat x = radius * cos(angle);
-		GLfloat y = radius * sin(angle);
-
-		if (angle <= PI / 2) {
-			glTexCoord2d(1, 1);
-			glVertex3d(radius, radius + thickness, length);
-			glTexCoord2d(x / radius, y / radius);
-			glVertex3f(x, y, length);
-		}
-		else {
-			glTexCoord2d(1, 1);
-			glVertex3d(-radius, radius + thickness, length);
-			glTexCoord2d(fabs(x) / radius, fabs(y) / radius);
-			glVertex3f(x, y, length);
-		}
-
-	}
-	glEnd();
-	ppm;
-	unbind ;
-}
-
-
-void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
-	white;
-	pshm;
-	glNormal3f(0, 0, 1);
-	glTranslated(0, 0, height/2.0 - 0.01);
-	cull;
-	frontf;
-	glBindTexture(GL_TEXTURE_2D , texture[1]);
-	Arch(sectorCnt/2.0, outerR);
-	backf;
-	nocull;
-	ppm;
-
-	pshm;
-	glNormal3f(0, 0, -1);
-	glTranslated(0, 0, -height/2.0 + 0.01);
-	cull;
-	glBindTexture(GL_TEXTURE_2D , texture[0]);
-	Arch(sectorCnt/2.0, outerR);
-	nocull;
-	ppm;
-	unbind;
-	//glColor3f(0, 0.123, 0.21);
-	drawPipe(innerR, outerR, height, sectorCnt, textures, true, true);
-}
-
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	unbind;
@@ -527,8 +344,9 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	glTranslated(0, 0, -20);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	int textures[6] = {wall5,wall5,wall5,wall5,wall5,wall5};
-	Arch(60.5, 80, 30, 16, textures);
+	
+	int textures[6] = {wall5,wall5,wall5,wall5,stone1 , stone1};
+	primitives::Arch(60, 100, 600, 16, textures);
 	Door door(Point(100 , 0,  0) , 50 , 50 , wall5 , 90 , 90);
 	door.DrawDoor(keys,Point(100 , 0 , 0));
 	/*school *s = new school();
