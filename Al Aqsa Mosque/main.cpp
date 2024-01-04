@@ -18,7 +18,7 @@
 #include "Pillar.h"
 #include "qibaliMosque.h"
 #include "vendor/model/Model_3DS.h"
-
+#include "Marwani.h"
 
 int mouseX = 0, mouseY = 0;
 bool isClicked = 0, isRClicked = 0;
@@ -79,6 +79,7 @@ int mosqueRoof,mosqueRoof2;
 int mosaic;
 int arch;
 int mosquewindow2;
+int marwanoCarpet;
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
 	// Center the Skybox around the given x,y,z position
@@ -222,6 +223,7 @@ int InitGL(GLvoid)
 	arch =  LoadTexture("images/mosque/arch2.bmp", 255);
 	mosquewindow2 =  LoadTexture("images/mosque/mosquewindow2.bmp", 255);
 	outsideDoors = LoadTexture("images/mosque/outsidedoors2.bmp", 255);
+	marwanoCarpet = LoadTexture("images/mosque/carpet.bmp", 255);
 
 
 	// note if you load a image the opengl while on the GL_Texture_2D himself
@@ -300,6 +302,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 
 	d->drawGround(Point(1,1,1),1000,2,1000,grass);
 	primitives p;
+	Marwani* m = new Marwani();
 	 //p.DrawCylinderBody(Point(20, 10, 10), 0.5, 0.5, 10, -1);
 	Pillar pillar(1.5,11.5); 
 	pillar.cube_cylinder_pillar(Point(150, 11, 150),marble,marble);
@@ -307,7 +310,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	pillar.cube_cylinder_pillar(Point(145, 11, 145),marble,marble);
 	pillar.cube_cylinder_pillar(Point(145, 11, 155),marble,marble);	
 
-
+	m->drawMarwaniMosque(Point(180,12,500),300,130,40,5,qibaliMosque,marwanoCarpet,marble);
 	
 	
 

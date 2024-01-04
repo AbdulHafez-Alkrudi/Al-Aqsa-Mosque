@@ -350,7 +350,7 @@ public:
 	Point f= Point (a.x+length,a.y+hight_cube,a.z);
 	Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 	Point h= Point (a.x,a.y+hight_cube,a.z+depth);
-	double t = 3;
+	double t = 2;
 	//draw wall
 	glColor3f(1,1,1);
 	glBindTexture(GL_TEXTURE_2D, texture_wall);
@@ -565,6 +565,113 @@ void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_le
     glEnd();
 }
 
+static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
+	
+		glPushMatrix();
+		glTranslated(bottom_left_back.x,bottom_left_back.y,bottom_left_back.z);
+		bottom_left_back = Point(0 , 0 , 0) ;
+		float shift_width  = (width_upper_base  - width_lower_base )/2.0f ; 
+		float shift_length = (length_upper_base - length_lower_base)/2.0f ;
 
+		if(texture != -1)
+				glBindTexture(GL_TEXTURE_2D,texture);
+			//back
+			glBegin(GL_QUADS);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.25, 0.67);
+				glVertex3d(-shift_width , height, -shift_length);
+			glEnd();
+
+
+			//front
+			glBegin(GL_QUADS);
+				glTexCoord2d(1, 0.33);
+				glVertex3d(0, 0, length_lower_base);
+				glTexCoord2d(0.75, 0.33);
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.75, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+				glTexCoord2d(1, 0.67);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+			//left
+			glBegin(GL_QUADS);
+				glTexCoord2d(0, 0.33);
+				glVertex3d(0, 0, length_lower_base);
+				glTexCoord2d(0.25, 0.33);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.25, 0.67);
+				glVertex3d(-shift_width, height, -shift_length);
+				glTexCoord2d(0, 0.67);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+			//right
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.75, 0.33);	
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.75, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+
+			//top
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.25 , 0.67);
+				glVertex3d(-shift_width , height, -shift_length);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.5, 1);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+				glTexCoord2d(0.25, 1);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+
+			//bottom
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.25, 0.33);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5,0);
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.25, 0);
+				glVertex3d(0, 0, length_lower_base);
+			glEnd();
+
+	
+
+		glPopMatrix();
+
+	}
+
+	static void DrawCoordinates(Point str , bool with_z = false ){
+		glPushMatrix();
+		glTranslated(str.x , str.y , str.z);
+		for(float i = -100 ; i <= 100 ; i+=0.1){
+			glBegin(GL_POINTS);
+				glVertex3d(fabs(i) , 0 , 0);
+				glVertex3d(0 , i , 0);
+			glEnd();
+
+			if(with_z){
+				glBegin(GL_POINTS);
+					glVertex3d(0 , 0 , i) ;
+				glEnd();
+			}
+		}
+		glPopMatrix();
+
+	}
 
 };
