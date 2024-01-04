@@ -20,6 +20,7 @@
 #include "qibaliMosque.h"
 #include "Cylinder.h"
 #include "vendor/model/Model_3DS.h"
+<<<<<<< HEAD
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 // Stolen From: Yassien 
@@ -38,6 +39,9 @@
 //const db pi = 3.1415926535897932384626433832795028;
 
 
+=======
+#include "Marwani.h"
+>>>>>>> 4360b26b8ef3f63ac49f72ebf3966b890a6c5b53
 
 int mouseX = 0, mouseY = 0;
 bool isClicked = 0, isRClicked = 0;
@@ -51,12 +55,21 @@ bool keys[256];			 // Array Used For The Keyboard Routine
 bool active = TRUE;		 // Window Active Flag Set To TRUE By Default
 bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 Point bottom_left_back;
+<<<<<<< HEAD
 int ground, wall, grass;
 int texture_wall, texture_door, CylinderBody;
 int stone1 , wall5 ;
 int ball, skybox, top, wall3, upwall, bottomwall;
 around *a;
 int house_door, house_window, house_wall, wallofmosque;
+=======
+int ground,wall,grass ;
+int  texture_wall,texture_door,CylinderBody;
+int ball,skybox,top,wall3,upwall,bottomwall;
+int outsideDoors;
+around* a;
+int house_door, house_window, house_wall,wallofmosque;
+>>>>>>> 4360b26b8ef3f63ac49f72ebf3966b890a6c5b53
 int house_roof[4];
 int texture[6];
 
@@ -94,6 +107,7 @@ int mosqueRoof, mosqueRoof2;
 int mosaic;
 int arch;
 int mosquewindow2;
+int marwanoCarpet;
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
 
@@ -271,6 +285,46 @@ int InitGL(GLvoid)
 	tree->Materials[6].tex = Leaf;
 	tree->Materials[7].tex = Leaf;
 
+<<<<<<< HEAD
+=======
+	ball			 = LoadTexture("images/mosque/ball.bmp", 255);
+	upwall			 = LoadTexture("images/mosque/up_wall.bmp", 255);
+	bottomwall			 = LoadTexture("images/mosque/bottom_wall.bmp", 255);
+	CylinderBody			 = LoadTexture("images/mosque/CylinderBody.bmp", 255);
+	wall3			 = LoadTexture("images/wall3.bmp",255);
+	//texture_door = LoadTexture("images/door.bmp", 255);
+	ground			 = LoadTexture("images/walls/ground.bmp", 255);
+	grass			 = LoadTexture("images/walls/grass.bmp", 255);
+	wall			 = LoadTexture("images/walls/house_wall.bmp",255);
+	house_wall		 = LoadTexture("images/mosque/insidemosque.bmp",255);
+	house_door		 = LoadTexture("images/House/door.bmp",255);
+	house_window	 = LoadTexture("images//House/window.bmp",255);
+	house_roof[0]	 = LoadTexture("images/texture_wall.bmp",255);
+	house_roof[1]	 = LoadTexture("images/texture_wall.bmp",255);
+	house_roof[2]	 = LoadTexture("images/texture_wall.bmp",255);
+	house_roof[3]	 = LoadTexture("images/texture_wall.bmp",255);
+	SKYFRONT		 = LoadTexture("images/skybox/front.bmp", 255);
+	SKYBACK		  	 = LoadTexture("images/skybox/back.bmp", 255);
+	SKYLEFT			 = LoadTexture("images/skybox/left.bmp", 255);
+	SKYRIGHT		 = LoadTexture("images/skybox/right.bmp", 255);
+	SKYUP			 = LoadTexture("images/skybox/up.bmp", 255);
+	SKYDOWN			 = LoadTexture("images/skybox/down.bmp", 255);
+	qibaliMosque     = LoadTexture("images/mosque/wallmosque.bmp", 255);
+	mosqueRoof  = LoadTexture("images/mosque/roofmosque.bmp", 255);
+	mosquewindow = LoadTexture("images/mosque/qibali.bmp", 255);
+	carpet          =LoadTexture("images/mosque/carpetMosque.bmp", 255);
+	mosaic =  LoadTexture("images/mosque/mosaic.bmp", 255);
+	mosqueRoof2 =  LoadTexture("images/mosque/mosqueroof2.bmp", 255);
+	arch =  LoadTexture("images/mosque/arch2.bmp", 255);
+	mosquewindow2 =  LoadTexture("images/mosque/mosquewindow2.bmp", 255);
+	outsideDoors = LoadTexture("images/mosque/outsidedoors2.bmp", 255);
+	marwanoCarpet = LoadTexture("images/mosque/carpet.bmp", 255);
+
+
+	// note if you load a image the opengl while on the GL_Texture_2D himself
+	glDisable(GL_TEXTURE_2D);
+	
+>>>>>>> 4360b26b8ef3f63ac49f72ebf3966b890a6c5b53
 	MyCamera = Camera();
 	MyCamera.Position.x = 0;
 	MyCamera.Position.y = 0;
@@ -335,6 +389,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
 	
 	Draw_Skybox(0, 0, 0, 2000, 2000, 2000);
+<<<<<<< HEAD
 	/*DrawWall *d = new DrawWall();
 	DomeOfTheRock *ro = new DomeOfTheRock();
 	House *h = new House();
@@ -344,6 +399,26 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	glTranslated(0, 0, -20);
 	glBindTexture(GL_TEXTURE_2D, 0);
+=======
+	DrawWall* d=new DrawWall();
+	DomeOfTheRock* ro=new DomeOfTheRock();
+	House* h=new House();
+	qibaliMosquee* mosque = new qibaliMosquee();
+	mosque->drawQibaliMosque(150,5,35,mosquewindow,qibaliMosque,mosqueRoof2,
+		mosquewindow2,mosqueRoof,mosaic,marble,house_wall,arch,carpet,outsideDoors,house_door);
+
+	d->drawGround(Point(1,1,1),1000,2,1000,grass);
+	primitives p;
+	Marwani* m = new Marwani();
+	 //p.DrawCylinderBody(Point(20, 10, 10), 0.5, 0.5, 10, -1);
+	Pillar pillar(1.5,11.5); 
+	pillar.cube_cylinder_pillar(Point(150, 11, 150),marble,marble);
+	pillar.cube_cylinder_pillar(Point(140, 11, 150),marble,marble);	
+	pillar.cube_cylinder_pillar(Point(145, 11, 145),marble,marble);
+	pillar.cube_cylinder_pillar(Point(145, 11, 155),marble,marble);	
+
+	m->drawMarwaniMosque(Point(160,12,500),400,250,40,5,qibaliMosque,marwanoCarpet,marble);
+>>>>>>> 4360b26b8ef3f63ac49f72ebf3966b890a6c5b53
 	
 	int textures[6] = {wall5,wall5,wall5,wall5,stone1 , stone1};
 	primitives::Arch(60, 100, 600, 16, textures);
