@@ -81,7 +81,7 @@
 #include "Model_3DS.h"
 
 #include <math.h>			// Header file for the math library
-#include <gl.h>			// Header file for the OpenGL32 library
+#include <gl/gl.h>			// Header file for the OpenGL32 library
 
 // The chunk's id numbers
 #define MAIN3DS				0x4D4D

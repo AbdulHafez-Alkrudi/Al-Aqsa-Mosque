@@ -1,7 +1,26 @@
 #include <iostream>
 #include <cmath>
 #include "Point.h"
+#include "Cylinder.h"
+
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
+
+
 #pragma once
+#define txt(s,t) glTexCoord2d(s,t)
+#define white glColor3f(1,1,1)
+#define db double 
+#define cull glEnable(GL_CULL_FACE)
+#define nocull glDisable(GL_CULL_FACE)
+#define frontf glCullFace(GL_FRONT)
+#define backf glCullFace(GL_BACK)
+#define pshm glPushMatrix()
+#define ppm glPopMatrix()
+
+const db srt = 1.414213562373095;
+const db PI = 3.1415926535897932384626433832795028;
+
+
 class primitives
 {
 		
@@ -25,6 +44,7 @@ public:
 		glTexCoord2d(0 ,1);
 		glVertex2f(x, y + height);          // Top-left vertex
 		glEnd();  // End drawing quads
+		unbind;
 	}
 	static void Drawsquare(float x, float y, float size , int texture)
 	{
@@ -39,7 +59,8 @@ public:
 			glTexCoord2d(0 ,size*0.5);
 			glVertex2f(x, y + size);          // Top-left vertex
 		glEnd();  // End drawing quads
-		}
+		unbind;
+	}
 	static void DrawCircle(float cx, float cy, float radius, int numSegments)
 	{
 		glBegin(GL_TRIANGLE_FAN);
@@ -52,6 +73,7 @@ public:
 			glVertex2f(cx + x, cy + y);
 		}
 		glEnd();
+		unbind;
 	}
 	static void DrawLine(float x1, float y1, float x2, float y2)
 {
@@ -59,6 +81,7 @@ public:
     glVertex2f(x1, y1);  // Starting point
     glVertex2f(x2, y2);  // Ending point
     glEnd();
+	unbind;
 }
 
 
@@ -129,6 +152,7 @@ public:
 			  }
 		  }
 		  glPopMatrix();
+		  unbind;
 
 	}
 
@@ -180,6 +204,7 @@ public:
 			lastcenter=centeri;
 		}
 		glTranslated(-center.x,-center.y,-center.z);
+		unbind;
 
 	};
 	static void DrawCylinderBody(Point Base_center1, float Base_rad1, float Base_rad2, float height, int texture = -1)
@@ -252,6 +277,7 @@ public:
 				glEnd();
 			}
 		glPopMatrix( );
+		unbind;
 	};
 	
 	static void DrawCupe(Point bottom_left_back, float length, float hight, float depth, int texture = -1)
@@ -338,6 +364,7 @@ public:
 			glEnd();
 		
 		glTranslated(-bottom_left_back.x,-bottom_left_back.y,-bottom_left_back.z);
+		unbind;
 	};
 	
 	static void DrawWall(Point bottom_left_back, float length, float hight_cube, float depth, int texture_wall)
@@ -427,6 +454,7 @@ public:
 	glTexCoord2d(0, t);
 	glVertex3f(h.x,h.y,h.z);
 	glEnd();
+	unbind;
 };
 
 	static void DrawCupe(Point bottom_left_back, float length, float hight, float depth, int texture, 
@@ -522,9 +550,120 @@ public:
 		}
 
 	glTranslated(-bottom_left_back.x,-bottom_left_back.y,-bottom_left_back.z);
+	unbind;
 };
+
+static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
 	
-void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
+		glPushMatrix();
+		glTranslated(bottom_left_back.x,bottom_left_back.y,bottom_left_back.z);
+		bottom_left_back = Point(0 , 0 , 0) ;
+		float shift_width  = (width_upper_base  - width_lower_base )/2.0f ; 
+		float shift_length = (length_upper_base - length_lower_base)/2.0f ;
+
+		if(texture != -1)
+				glBindTexture(GL_TEXTURE_2D,texture);
+			//back
+			glBegin(GL_QUADS);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.25, 0.67);
+				glVertex3d(-shift_width , height, -shift_length);
+			glEnd();
+
+
+			//front
+			glBegin(GL_QUADS);
+				glTexCoord2d(1, 0.33);
+				glVertex3d(0, 0, length_lower_base);
+				glTexCoord2d(0.75, 0.33);
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.75, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+				glTexCoord2d(1, 0.67);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+			//left
+			glBegin(GL_QUADS);
+				glTexCoord2d(0, 0.33);
+				glVertex3d(0, 0, length_lower_base);
+				glTexCoord2d(0.25, 0.33);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.25, 0.67);
+				glVertex3d(-shift_width, height, -shift_length);
+				glTexCoord2d(0, 0.67);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+			//right
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.75, 0.33);	
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.75, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+
+			//top
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.25 , 0.67);
+				glVertex3d(-shift_width , height, -shift_length);
+				glTexCoord2d(0.5, 0.67);
+				glVertex3d(width_upper_base - shift_width, height, -shift_length);
+				glTexCoord2d(0.5, 1);
+				glVertex3d(width_upper_base - shift_width, height, length_upper_base - shift_length);
+				glTexCoord2d(0.25, 1);
+				glVertex3d(-shift_width, height, length_upper_base - shift_length);
+			glEnd();
+
+
+			//bottom
+			glBegin(GL_QUADS);
+				glTexCoord2d(0.25, 0.33);
+				glVertex3d(0, 0, 0);
+				glTexCoord2d(0.5, 0.33);
+				glVertex3d(width_lower_base, 0, 0);
+				glTexCoord2d(0.5,0);
+				glVertex3d(width_lower_base, 0, length_lower_base);
+				glTexCoord2d(0.25, 0);
+				glVertex3d(0, 0, length_lower_base);
+			glEnd();
+
+	
+
+		glPopMatrix();
+		unbind;
+	}
+
+static void DrawCoordinates(Point str , bool with_z = false ){
+		glPushMatrix();
+		glTranslated(str.x , str.y , str.z);
+		for(float i = -100 ; i <= 100 ; i+=0.1){
+			glBegin(GL_POINTS);
+				glVertex3d(fabs(i) , 0 , 0);
+				glVertex3d(0 , i , 0);
+			glEnd();
+
+			if(with_z){
+				glBegin(GL_POINTS);
+					glVertex3d(0 , 0 , i) ;
+				glEnd();
+			}
+		}
+		glPopMatrix();
+
+	}
+
+
+static void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
 {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBegin(GL_QUADS);
@@ -563,6 +702,60 @@ void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_le
     }
 
     glEnd();
+	unbind;
+}
+
+static void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1, int texture2, bool isHalf) {
+
+	//glEnable(GL_TEXTURE_2D);
+	pshm;
+	db x1, x2, x3, x4, y1, y2, y3, y4, angle; int div = 1;
+	if (isHalf) div =2;
+	for (float i = 0; i <sectorCnt/div ; i++) {
+		angle = 2 * (i / sectorCnt) * PI;
+		x1 = innerR * cos(angle);
+		y1 = innerR * sin(angle);
+		x2 = outerR * cos(angle);
+		y2 = outerR * sin(angle);
+		angle = 2 * (++i / sectorCnt) * PI;
+		x3 = innerR * cos(angle);
+		y3 = innerR * sin(angle);
+		x4 = outerR * cos(angle);
+		y4 = outerR * sin(angle);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+		glBegin(GL_QUADS);
+		txt(0, 0);
+		glVertex3d(x1, y1,height/ 2.0);
+		txt(0, 1);
+		glVertex3d(x2, y2, height/ 2.0);
+		txt(1, 1);
+		glVertex3d(x4, y4, height/ 2.0);
+		txt(1, 0);
+		glVertex3d(x3, y3, height/ 2.0);
+		glEnd();
+
+		angle = 2 * (++i / sectorCnt) * PI;
+		x1 = innerR * cos(angle);
+		y1 = innerR * sin(angle);
+		x2 = outerR * cos(angle);
+		y2 = outerR * sin(angle);
+
+		glBindTexture(GL_TEXTURE_2D, texture2);
+		glBegin(GL_QUADS);
+		txt(0, 0);
+		glVertex3d(x3, y3, height/ 2);
+		txt(0, 1);
+		glVertex3d(x4, y4, height/ 2);
+		txt(1, 1);
+		glVertex3d(x2, y2, height/ 2);
+		txt(1, 0);
+		glVertex3d(x1, y1, height/ 2);
+		glEnd();
+		i--;
+	}
+	ppm;
+	unbind;
+	//glDisable(GL_TEXTURE_2D);
 }
 
 static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
@@ -673,5 +866,134 @@ static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float l
 		glPopMatrix();
 
 	}
+
+static void drawPipe(db innerR, db outerR, db height, int sectorCnt,int textures[4], bool isHalf, bool isArch = false) {
+
+#pragma region front ring
+	
+	pshm;
+	glNormal3f(0, 0, -1);
+	cull;
+	frontf;
+	drawRing(innerR, outerR, -height, sectorCnt, textures[0], textures[1], isHalf);
+	backf;
+	nocull;
+	ppm;
+#pragma endregion
+
+		if (!isArch) {
+#pragma region outer cylinder
+		pshm;
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, textures[2]);
+		Cylinder outerC = Cylinder(outerR, outerR, height, sectorCnt);
+		outerC.setIsHalf(isHalf);
+		cull;
+		outerC.drawSide();
+		nocull;
+		ppm;
+#pragma endregion
+		}
+
+#pragma region inner cylinder
+	pshm;
+	glBindTexture(GL_TEXTURE_2D, textures[3]);
+	Cylinder innerC = Cylinder(innerR, innerR, height, sectorCnt);
+	innerC.setIsHalf(isHalf);
+	innerC.reverseNormals();
+	cull;
+	innerC.drawSide();
+	nocull;
+	//glDisable(GL_TEXTURE_2D);
+	ppm;
+#pragma endregion
+
+#pragma region back ring 
+	pshm;
+	glNormal3f(0, 0, 1);
+	cull;
+	drawRing(innerR, outerR, height, sectorCnt, textures[0], textures[1], isHalf);
+	nocull;
+	ppm;
+#pragma endregion
+	if (isHalf) {
+		glNormal3f(0, -1, 0);
+		cull;
+		glBegin(GL_QUADS);
+		glVertex3d(outerR,0,height/2.0);
+		glVertex3d(innerR, 0, height / 2.0);
+		glVertex3d(innerR, 0, -height / 2.0);
+		glVertex3d(outerR, 0, -height / 2.0);
+		glEnd();
+		frontf;
+		glBegin(GL_QUADS);
+		glVertex3d(-outerR, 0, height / 2.0);
+		glVertex3d(-innerR, 0, height / 2.0);
+		glVertex3d(-innerR, 0, -height / 2.0);
+		glVertex3d(-outerR, 0, -height / 2.0);
+		glEnd();
+		backf;
+		nocull;
+	}
+	unbind;
+}
+static void Arch(db sectorCount , db radius, db thickness = 0) {
+
+	db length = 0;
+	pshm;
+	glTranslatef(0, 0, -length / 2);
+	glBegin(GL_TRIANGLE_STRIP);
+
+	for (int i = 0; i <= sectorCount; ++i) {
+		GLfloat angle = (static_cast<float>(i) / sectorCount) * PI;
+		GLfloat x = radius * cos(angle);
+		GLfloat y = radius * sin(angle);
+
+		if (angle <= PI / 2) {
+			glTexCoord2d(1, 1);
+			glVertex3d(radius, radius + thickness, length);
+			glTexCoord2d(x / radius, y / radius);
+			glVertex3f(x, y, length);
+		}
+		else {
+			glTexCoord2d(1, 1);
+			glVertex3d(-radius, radius + thickness, length);
+			glTexCoord2d(fabs(x) / radius, fabs(y) / radius);
+			glVertex3f(x, y, length);
+		}
+
+	}
+	glEnd();
+	ppm;
+	unbind ;
+}
+
+
+static void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
+	white;
+	pshm;
+	glNormal3f(0, 0, 1);
+	glTranslated(0, 0, height/2.0 - 0.01);
+	cull;
+	frontf;
+	glBindTexture(GL_TEXTURE_2D , textures[4]);
+	Arch(sectorCnt/2.0, outerR);
+	backf;
+	nocull;
+	ppm;
+
+	pshm;
+	glNormal3f(0, 0, -1);
+	glTranslated(0, 0, -height/2.0 + 0.01);
+	cull;
+	glBindTexture(GL_TEXTURE_2D , textures[5]);
+	Arch(sectorCnt/2.0, outerR);
+	nocull;
+	ppm;
+	unbind;
+	//glColor3f(0, 0.123, 0.21);
+	drawPipe(innerR, outerR, height, sectorCnt, textures, true, true);
+}
+
 
 };

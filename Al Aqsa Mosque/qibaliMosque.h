@@ -5,6 +5,7 @@
 #include "texture.h"
 #include <cmath>
 #include "Point.h"
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
 class qibaliMosquee {
 	public:
 
@@ -18,7 +19,8 @@ class qibaliMosquee {
                Point(180 + (i + 25), 12 + heightOfWall-0.2 , 200 -0.2 ),
                Point(180 + i, 12 + heightOfWall-0.2 , 200 -0.2),
                mosquewindow, 1);
-}
+	
+	}
 	 //front
 	 p.DrawWall(Point(180,12,200+lenghtOfWall),lenghtOfWall/2-10,heightOfWall,depthOfWall,house_wall);
 	 p.DrawWall(Point(180+lenghtOfWall/2+15,12,200+lenghtOfWall),lenghtOfWall/2-15,heightOfWall,depthOfWall,house_wall);
@@ -158,7 +160,7 @@ class qibaliMosquee {
 	 }
 	 }
 
-
+	 unbind;
 };
 
 

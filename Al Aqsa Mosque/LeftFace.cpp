@@ -1,6 +1,6 @@
 #include "LeftFace.h"
 #include "texture.h"
-
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
 LeftFace::LeftFace(void)
 	{
 	}
@@ -72,4 +72,6 @@ void LeftFace::FirstEntranceLeft(){
 		glTranslated(-17 , -5 , -32.1+3);
 	DrawRectangle(0 , 0 , 7 , 3 , photo);
 	glPopMatrix();
-	}
+	
+	unbind;
+}
