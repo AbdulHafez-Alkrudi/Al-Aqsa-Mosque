@@ -23,10 +23,10 @@
 #include "Marwani.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
-// Stolen From: Yassien 
-#define txt(s,t) glTexCoord2d(s,t)
-#define white glColor3f(1,1,1)
-#define db double 
+// Stolen From: Yassien
+#define txt(s, t) glTexCoord2d(s, t)
+#define white glColor3f(1, 1, 1)
+#define db double
 #define cull glEnable(GL_CULL_FACE)
 #define nocull glDisable(GL_CULL_FACE)
 #define frontf glCullFace(GL_FRONT)
@@ -34,9 +34,8 @@
 #define pshm glPushMatrix()
 #define ppm glPopMatrix()
 
-
-const db srt = 1.414213562373095;
-const db pi = 3.1415926535897932384626433832795028;
+	// const db srt = 1.414213562373095;
+	// const db pi = 3.1415926535897932384626433832795028;
 
 
 
@@ -54,8 +53,8 @@ bool fullscreen = FALSE; // Fullscreen Flag Set To Fullscreen Mode By Default
 Point bottom_left_back;
 int ground, wall, grass;
 int texture_wall, texture_door, CylinderBody;
-int stone1 , wall5 ;
 int ball, skybox, top, wall3, upwall, bottomwall;
+int outsideDoors;
 around *a;
 int house_door, house_window, house_wall, wallofmosque;
 int house_roof[4];
@@ -84,7 +83,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();
 }
 
-int image, image2 , marble;
+int image, image2, marble;
 int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
 Model_3DS *tree;
 GLTexture Bark, Leaf;
@@ -94,6 +93,8 @@ int carpet,marwaniCarpet;
 int mosqueRoof, mosqueRoof2;
 int mosaic;
 int arch;
+int stone1;
+int wall5;
 int mosquewindow2;
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
@@ -103,7 +104,6 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	x = x - width / 2;
 	y = y - height / 2;
 	z = z - length / 2;
-
 
 	// Draw Front side
 	glBindTexture(GL_TEXTURE_2D, SKYFRONT);
@@ -205,7 +205,6 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 int InitGL(GLvoid)
 {
 
-	
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
@@ -214,18 +213,17 @@ int InitGL(GLvoid)
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	tree = new Model_3DS();
-	
-	//marble = LoadTexture("", 255);
+	// this one just to fix the bug of puting the first texture on the primitive if i didn't bind any textuer to it
+	marble = LoadTexture("", 255);
 	marble = LoadTexture("images/walls/marble.bmp", 255);
 
 	stone1 = LoadTexture("images/walls/stone1.bmp", 255);
 	wall5 = LoadTexture("images/walls/wall5.bmp", 255);
-
 
 	ball = LoadTexture("images/mosque/ball.bmp", 255);
 	upwall = LoadTexture("images/mosque/up_wall.bmp", 255);
@@ -316,190 +314,6 @@ void Key(bool *keys, float speed)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 float z = 0;
 
-
-void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1, int texture2, bool isHalf) {
-
-	//glEnable(GL_TEXTURE_2D);
-	pshm;
-	db x1, x2, x3, x4, y1, y2, y3, y4, angle; int div = 1;
-	if (isHalf) div =2;
-	for (float i = 0; i <sectorCnt/div ; i++) {
-		angle = 2 * (i / sectorCnt) * PI;
-		x1 = innerR * cos(angle);
-		y1 = innerR * sin(angle);
-		x2 = outerR * cos(angle);
-		y2 = outerR * sin(angle);
-		angle = 2 * (++i / sectorCnt) * PI;
-		x3 = innerR * cos(angle);
-		y3 = innerR * sin(angle);
-		x4 = outerR * cos(angle);
-		y4 = outerR * sin(angle);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glBegin(GL_QUADS);
-		txt(0, 0);
-		glVertex3d(x1, y1,height/ 2.0);
-		txt(0, 1);
-		glVertex3d(x2, y2, height/ 2.0);
-		txt(1, 1);
-		glVertex3d(x4, y4, height/ 2.0);
-		txt(1, 0);
-		glVertex3d(x3, y3, height/ 2.0);
-		glEnd();
-
-		angle = 2 * (++i / sectorCnt) * PI;
-		x1 = innerR * cos(angle);
-		y1 = innerR * sin(angle);
-		x2 = outerR * cos(angle);
-		y2 = outerR * sin(angle);
-
-		glBindTexture(GL_TEXTURE_2D, texture2);
-		glBegin(GL_QUADS);
-		txt(0, 0);
-		glVertex3d(x3, y3, height/ 2);
-		txt(0, 1);
-		glVertex3d(x4, y4, height/ 2);
-		txt(1, 1);
-		glVertex3d(x2, y2, height/ 2);
-		txt(1, 0);
-		glVertex3d(x1, y1, height/ 2);
-		glEnd();
-		i--;
-	}
-	ppm;
-	glDisable(GL_TEXTURE_2D);
-}
-
-
-
-void drawPipe(db innerR, db outerR, db height, int sectorCnt,int textures[4], bool isHalf, bool isArch = false) {
-
-#pragma region front ring
-	
-	pshm;
-	glNormal3f(0, 0, -1);
-	cull;
-	frontf;
-	drawRing(innerR, outerR, -height, sectorCnt, textures[0], textures[1], isHalf);
-	backf;
-	nocull;
-	ppm;
-#pragma endregion
-
-		if (!isArch) {
-#pragma region outer cylinder
-		pshm;
-	//	glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, textures[2]);
-		Cylinder outerC = Cylinder(outerR, outerR, height, sectorCnt);
-		outerC.setIsHalf(isHalf);
-		cull;
-		outerC.drawSide();
-		nocull;
-		ppm;
-#pragma endregion
-		}
-
-#pragma region inner cylinder
-	pshm;
-	glBindTexture(GL_TEXTURE_2D, textures[3]);
-	Cylinder innerC = Cylinder(innerR, innerR, height, sectorCnt);
-	innerC.setIsHalf(isHalf);
-	innerC.reverseNormals();
-	cull;
-	innerC.drawSide();
-	nocull;
-	//glDisable(GL_TEXTURE_2D);
-	ppm;
-#pragma endregion
-
-#pragma region back ring 
-	pshm;
-	glNormal3f(0, 0, 1);
-	cull;
-	drawRing(innerR, outerR, height, sectorCnt, textures[0], textures[1], isHalf);
-	nocull;
-	ppm;
-#pragma endregion
-	if (isHalf) {
-		glNormal3f(0, -1, 0);
-		cull;
-		glBegin(GL_QUADS);
-		glVertex3d(outerR,0,height/2.0);
-		glVertex3d(innerR, 0, height / 2.0);
-		glVertex3d(innerR, 0, -height / 2.0);
-		glVertex3d(outerR, 0, -height / 2.0);
-		glEnd();
-		frontf;
-		glBegin(GL_QUADS);
-		glVertex3d(-outerR, 0, height / 2.0);
-		glVertex3d(-innerR, 0, height / 2.0);
-		glVertex3d(-innerR, 0, -height / 2.0);
-		glVertex3d(-outerR, 0, -height / 2.0);
-		glEnd();
-		backf;
-		nocull;
-	}
-	unbind;
-}
-
-void Arch(db sectorCount , db radius, db thickness = 0) {
-
-	db length = 0;
-	pshm;
-	glTranslatef(0, 0, -length / 2);
-	glBegin(GL_TRIANGLE_STRIP);
-
-	for (int i = 0; i <= sectorCount; ++i) {
-		GLfloat angle = (static_cast<float>(i) / sectorCount) * PI;
-		GLfloat x = radius * cos(angle);
-		GLfloat y = radius * sin(angle);
-
-		if (angle <= PI / 2) {
-			glTexCoord2d(1, 1);
-			glVertex3d(radius, radius + thickness, length);
-			glTexCoord2d(x / radius, y / radius);
-			glVertex3f(x, y, length);
-		}
-		else {
-			glTexCoord2d(1, 1);
-			glVertex3d(-radius, radius + thickness, length);
-			glTexCoord2d(fabs(x) / radius, fabs(y) / radius);
-			glVertex3f(x, y, length);
-		}
-
-	}
-	glEnd();
-	ppm;
-	unbind ;
-}
-
-
-void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
-	white;
-	pshm;
-	glNormal3f(0, 0, 1);
-	glTranslated(0, 0, height/2.0 - 0.01);
-	cull;
-	frontf;
-	glBindTexture(GL_TEXTURE_2D , texture[1]);
-	Arch(sectorCnt/2.0, outerR);
-	backf;
-	nocull;
-	ppm;
-
-	pshm;
-	glNormal3f(0, 0, -1);
-	glTranslated(0, 0, -height/2.0 + 0.01);
-	cull;
-	glBindTexture(GL_TEXTURE_2D , texture[0]);
-	Arch(sectorCnt/2.0, outerR);
-	nocull;
-	ppm;
-	unbind;
-	//glColor3f(0, 0.123, 0.21);
-	drawPipe(innerR, outerR, height, sectorCnt, textures, true, true);
-}
-
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 	unbind;
@@ -511,7 +325,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	// pos.z-=z;
 	// if (Collision(pos))
 	// c1.move();
-	
+
 	MyCamera.Render();
 
 	Key(keys, 0.1);
@@ -520,7 +334,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	marwani->drawMarwaniMosque(Point(160,12,500),400,250,40,5,qibaliMosque,marwaniCarpet,marble);
 
 	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
-	
+
 	Draw_Skybox(0, 0, 0, 2000, 2000, 2000);
 	/*DrawWall *d = new DrawWall();
 	DomeOfTheRock *ro = new DomeOfTheRock();
@@ -543,131 +357,136 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	 //ro->Floor_Roof(marble);
 
-	p.DrawQuad(Point(140,25,143),Point(151.5,25,143),Point(151.5,25,156.5),Point(140,25,156.5),marble);
-	  ro->DrawBall(5,ball,Point (146,24.7,150));
-	//p.DrawCircle(-5,20,5,100);
-		p.DrawQuad(Point(0,20,4),Point(11.5,20,4),Point(11.5,20,16.5),Point(0,20,15.5),marble);
-	  ro->DrawBall(5,ball,Point (6,19.7,10));
+	p.DrawQuad(Point(140, 25, 143), Point(151.5, 25, 143), Point(151.5, 25, 156.5), Point(140, 25, 156.5), marble);
+	ro->DrawBall(5, ball, Point(146, 24.7, 150));
+	// p.DrawCircle(-5,20,5,100);
+	p.DrawQuad(Point(0, 20, 4), Point(11.5, 20, 4), Point(11.5, 20, 16.5), Point(0, 20, 15.5), marble);
+	ro->DrawBall(5, ball, Point(6, 19.7, 10));
 	glTranslated(100, 0, 100);
 	glPushMatrix();
-		primitives::DrawRing(Point(10,10,10),100,100,wall);
-			glTranslated(400, 0, -80);
-			glPushMatrix();
-			glRotated(-90,0,10,0);
-			glBindTexture(GL_TEXTURE_2D,wall);
-			glBegin(GL_TRIANGLE_STRIP);
-			//glColor3b(1,1,1);
-			glTexCoord2f(0,0);
-			glVertex3d(0,0,0);
+	primitives::DrawRing(Point(10, 10, 10), 100, 100, wall);
+	glTranslated(400, 0, -80);
+	glPushMatrix();
+	glRotated(-90, 0, 10, 0);
+	glBindTexture(GL_TEXTURE_2D, wall);
+	glBegin(GL_TRIANGLE_STRIP);
+	// glColor3b(1,1,1);
+	glTexCoord2f(0, 0);
+	glVertex3d(0, 0, 0);
 
-			glTexCoord2f(1,0);
-			glVertex3d(80,0,0);
+	glTexCoord2f(1, 0);
+	glVertex3d(80, 0, 0);
 
-			glTexCoord2f(1,1);
-			glVertex3d(60,12,0);
+	glTexCoord2f(1, 1);
+	glVertex3d(60, 12, 0);
 
-			glTexCoord2f(0,1);
-			glVertex3d(80,12,0);
-			glEnd();
-			  glPopMatrix();
-			  glPushMatrix();
-			glRotated(-90,0,10,0);
-			glTranslated(0, 0, -50);
-			glBindTexture(GL_TEXTURE_2D,wall);
-			glBegin(GL_TRIANGLE_STRIP);
-			//glColor3b(1,1,1);
-			glTexCoord2f(0,0);
-			glVertex3d(0,0,0);
+	glTexCoord2f(0, 1);
+	glVertex3d(80, 12, 0);
+	glEnd();
+	glPopMatrix();
+	glPushMatrix();
+	glRotated(-90, 0, 10, 0);
+	glTranslated(0, 0, -50);
+	glBindTexture(GL_TEXTURE_2D, wall);
+	glBegin(GL_TRIANGLE_STRIP);
+	// glColor3b(1,1,1);
+	glTexCoord2f(0, 0);
+	glVertex3d(0, 0, 0);
 
-			glTexCoord2f(1,0);
-			glVertex3d(80,0,0);
+	glTexCoord2f(1, 0);
+	glVertex3d(80, 0, 0);
 
-			glTexCoord2f(1,1);
-			glVertex3d(60,12,0);
+	glTexCoord2f(1, 1);
+	glVertex3d(60, 12, 0);
 
-			glTexCoord2f(0,1);
-			glVertex3d(80,12,0);
-			glEnd();
-			  glPopMatrix();
-			ro->DrawStrais(50,house_wall);glPushMatrix();
-			glPushMatrix();glTranslated(-10, -11,-10);
-			glRotated(-180, 0, 1, 0);
-		h->DrawHousewithoutDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window);
-			glPopMatrix();
-			glPushMatrix();glTranslated(160, -11,-10);
-			glRotated(-180, 0, 1, 0);
-		h->DrawHousewithoutDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window);
-			glPopMatrix();
-			glTranslated(60, 25,-50);
-		h->DrawHousewithDomeNOdoor(Point(0,0,0),100,40,40,40,wall,house_window,wall);
-			 glPopMatrix();
-			  glPopMatrix();
-			d->drawWall(Point(1, 1, 1),11,1,800,wall);
-				glPushMatrix();
-				glTranslated(0, 10, 0);
-			d->drawGround(Point (1, 1, 1),10,1,800,ground);
-		  glPushMatrix();
-		  glPushMatrix();
-		  glTranslated(600, 0, 50); ////////////////////////////////
-		  h->DrawHousewithDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window,wall);
-		  glPopMatrix();                       //��������������
-		  glTranslated(400, 0, 500);
-		  ro->DrawOctagon(60, 30, bottomwall, Point (0, 0, 0));
-		 glPushMatrix();glTranslated(0, 30, 0);   ro->DrawOctagon(60, 50, upwall, Point (0, 0, 0));
-		  glPopMatrix();
-		 //�������������
-		  glPushMatrix();                                             //��������������
-		  glTranslated(30, 0, -72.6);
-		  glRotated(22.5, 0, 1, 0);
-		  glRotated(90, 1, 0, 0);
-		  ro->Floor_Roof(marble);
-		  glPopMatrix();
+	glTexCoord2f(0, 1);
+	glVertex3d(80, 12, 0);
+	glEnd();
+	glPopMatrix();
+	ro->DrawStrais(50, house_wall);
+	glPushMatrix();
+	glPushMatrix();
+	glTranslated(-10, -11, -10);
+	glRotated(-180, 0, 1, 0);
+	h->DrawHousewithoutDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(160, -11, -10);
+	glRotated(-180, 0, 1, 0);
+	h->DrawHousewithoutDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window);
+	glPopMatrix();
+	glTranslated(60, 25, -50);
+	h->DrawHousewithDomeNOdoor(Point(0, 0, 0), 100, 40, 40, 40, wall, house_window, wall);
+	glPopMatrix();
+	glPopMatrix();
+	d->drawWall(Point(1, 1, 1), 11, 1, 800, wall);
+	glPushMatrix();
+	glTranslated(0, 10, 0);
+	d->drawGround(Point(1, 1, 1), 10, 1, 800, ground);
+	glPushMatrix();
+	glPushMatrix();
+	glTranslated(600, 0, 50); ////////////////////////////////
+	h->DrawHousewithDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window, wall);
+	glPopMatrix(); // ��������������
+	glTranslated(400, 0, 500);
+	ro->DrawOctagon(60, 30, bottomwall, Point(0, 0, 0));
+	glPushMatrix();
+	glTranslated(0, 30, 0);
+	ro->DrawOctagon(60, 50, upwall, Point(0, 0, 0));
+	glPopMatrix();
+	// �������������
+	glPushMatrix(); // ��������������
+	glTranslated(30, 0, -72.6);
+	glRotated(22.5, 0, 1, 0);
+	glRotated(90, 1, 0, 0);
+	ro->Floor_Roof(marble);
+	glPopMatrix();
 
-		  glPushMatrix();
-		  glTranslated(30, 80, -72.6);
-		  glRotated(90, 1, 0, 0);
-		  glRotated(22.5, 0,0, 1);
-		  ro->Floor_Roof(marble);
-		  glPopMatrix();
-		   glPushMatrix();
-		   glTranslated(30, 83, -74);
-		   glPushMatrix();
-			glTranslated(0, -10, 0);
-		   primitives::DrawCylinderBody(Point(0,0,0),48,48,20,CylinderBody);
-		   glPopMatrix();
-		   ro->DrawBall(50,ball,Point (0,0,0));
-		   glPopMatrix();
-		   glPopMatrix();
-		   glPushMatrix();
-		   glPopMatrix();
-		glPopMatrix();
-	 glPopMatrix();
+	glPushMatrix();
+	glTranslated(30, 80, -72.6);
+	glRotated(90, 1, 0, 0);
+	glRotated(22.5, 0, 0, 1);
+	ro->Floor_Roof(marble);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(30, 83, -74);
+	glPushMatrix();
+	glTranslated(0, -10, 0);
+	primitives::DrawCylinderBody(Point(0, 0, 0), 48, 48, 20, CylinderBody);
+	glPopMatrix();
+	ro->DrawBall(50, ball, Point(0, 0, 0));
+	glPopMatrix();
+	glPopMatrix();
+	glPushMatrix();
+	glPopMatrix();
+	glPopMatrix();
+	glPopMatrix();
 
-	//Pillar pillar ;
-	//pillar.cube_cylinder_pillar(Point(0,0,0),4,marble,10,-1);
+	// Pillar pillar ;
+	// pillar.cube_cylinder_pillar(Point(0,0,0),4,marble,10,-1);
 
-	for(float i = -100 ; i <= 100 ; i+=0.1){
+	for (float i = -100; i <= 100; i += 0.1)
+	{
 		glBegin(GL_POINTS);
-			glVertex3d(i , 0 , 0);
-			glVertex3d(0 , i , 0);
+		glVertex3d(i, 0, 0);
+		glVertex3d(0, i, 0);
 		glEnd();
 	}
-	//primitives::Draw3DHexagon(Point(0,0,-100),40,100,marble);
-	tree->pos.x=0;
-	tree->pos.y=0;
-	tree->pos.z=0;
-	tree->scale=2;
+	// primitives::Draw3DHexagon(Point(0,0,-100),40,100,marble);
+	tree->pos.x = 0;
+	tree->pos.y = 0;
+	tree->pos.z = 0;
+	tree->scale = 2;
 	tree->Draw();
 
-	
 	/*tree->pos.x = 10 ;
 	tree->pos.y = 0  ;
 	tree->pos.z = 0  ;
-	
+
 	tree->Draw();*/
-	//Minaret mina2(200, 50);
-	//mina2.draw_minaret(Point(50, 0, 0), marble, marble, marble, marble);
-	
+	// Minaret mina2(200, 50);
+	// mina2.draw_minaret(Point(50, 0, 0), marble, marble, marble, marble);
+
 	return TRUE;
 }
 

@@ -1,8 +1,24 @@
 #include <iostream>
 #include <cmath>
 #include "Point.h"
+#include "Cylinder.h"
+
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
+
+
 #pragma once
+#define txt(s,t) glTexCoord2d(s,t)
+#define white glColor3f(1,1,1)
+#define db double 
+#define cull glEnable(GL_CULL_FACE)
+#define nocull glDisable(GL_CULL_FACE)
+#define frontf glCullFace(GL_FRONT)
+#define backf glCullFace(GL_BACK)
+#define pshm glPushMatrix()
+#define ppm glPopMatrix()
+
+const db srt = 1.414213562373095;
+const db PI = 3.1415926535897932384626433832795028;
 
 
 class primitives
@@ -537,7 +553,7 @@ public:
 	unbind;
 };
 
-	static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
+static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
 	
 		glPushMatrix();
 		glTranslated(bottom_left_back.x,bottom_left_back.y,bottom_left_back.z);
@@ -627,7 +643,7 @@ public:
 		unbind;
 	}
 
-	static void DrawCoordinates(Point str , bool with_z = false ){
+static void DrawCoordinates(Point str , bool with_z = false ){
 		glPushMatrix();
 		glTranslated(str.x , str.y , str.z);
 		for(float i = -100 ; i <= 100 ; i+=0.1){
@@ -647,7 +663,7 @@ public:
 	}
 
 
-void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
+static void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
 {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBegin(GL_QUADS);
@@ -689,6 +705,198 @@ void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_le
 	unbind;
 }
 
+<<<<<<< HEAD
+=======
+static void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1, int texture2, bool isHalf) {
+
+	//glEnable(GL_TEXTURE_2D);
+	pshm;
+	db x1, x2, x3, x4, y1, y2, y3, y4, angle; int div = 1;
+	if (isHalf) div =2;
+	for (float i = 0; i <sectorCnt/div ; i++) {
+		angle = 2 * (i / sectorCnt) * PI;
+		x1 = innerR * cos(angle);
+		y1 = innerR * sin(angle);
+		x2 = outerR * cos(angle);
+		y2 = outerR * sin(angle);
+		angle = 2 * (++i / sectorCnt) * PI;
+		x3 = innerR * cos(angle);
+		y3 = innerR * sin(angle);
+		x4 = outerR * cos(angle);
+		y4 = outerR * sin(angle);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+		glBegin(GL_QUADS);
+		txt(0, 0);
+		glVertex3d(x1, y1,height/ 2.0);
+		txt(0, 1);
+		glVertex3d(x2, y2, height/ 2.0);
+		txt(1, 1);
+		glVertex3d(x4, y4, height/ 2.0);
+		txt(1, 0);
+		glVertex3d(x3, y3, height/ 2.0);
+		glEnd();
+
+		angle = 2 * (++i / sectorCnt) * PI;
+		x1 = innerR * cos(angle);
+		y1 = innerR * sin(angle);
+		x2 = outerR * cos(angle);
+		y2 = outerR * sin(angle);
+
+		glBindTexture(GL_TEXTURE_2D, texture2);
+		glBegin(GL_QUADS);
+		txt(0, 0);
+		glVertex3d(x3, y3, height/ 2);
+		txt(0, 1);
+		glVertex3d(x4, y4, height/ 2);
+		txt(1, 1);
+		glVertex3d(x2, y2, height/ 2);
+		txt(1, 0);
+		glVertex3d(x1, y1, height/ 2);
+		glEnd();
+		i--;
+	}
+	ppm;
+	unbind;
+	//glDisable(GL_TEXTURE_2D);
+}
+
+static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
+	
+		glPushMatrix();
+		glTranslated(bottom_left_back.x,bottom_left_back.y,bottom_left_back.z);
+		bottom_left_back = Point(0 , 0 , 0) ;
+		float shift_width  = (width_upper_base  - width_lower_base )/2.0f ; 
+		float shift_length = (length_upper_base - length_lower_base)/2.0f ;
+>>>>>>> d43c0fcf929d11d2c04b10df4f3e63d4b789902c
+
+
+static void drawPipe(db innerR, db outerR, db height, int sectorCnt,int textures[4], bool isHalf, bool isArch = false) {
+
+#pragma region front ring
+	
+	pshm;
+	glNormal3f(0, 0, -1);
+	cull;
+	frontf;
+	drawRing(innerR, outerR, -height, sectorCnt, textures[0], textures[1], isHalf);
+	backf;
+	nocull;
+	ppm;
+#pragma endregion
+
+		if (!isArch) {
+#pragma region outer cylinder
+		pshm;
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, textures[2]);
+		Cylinder outerC = Cylinder(outerR, outerR, height, sectorCnt);
+		outerC.setIsHalf(isHalf);
+		cull;
+		outerC.drawSide();
+		nocull;
+		ppm;
+#pragma endregion
+		}
+
+#pragma region inner cylinder
+	pshm;
+	glBindTexture(GL_TEXTURE_2D, textures[3]);
+	Cylinder innerC = Cylinder(innerR, innerR, height, sectorCnt);
+	innerC.setIsHalf(isHalf);
+	innerC.reverseNormals();
+	cull;
+	innerC.drawSide();
+	nocull;
+	//glDisable(GL_TEXTURE_2D);
+	ppm;
+#pragma endregion
+
+#pragma region back ring 
+	pshm;
+	glNormal3f(0, 0, 1);
+	cull;
+	drawRing(innerR, outerR, height, sectorCnt, textures[0], textures[1], isHalf);
+	nocull;
+	ppm;
+#pragma endregion
+	if (isHalf) {
+		glNormal3f(0, -1, 0);
+		cull;
+		glBegin(GL_QUADS);
+		glVertex3d(outerR,0,height/2.0);
+		glVertex3d(innerR, 0, height / 2.0);
+		glVertex3d(innerR, 0, -height / 2.0);
+		glVertex3d(outerR, 0, -height / 2.0);
+		glEnd();
+		frontf;
+		glBegin(GL_QUADS);
+		glVertex3d(-outerR, 0, height / 2.0);
+		glVertex3d(-innerR, 0, height / 2.0);
+		glVertex3d(-innerR, 0, -height / 2.0);
+		glVertex3d(-outerR, 0, -height / 2.0);
+		glEnd();
+		backf;
+		nocull;
+	}
+	unbind;
+}
+static void Arch(db sectorCount , db radius, db thickness = 0) {
+
+	db length = 0;
+	pshm;
+	glTranslatef(0, 0, -length / 2);
+	glBegin(GL_TRIANGLE_STRIP);
+
+	for (int i = 0; i <= sectorCount; ++i) {
+		GLfloat angle = (static_cast<float>(i) / sectorCount) * PI;
+		GLfloat x = radius * cos(angle);
+		GLfloat y = radius * sin(angle);
+
+		if (angle <= PI / 2) {
+			glTexCoord2d(1, 1);
+			glVertex3d(radius, radius + thickness, length);
+			glTexCoord2d(x / radius, y / radius);
+			glVertex3f(x, y, length);
+		}
+		else {
+			glTexCoord2d(1, 1);
+			glVertex3d(-radius, radius + thickness, length);
+			glTexCoord2d(fabs(x) / radius, fabs(y) / radius);
+			glVertex3f(x, y, length);
+		}
+
+	}
+	glEnd();
+	ppm;
+	unbind ;
+}
+
+
+static void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
+	white;
+	pshm;
+	glNormal3f(0, 0, 1);
+	glTranslated(0, 0, height/2.0 - 0.01);
+	cull;
+	frontf;
+	glBindTexture(GL_TEXTURE_2D , textures[4]);
+	Arch(sectorCnt/2.0, outerR);
+	backf;
+	nocull;
+	ppm;
+
+	pshm;
+	glNormal3f(0, 0, -1);
+	glTranslated(0, 0, -height/2.0 + 0.01);
+	cull;
+	glBindTexture(GL_TEXTURE_2D , textures[5]);
+	Arch(sectorCnt/2.0, outerR);
+	nocull;
+	ppm;
+	unbind;
+	//glColor3f(0, 0.123, 0.21);
+	drawPipe(innerR, outerR, height, sectorCnt, textures, true, true);
+}
 
 
 };

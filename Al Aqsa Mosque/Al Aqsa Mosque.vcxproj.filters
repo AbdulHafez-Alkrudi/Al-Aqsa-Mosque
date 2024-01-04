@@ -40,6 +40,8 @@
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="Marwani.h" />
+    <ClInclude Include="Marwani.h" />
+
     <ClInclude Include="Cylinder.h" />
   </ItemGroup>
   <ItemGroup>
