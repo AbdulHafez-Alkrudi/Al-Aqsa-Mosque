@@ -346,7 +346,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glTranslated(0, 0, -20);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	int textures[6] = {wall5,wall5,wall5,wall5,wall5,wall5};
-	Arch(60.5, 80, 30, 16, textures);
+	//Arch(60.5, 80, 30, 16, textures);
 	Door door(Point(100 , 0,  0) , 50 , 50 , wall5 , 90 , 90);
 	door.DrawDoor(keys,Point(100 , 0 , 0));
 	/*school *s = new school();
