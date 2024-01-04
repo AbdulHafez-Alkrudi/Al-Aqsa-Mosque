@@ -705,8 +705,6 @@ static void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Poin
 	unbind;
 }
 
-<<<<<<< HEAD
-=======
 static void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1, int texture2, bool isHalf) {
 
 	//glEnable(GL_TEXTURE_2D);
@@ -759,15 +757,6 @@ static void drawRing(db innerR, db outerR,db height, int sectorCnt, int texture1
 	unbind;
 	//glDisable(GL_TEXTURE_2D);
 }
-
-static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float length_lower_base , float width_upper_base , float length_upper_base , float height , int texture = -1){
-	
-		glPushMatrix();
-		glTranslated(bottom_left_back.x,bottom_left_back.y,bottom_left_back.z);
-		bottom_left_back = Point(0 , 0 , 0) ;
-		float shift_width  = (width_upper_base  - width_lower_base )/2.0f ; 
-		float shift_length = (length_upper_base - length_lower_base)/2.0f ;
->>>>>>> d43c0fcf929d11d2c04b10df4f3e63d4b789902c
 
 
 static void drawPipe(db innerR, db outerR, db height, int sectorCnt,int textures[4], bool isHalf, bool isArch = false) {

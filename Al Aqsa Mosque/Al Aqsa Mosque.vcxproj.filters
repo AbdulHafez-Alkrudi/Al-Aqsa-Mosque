@@ -14,6 +14,7 @@
     <ClCompile Include="vendor\model\3DTexture.cpp" />
     <ClCompile Include="vendor\model\Model_3DS.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="sphereSunAndMoon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="around.h" />
@@ -41,8 +42,8 @@
     <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="Marwani.h" />
     <ClInclude Include="Marwani.h" />
-
     <ClInclude Include="Cylinder.h" />
+    <ClInclude Include="sphereSunAndMoon.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
@@ -79,6 +80,9 @@
     <Image Include="models\tree\green.bmp" />
     <Image Include="models\tree\leaf.bmp" />
     <Image Include="images\mosque\outsidedoors2.bmp" />
+    <Image Include="images\Moon_Sun\Moon.bmp" />
+    <Image Include="images\Moon_Sun\Sun.bmp" />
+    <Image Include="images\Moon_Sun\SunTexture.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />
