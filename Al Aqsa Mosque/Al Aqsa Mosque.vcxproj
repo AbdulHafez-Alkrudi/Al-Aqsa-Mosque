@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="DrawEntrance.cpp" />
     <ClCompile Include="EntranceOfMosque.cpp" />
     <ClCompile Include="grand.cpp" />
@@ -113,6 +114,7 @@
   <ItemGroup>
     <ClInclude Include="around.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Dome Of The Rock.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DrawEntrance.h" />
