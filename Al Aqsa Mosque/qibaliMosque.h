@@ -28,10 +28,10 @@ class qibaliMosquee {
 		 Point(180+lenghtOfWall/4.5,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+depthOfWall*2,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
 	 p.DrawQuad(Point(180+lenghtOfWall/4.5+10,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/2.3,12,200+lenghtOfWall+0.1+depthOfWall),
 		 Point(180+lenghtOfWall/2.3,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/4.5+10,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
-	 p.DrawQuad(Point(180+lenghtOfWall/2+15,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),
-		 Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/2+15,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
-	 p.DrawQuad(Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall-depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),
-		 Point(180+lenghtOfWall-depthOfWall,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
+	 p.DrawQuad(Point(180+lenghtOfWall/2+15+depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),
+		 Point(180+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+depthOfWall+lenghtOfWall/2+15,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
+	 p.DrawQuad(Point(180+depthOfWall+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall-depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),
+		 Point(180+lenghtOfWall-depthOfWall,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+depthOfWall+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
 	 
 	 //draw main door
 	 p.DrawQuad(Point(180+lenghtOfWall/2.3,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/2.3-5,12,200+lenghtOfWall+0.1+depthOfWall+12.5),

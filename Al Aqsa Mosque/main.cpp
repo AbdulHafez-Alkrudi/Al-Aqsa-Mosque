@@ -310,7 +310,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	pillar.cube_cylinder_pillar(Point(145, 11, 145),marble,marble);
 	pillar.cube_cylinder_pillar(Point(145, 11, 155),marble,marble);	
 
-	m->drawMarwaniMosque(Point(180,12,500),300,130,40,5,qibaliMosque,marwanoCarpet,marble);
+	m->drawMarwaniMosque(Point(160,12,500),400,250,40,5,qibaliMosque,marwanoCarpet,marble);
 	
 	
 
