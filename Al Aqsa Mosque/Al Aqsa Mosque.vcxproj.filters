@@ -14,6 +14,7 @@
     <ClCompile Include="vendor\model\3DTexture.cpp" />
     <ClCompile Include="vendor\model\Model_3DS.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="sphereSunAndMoon.cpp" />
     <ClCompile Include="Door.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,8 +42,12 @@
     <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="museum.h" />
     <ClInclude Include="Marwani.h" />
+
     <ClInclude Include="Cylinder.h" />
+
     <ClInclude Include="Marwani.h" />
+    <ClInclude Include="Cylinder.h" />
+    <ClInclude Include="sphereSunAndMoon.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
@@ -82,6 +87,10 @@
     <Image Include="images\walls\wall6.bmp" />
 
     <Image Include="images\mosque\outsidedoors2.bmp" />
+    <Image Include="images\Moon_Sun\Moon.bmp" />
+    <Image Include="images\Moon_Sun\Sun.bmp" />
+    <Image Include="images\Moon_Sun\SunTexture.bmp" />
+
     <Image Include="images\walls\stone2.bmp" />
 
   </ItemGroup>

@@ -108,6 +108,7 @@
     <ClCompile Include="minaret.cpp" />
     <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RightFace.cpp" />
+    <ClCompile Include="sphereSunAndMoon.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="vendor\model\3DTexture.cpp" />
     <ClCompile Include="vendor\model\Model_3DS.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="RightFace.h" />
     <ClInclude Include="school.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="sphereSunAndMoon.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="vendor\model\3DTexture.h" />
     <ClInclude Include="vendor\model\Model_3DS.h" />
@@ -144,6 +146,10 @@
     <Image Include="Images\House\school_logo.bmp" />
     <Image Include="Images\House\window.bmp" />
     <Image Include="Images\House\window2.bmp" />
+    <Image Include="images\Moon_Sun\Moon.bmp" />
+    <Image Include="images\Moon_Sun\Sun.bmp" />
+    <Image Include="images\Moon_Sun\SunTexture.bmp" />
+
     <Image Include="images\mosque\alporaq.bmp" />
     <Image Include="Images\mosque\Arch.bmp" />
     <Image Include="Images\mosque\ball.bmp" />

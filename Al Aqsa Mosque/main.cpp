@@ -36,6 +36,9 @@ int mouseX = 0, mouseY = 0;
 #include"Door.h"
 
 
+int mouseX = 0, mouseY = 0;
+
+
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 // Stolen From: Yassien
 #define txt(s, t) glTexCoord2d(s, t)
@@ -50,6 +53,7 @@ int mouseX = 0, mouseY = 0;
 
 	// const db srt = 1.414213562373095;
 	// const db pi = 3.1415926535897932384626433832795028;
+
 int mouseX = 0,
 		mouseY = 0;
 
@@ -299,6 +303,7 @@ int InitGL(GLvoid)
 	carpet_aqsa          =LoadTexture("images/mosque/carpet.bmp", 255);
 	// this one just to fix the bug of putting the first texture on the primitive if i didn't bind any textuer to it
 	marble = LoadTexture("images/walls/marble.bmp", 255);
+
 
 	stone1 = LoadTexture("images/walls/stone1.bmp", 255);
 	//wall5 = LoadTexture("images/walls/wall5.bmp", 255);
@@ -1004,18 +1009,8 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	/*Camera c2 = Camera(c1);
-	c2.kb();
-	Point pos = Point(c2.cPos.x,c2.cPos.y,c2.cPos.z);*/
-	// pos.z-=z;
-	// if (Collision(pos))
-	// c1.move();
-
 	MyCamera.Render();
-
-	Key(keys, 5.5);
-
-//	Key(keys,2);
+	Key(keys, 0.8);
 
 	// MyCamera.Render();
 
@@ -1030,15 +1025,10 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	mosque->drawQibaliMosque(150, 5, 35, mosquewindow, qibaliMosque, mosqueRoof2,
 							 mosquewindow2, mosqueRoof, mosaic, marble, house_wall, arch, carpet, outsideDoors, house_door);
 
+	
 	d->drawGround(Point(1, 1, 1), 1000, 2, 1000, grass);
 	primitives p;
-	glPushMatrix();
-	glTranslated(20,12,50);
-	glRotated(180,1,0,1);
-	glRotated(180,1,0,0);
-	p.Arch1(20,22,5,16,texturess);
-	glPopMatrix();
-	
+
 	Marwani *m = new Marwani();
 	// p.DrawCylinderBody(Point(20, 10, 10), 0.5, 0.5, 10, -1);
 	Pillar pillar(1.5, 11.5);
