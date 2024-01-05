@@ -351,12 +351,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	// c1.move();
 
 	MyCamera.Render();
-
-<<<<<<< HEAD
 	Key(keys, 5.5);
-=======
-	Key(keys,2);
->>>>>>> origin/main
 	// MyCamera.Render();
 
 	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
