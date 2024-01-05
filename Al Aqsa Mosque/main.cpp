@@ -3,6 +3,9 @@
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
 #include <glaux.h>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <fstream>
 #include <cmath>
 #include "Point.h"
@@ -88,8 +91,7 @@ int Door_angle = 0 ;
 
 int image, image2, marble , wall5 ;
 int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
-Model_3DS *tree;
-GLTexture Bark, Leaf;
+
 int qibaliMosque;
 int mosquewindow;
 int carpet;
@@ -97,6 +99,15 @@ int mosqueRoof, mosqueRoof2;
 int mosaic;
 int arch;
 int mosquewindow2;
+int marwanoCarpet;
+
+int great_door;
+
+Model_3DS *tree;
+GLTexture Bark, Leaf;
+
+Model_3DS *person;
+
 int marwanoCarpet,stone1;
 int texturess[6];
 int blackMetal;
@@ -207,6 +218,7 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	unbind;
 }
 
+
 int InitGL(GLvoid)
 {
 
@@ -222,7 +234,7 @@ int InitGL(GLvoid)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// this one just to fix the bug of puting the first texture on the primitive if i didn't bind any textuer to it
+	// this one just to fix the bug of putting the first texture on the primitive if i didn't bind any textuer to it
 	marble = LoadTexture("", 255);
 	marble = LoadTexture("images/walls/marble.bmp", 255);
 
@@ -275,7 +287,20 @@ int InitGL(GLvoid)
 	tree->Materials[5].tex = Leaf;
 	tree->Materials[6].tex = Leaf;
 	
+	great_door = LoadTexture("images/House/GreatDoor.bmp" , 255);
 	
+	person = new Model_3DS();
+	person->Load("models/person/8.3DS");
+	person->Materials[0].tex = Bark;
+	person->Materials[1].tex = Bark;
+	person->Materials[2].tex = Bark;
+	
+	person->Materials[3].tex = Bark;
+	person->Materials[4].tex = Leaf;
+	person->Materials[5].tex = Leaf;
+	person->Materials[6].tex = Leaf;
+
+
 
 	MyCamera = Camera();
 	MyCamera.Position.x = 0;
@@ -514,16 +539,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	
 	
-	door.DrawDoubledDoor(stone1);
+	door.DrawDoubledDoor(great_door , stone1 );
 	
-	glTranslated(30 , 0 , 0 ) ; 
-	door.DrawSingleDoor(false , marble);
+	//glTranslated(30 , 0 , 0 ) ; 
 	glTranslated(50 , 0 , 0) ; 
 	for(int i = 0 ; i < 10 ; i++){
 		DrawModel(tree);
 		glTranslated(20 , 0 , 0) ;
 	}
-
+	DrawModel(person , 10);
+	
 	door.openning_trigger(keys);
 	return TRUE;
 }
