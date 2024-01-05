@@ -161,6 +161,7 @@
     <Image Include="Images\walls\house_wall.bmp" />
     <Image Include="Images\walls\marble.bmp" />
     <Image Include="Images\walls\stone1.bmp" />
+    <Image Include="images\walls\stone2.bmp" />
     <Image Include="Images\walls\stone3.bmp" />
     <Image Include="Images\walls\street.bmp" />
     <Image Include="Images\walls\street1.bmp" />

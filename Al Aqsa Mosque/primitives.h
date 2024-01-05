@@ -4,8 +4,6 @@
 #include "Cylinder.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
-
-
 #pragma once
 #define txt(s,t) glTexCoord2d(s,t)
 #define white glColor3f(1,1,1)
@@ -377,7 +375,7 @@ public:
 	Point f= Point (a.x+length,a.y+hight_cube,a.z);
 	Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 	Point h= Point (a.x,a.y+hight_cube,a.z+depth);
-	double t = 2;
+	double t = 5;
 	//draw wall
 	glColor3f(1,1,1);
 	glBindTexture(GL_TEXTURE_2D, texture_wall);
@@ -860,7 +858,7 @@ static void Arch(db sectorCount , db radius, db thickness = 0) {
 }
 
 
-static void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
+static void Arch1(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
 	white;
 	pshm;
 	glNormal3f(0, 0, 1);
