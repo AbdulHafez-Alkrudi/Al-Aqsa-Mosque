@@ -4,8 +4,6 @@
 #include "Cylinder.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
-
-
 #pragma once
 #define txt(s,t) glTexCoord2d(s,t)
 #define white glColor3f(1,1,1)
@@ -377,7 +375,7 @@ public:
 	Point f= Point (a.x+length,a.y+hight_cube,a.z);
 	Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 	Point h= Point (a.x,a.y+hight_cube,a.z+depth);
-	double t = 2;
+	double t = 5;
 	//draw wall
 	glColor3f(1,1,1);
 	glBindTexture(GL_TEXTURE_2D, texture_wall);
@@ -643,18 +641,17 @@ static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float l
 		unbind;
 	}
 
-static void DrawCoordinates(Point str , bool with_z = false ){
+static void DrawCoordinates(bool only_positive = false , bool with_z = false ){
 		glPushMatrix();
-		glTranslated(str.x , str.y , str.z);
 		for(float i = -100 ; i <= 100 ; i+=0.1){
 			glBegin(GL_POINTS);
-				glVertex3d(fabs(i) , 0 , 0);
-				glVertex3d(0 , i , 0);
+				glVertex3d( (only_positive ? fabs(i) : i) , 0 , 0);
+				glVertex3d(0 , (only_positive ? fabs(i) : i)  , 0);
 			glEnd();
 
 			if(with_z){
 				glBegin(GL_POINTS);
-					glVertex3d(0 , 0 , i) ;
+					glVertex3d(0 , 0 , (only_positive ? fabs(i) : i) ) ;
 				glEnd();
 			}
 		}
@@ -663,7 +660,50 @@ static void DrawCoordinates(Point str , bool with_z = false ){
 	}
 
 
+
+void DrawQuad5(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
+{
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+    double t = 1;
+    if (repeat == 1)
+        t = 1;
+    if (reverse == 1)
+    {
+        // Reverse the order of vertices when reverse is 1
+        glTexCoord2f(0, 0);
+        glVertex3f(up_left.x, up_left.y, up_left.z);
+
+        glTexCoord2f(t, 0);
+        glVertex3f(up_right.x, up_right.y, up_right.z);
+
+        glTexCoord2f(t, t);
+        glVertex3f(bottom_right.x, bottom_right.y, bottom_right.z);
+
+        glTexCoord2f(0, t);
+        glVertex3f(bottom_left.x, bottom_left.y, bottom_left.z);
+    }
+    else
+    {
+        // Default order of vertices
+        glTexCoord2f(0, 0);
+        glVertex3f(bottom_left.x, bottom_left.y, bottom_left.z);
+
+        glTexCoord2f(t, 0);
+        glVertex3f(bottom_right.x, bottom_right.y, bottom_right.z);
+
+        glTexCoord2f(t, t);
+        glVertex3f(up_right.x, up_right.y, up_right.z);
+
+        glTexCoord2f(0, t);
+        glVertex3f(up_left.x, up_left.y, up_left.z);
+    }
+
+    glEnd();
+}
+
 static void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Point up_left, int texture, double repeat = 0, double reverse = 0)
+
 {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBegin(GL_QUADS);
@@ -861,7 +901,8 @@ static void Arch(db sectorCount , db radius, db thickness = 0) {
 }
 
 
-static void Arch(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
+
+static void Arch1(db innerR, db outerR, db height, int sectorCnt, int textures[]) {
 	white;
 	pshm;
 	glNormal3f(0, 0, 1);

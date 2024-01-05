@@ -13,6 +13,7 @@
 #include "Door.h"
 #include "texture.h"
 #include "Camera.h"
+
 #include "Pillar.h"
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 class OutSide
@@ -33,13 +34,13 @@ class OutSide
 				glTexCoord2d(0,0);
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z);
 
-			glTexCoord2d(5,0);
+			glTexCoord2d(20,0);
 			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y, bottom_left_back.z);
 
-			glTexCoord2d(5,5);
+			glTexCoord2d(20,20);
 			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y , bottom_left_back.z - width);
 
-			glTexCoord2d(0,5);
+			glTexCoord2d(0,20);
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
@@ -62,10 +63,9 @@ class OutSide
 	   
 			// Front 
 			glPushMatrix();
-			primitives::DrawWall(Point(0,0,0),width, height, 500, texture);
-			glTranslated(0, 0, 500);
-			glTranslated(0, 0, 50);
-			primitives::DrawWall(Point(0,0,0),width, height, 250, texture);
+			primitives::DrawWall(Point(0,0,0),width, height, 1200, texture);
+			glTranslated(0, 0, 1300);
+			primitives::DrawWall(Point(0,0,0),width, height, 200, texture);
 			glPopMatrix();
 		
 			glPushMatrix();
@@ -74,15 +74,13 @@ class OutSide
 	   
 			// Right
 			glPushMatrix();
-			primitives::DrawWall(Point(0,0,0),width, height, 100, texture);
-			glTranslated(0, 0, 100);
-
-			glTranslated(0, 0, 50);
+			primitives::DrawWall(Point(0,0,0),width, height, 50, texture);
+			glTranslated(0, 0, 120);
+			primitives::DrawWall(Point(0,0,0),width, height, 410, texture);
+			glTranslated(0, 0, 480);
+			primitives::DrawWall(Point(0,0,0),width, height, 630, texture);
+			glTranslated(0, 0, 700);
 			primitives::DrawWall(Point(0,0,0),width, height, 200, texture);
-			glTranslated(0, 0, 250);
-			primitives::DrawWall(Point(0,0,0),width, height, 250, texture);
-			glTranslated(0, 0, 300);
-			primitives::DrawWall(Point(0,0,0),width, height, 100, texture);
 			glPopMatrix();
 			
 			glPushMatrix();
@@ -90,12 +88,12 @@ class OutSide
 			glRotated(90,10,0,0);
 	  
 			// Back
-			primitives::DrawWall(Point(0,0,0),width, height, 400, texture);
+			primitives::DrawWall(Point(0,0,0),width, height, 760, texture);
 			glPushMatrix();
-			glTranslated(0, 0, 450);
-			primitives::DrawWall(Point(0,0,0),width, height, 150, texture);
-			glTranslated(0, 0, 200);
-			primitives::DrawWall(Point(0,0,0),width, height, 150, texture);
+			glTranslated(0, 0, 830);
+			primitives::DrawWall(Point(0,0,0),width, height, 250, texture);
+			glTranslated(0, 0, 320);
+			primitives::DrawWall(Point(0,0,0),width, height, 350, texture);
 			glPopMatrix();
 
 			glPopMatrix();
