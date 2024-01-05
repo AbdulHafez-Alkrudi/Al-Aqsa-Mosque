@@ -21,11 +21,7 @@
 #include "Cylinder.h"
 #include "vendor/model/Model_3DS.h"
 #include "Marwani.h"
-<<<<<<< HEAD
-
-=======
 #include"Door.h"
->>>>>>> origin/main
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 // Stolen From: Yassien
@@ -89,7 +85,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 
 int Door_angle = 0 ;
 
-int image, image2, marble , stone1 , wall5 ;
+int image, image2, marble , wall5 ;
 int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
 Model_3DS *tree;
 GLTexture Bark, Leaf;
