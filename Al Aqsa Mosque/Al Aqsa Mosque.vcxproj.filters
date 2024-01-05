@@ -14,6 +14,7 @@
     <ClCompile Include="vendor\model\3DTexture.cpp" />
     <ClCompile Include="vendor\model\Model_3DS.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="Door.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="around.h" />

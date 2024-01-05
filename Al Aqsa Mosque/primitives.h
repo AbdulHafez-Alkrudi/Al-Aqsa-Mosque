@@ -641,18 +641,17 @@ static void Draw3dQuad(Point bottom_left_back , float width_lower_base , float l
 		unbind;
 	}
 
-static void DrawCoordinates(Point str , bool with_z = false ){
+static void DrawCoordinates(bool only_positive = false , bool with_z = false ){
 		glPushMatrix();
-		glTranslated(str.x , str.y , str.z);
 		for(float i = -100 ; i <= 100 ; i+=0.1){
 			glBegin(GL_POINTS);
-				glVertex3d(fabs(i) , 0 , 0);
-				glVertex3d(0 , i , 0);
+				glVertex3d( (only_positive ? fabs(i) : i) , 0 , 0);
+				glVertex3d(0 , (only_positive ? fabs(i) : i)  , 0);
 			glEnd();
 
 			if(with_z){
 				glBegin(GL_POINTS);
-					glVertex3d(0 , 0 , i) ;
+					glVertex3d(0 , 0 , (only_positive ? fabs(i) : i) ) ;
 				glEnd();
 			}
 		}
