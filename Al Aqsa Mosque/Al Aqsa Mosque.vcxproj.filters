@@ -40,9 +40,7 @@
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="Marwani.h" />
-
     <ClInclude Include="Cylinder.h" />
-
     <ClInclude Include="Marwani.h" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +78,7 @@
     <Image Include="models\tree\green.bmp" />
     <Image Include="models\tree\leaf.bmp" />
     <Image Include="images\mosque\outsidedoors2.bmp" />
+    <Image Include="images\walls\stone2.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />
