@@ -126,7 +126,7 @@
     <ClInclude Include="LeftFace.h" />
     <ClInclude Include="Marwani.h" />
     <ClInclude Include="minaret.h" />
-    <ClInclude Include="models\tree\house.h" />
+    <ClInclude Include="museum.h" />
     <ClInclude Include="OutSide.h" />
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="Point.h" />
@@ -144,6 +144,7 @@
     <Image Include="Images\House\school_logo.bmp" />
     <Image Include="Images\House\window.bmp" />
     <Image Include="Images\House\window2.bmp" />
+    <Image Include="images\mosque\alporaq.bmp" />
     <Image Include="Images\mosque\Arch.bmp" />
     <Image Include="Images\mosque\ball.bmp" />
     <Image Include="Images\mosque\BigEntrance.bmp" />
@@ -167,6 +168,7 @@
     <Image Include="Images\walls\street1.bmp" />
     <Image Include="Images\walls\wall1.bmp" />
     <Image Include="Images\walls\wall5.bmp" />
+    <Image Include="images\walls\wall6.bmp" />
     <Image Include="Images\walls\wall_of_mosque.bmp" />
     <Image Include="models\tree\bark.bmp" />
     <Image Include="models\tree\bark_loo.jpg" />

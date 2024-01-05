@@ -72,14 +72,14 @@ class DomeOfTheRock
 
 	};
 
-	void DrawStrais(double width,int texture)
+	void DrawStrais(int texture)
 	{
-		for (int i = 0; i <= 10; i++) 
-		{
-			primitives::DrawCupe(Point(0, 0, 0), 50, 1, 11 + 10 - i, texture);
-			glTranslated(0, 1, 8);
-		}
 		
+		for (int i = 0; i <= 12; i++) 
+		{
+			primitives::DrawCupe(Point(0, 0, 0), 60, 3, 25 - i, texture);
+			glTranslated(0, 3, 8);
+		}
 	}
 	
 	void DrawOctagon(float w, float h, int p, Point base = Point(0, 0, 0))
@@ -88,7 +88,7 @@ class DomeOfTheRock
 		  glPushMatrix();
 		  for (int i = 0; i < 8; i++)
 		  {
-			  if (i == 0)
+			  if (i % 2 == 0)
 			  {
 				  glPushMatrix();
 				  glBindTexture(GL_TEXTURE_2D, p);
@@ -98,16 +98,16 @@ class DomeOfTheRock
 					  glVertex3d(base.x, base.y, base.z);
 				  
 					  glTexCoord2d(1, 0);
-					  glVertex3d(base.x + 20, base.y, base.z);
+					  glVertex3d(base.x + 25, base.y, base.z);
 				  
 					  glTexCoord2d(1, 1);
-					  glVertex3d(base.x + 20, base.y + h, base.z);
+					  glVertex3d(base.x + 25, base.y + h, base.z);
 				  
 					  glTexCoord2d(0, 1);
 					  glVertex3d(base.x, base.y + h, base.z);
 				  glEnd();
 
-				  glTranslated(40, 0, 0);
+				  glTranslated(45, 0, 0);
 				  glBindTexture(GL_TEXTURE_2D, p);
 			  
 				  glBegin(GL_QUADS);
@@ -115,19 +115,49 @@ class DomeOfTheRock
 					  glVertex3d(base.x, base.y, base.z);
 				  
 					  glTexCoord2d(1, 0);
-					  glVertex3d(base.x + 20, base.y, base.z);
+					  glVertex3d(base.x + 25, base.y, base.z);
 				  
 					  glTexCoord2d(1, 1);
-					  glVertex3d(base.x + 20, base.y + h, base.z);
+					  glVertex3d(base.x + 25, base.y + h, base.z);
 				  
 					  glTexCoord2d(0, 1);
 					  glVertex3d(base.x, base.y + h, base.z);
 				  glEnd();
 				  glPopMatrix();
+				  glTranslated(w, 0, 0);
+				  glRotated(45, 0, 1, 0);
 			  }
 			  else 
 			  {
+				  glBindTexture(GL_TEXTURE_2D, p);
+			  
+				  glBegin(GL_QUADS);
+					  glTexCoord2d(0, 0);
+					  glVertex3d(base.x, base.y, base.z);
+				  
+					  glTexCoord2d(1, 0);
+					  glVertex3d(base.x + w, base.y, base.z);
+				  
+					  glTexCoord2d(1, 1);
+					  glVertex3d(base.x + w, base.y + h, base.z);
+				  
+					  glTexCoord2d(0, 1);
+					  glVertex3d(base.x, base.y + h, base.z);
+				  glEnd();
 				  glTranslated(w, 0, 0);
+				  glRotated(45, 0, 1, 0);
+			  }
+		  }
+		  glPopMatrix();
+	}
+
+	void drawOctagon(float w, float h, int p, Point base = Point(0, 0, 0))
+	{         
+		  glEnable(GL_TEXTURE_2D);
+		  glPushMatrix();
+		  for (int i = 0; i < 8; i++)
+		  {
+			  glTranslated(w, 0, 0);
 				  glRotated(45, 0, 1, 0);
 				  glBindTexture(GL_TEXTURE_2D, p);
 			  
@@ -144,7 +174,6 @@ class DomeOfTheRock
 					  glTexCoord2d(0, 1);
 					  glVertex3d(base.x, base.y + h, base.z);
 				  glEnd();
-			  }
 		  }
 		  glPopMatrix();
 	}
@@ -159,8 +188,8 @@ class DomeOfTheRock
 			{
 				double angle = 2.0 * pi * i / 8.0;
 
-				double x = 0.5 * cos(angle) * 157;
-				double y = 0.5 * sin(angle) * 157;
+				double x = 0.58 * cos(angle) * 157;
+				double y = 0.58 * sin(angle) * 157;
 
 				double u = 0.5 * cos(angle) + 0.5;
 				double v = 0.5 * sin(angle) + 0.5;
@@ -185,10 +214,10 @@ class DomeOfTheRock
 		glTranslated(0,0,depth);
 		glRotated(90,10,0,0);
 		
-		primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
+		primitives::DrawWall(Point(0,0,0),width,height,depth - 100,texture);
 
 		glPushMatrix();
-		glTranslated(0,0,depth);
+		glTranslated(0,0,depth - 100);
 	    glRotated(90,10,0,0);
 
 		primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
@@ -197,7 +226,7 @@ class DomeOfTheRock
 		glTranslated(0,0,depth);
 	    glRotated(90,10,0,0);
    
-		primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
+		primitives::DrawWall(Point(0,0,0),width,height,depth - 100,texture);
 	   
 		glPopMatrix();
 	    glPopMatrix();
@@ -207,25 +236,24 @@ class DomeOfTheRock
 
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
-		glPushMatrix();
-		glTranslated(0,0,depth);
-		glBindTexture(GL_TEXTURE_2D, texture);
+			glPushMatrix();
+			glTranslated(0,0,depth);
+			glBindTexture(GL_TEXTURE_2D, texture);
 	  
-		glBegin(GL_QUADS);
+			glBegin(GL_QUADS);
 
-			glTexCoord2d(0,0);
+				glTexCoord2d(0,0);
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z);
 
-			glTexCoord2d(5,0);
+			glTexCoord2d(10,0);
 			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y, bottom_left_back.z);
 
-			glTexCoord2d(5,5);
+			glTexCoord2d(10,10);
 			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y , bottom_left_back.z - width);
 
-			glTexCoord2d(0,5);
+			glTexCoord2d(0,10);
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
-		 
-		glEnd();
-		glPopMatrix();
+			glEnd();
+			glPopMatrix();
 	}
 };

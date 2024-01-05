@@ -28,7 +28,6 @@
     <ClInclude Include="House.h" />
     <ClInclude Include="LeftFace.h" />
     <ClInclude Include="minaret.h" />
-    <ClInclude Include="models\tree\house.h" />
     <ClInclude Include="OutSide.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="primitives.h" />
@@ -40,6 +39,7 @@
     <ClInclude Include="vendor\model\Model_3DS.h" />
     <ClInclude Include="Pillar.h" />
     <ClInclude Include="qibaliMosque.h" />
+    <ClInclude Include="museum.h" />
     <ClInclude Include="Marwani.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Marwani.h" />
@@ -78,8 +78,12 @@
     <Image Include="models\tree\empty_leaf.bmp" />
     <Image Include="models\tree\green.bmp" />
     <Image Include="models\tree\leaf.bmp" />
+    <Image Include="images\mosque\alporaq.bmp" />
+    <Image Include="images\walls\wall6.bmp" />
+
     <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="images\walls\stone2.bmp" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />
