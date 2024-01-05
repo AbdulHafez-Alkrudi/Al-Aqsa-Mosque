@@ -14,6 +14,7 @@
 #include "around.h"
 #include "Dome Of The Rock.h"
 #include "texture.h"
+#include "LeftFace.h"
 #include "Camera.h"
 #include "school.h"
 #include "Pillar.h"
@@ -271,12 +272,11 @@ int InitGL(GLvoid)
 	tree->Materials[4].tex = Leaf;
 	tree->Materials[5].tex = Leaf;
 	tree->Materials[6].tex = Leaf;
-	tree->Materials[7].tex = Leaf;
 
 	MyCamera = Camera();
-	MyCamera.Position.x = 0;
-	MyCamera.Position.y = 0;
-	MyCamera.Position.z = -10;
+	MyCamera.Position.x = 800;
+	MyCamera.Position.y = 10;
+	MyCamera.Position.z = 100;
 
 	return TRUE; // Initialization Went OK
 }
@@ -461,10 +461,10 @@ void drawHouse()
 }
 void drawschool(){
 	sch=new school();
-	sch->drawGround(Point(0,0,0),300,2,300,wall4);
-	sch->drawWall(Point(0,0,0),30,1,300,wall,wooden_door);
-	sch->DrawHousewithoutDome(Point(1,0,1),100,70,0,80,green_door,wall2,window);
-	sch->DrawHousewithoutDome(Point(101,0,1),100,70,0,80,wall2,wall2,window);
+	sch->drawGround(Point(0,0,0),180,1,400,land);
+	sch->drawWall(Point(0,0,0),30,1,400,wall,wooden_door);
+	sch->DrawHousewithoutDome(Point(1,0,1),200,70,0,80,green_door,wall2,window);
+	sch->DrawHousewithoutDome(Point(201,0,1),200,70,0,80,wall2,wall2,window);
 	glPushMatrix();
 	glRotated(-180,0,10,0);
 	glTranslated(-310,0,-70);
@@ -491,12 +491,12 @@ void drawschool(){
 	glPopMatrix();	
 	glPushMatrix();
 	glTranslated(0, -20, 100);
-	primitives::DrawCupe(Point(0, 80, -50), 300, 8, 90, wall2);
+	primitives::DrawCupe(Point(0, 80, -50), 400, 8, 90, wall2);
 	glPopMatrix();
-	glTranslated(300, 0, 120);
-	for (int i = 1; i <= 5; i++)
+	glTranslated(450, 0, 120);
+	for (int i = 1; i <= 8; i++)
 	{
-		glTranslated(-56, 0, 0);
+		glTranslated(-53, 0, 0);
 		p->cube_cylinder_pillar(Point(0, 0, 0), wall1, wall1);
 	}
 		
@@ -535,6 +535,11 @@ void drawdomeoftherock()
 	//front 
 		    glPushMatrix();
 		    glTranslated(200, 0, -200);	
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(13, -5, 10);
+			tree->Draw();
+			glPopMatrix();
 			glPushMatrix();
 			 glTranslated(-100, -40, 0);
 			glPushMatrix();
@@ -584,6 +589,11 @@ void drawdomeoftherock()
 			glPushMatrix();
 		    glTranslated(600, -40, 380);
 			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-20, 0, -25);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
 			glRotated(-90,0,10,0);
 			glPushMatrix();
 			glRotated(-90,0,10,0);
@@ -620,6 +630,16 @@ void drawdomeoftherock()
 			glPushMatrix();
 		    glTranslated(200, -40, 600);
 			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(15, 0, -10);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-20, 0, -10);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
 			glRotated(-180,0,10,0);
 			glPushMatrix();
 			glRotated(-90,0,10,0);
@@ -638,6 +658,26 @@ void drawdomeoftherock()
 	//right 
 			glPushMatrix();
 		    glTranslated(-100, -40, 460);
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-5, 0, -10);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-5, 0, -20);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-5, 0, -40);
+			tree->Draw();
+			glPopMatrix();
+			glPushMatrix();
+			glScaled(8, 8, 8);
+			glTranslated(-5, 0, -50);
+			tree->Draw();
+			glPopMatrix();
 			glPushMatrix();
 			glRotated(90,0,10,0);
 			glPushMatrix();
@@ -801,6 +841,10 @@ void drawMuseum(){
 		p->cube_cylinder_pillar(Point(0, 0, 0), wall1, wall1);
 	}
 }
+void drawterraces()
+{
+	primitives::DrawCupe(Point(0,0,0),100,10,220,wall1);
+} 
 
 GLfloat lightColor0[] = { 0.2f, 1.0f, 0.7f, 1.0f }; //Color (0.5, 0.5, 0.5)
 GLfloat lightPos0[] = { 4.0f, 6.0f, 8.0f, 1.0f }; //Positioned at (4, 0, 8)
@@ -812,14 +856,14 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	   if(keys['T'])
-  {
-    check=true;
-  }
-  if(keys['R'])
-  {
-    check=false;
-  }
+	if(keys['T'])
+	  {
+		check=true;
+	  }
+	if(keys['R'])
+	  {
+		check=false;
+	  }
 
   glTranslatef(0.0f, 0.0f, -8.0f);
 
@@ -841,7 +885,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
   }
 
 	MyCamera.Render();
-	Key(keys, 10);
+	Key(keys, 5);
 
 	tree->pos.x = 10 ;
 	tree->pos.y = 0  ;
@@ -856,16 +900,11 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	p = new Pillar(10, 46);
 	dome = new DomeOfTheRock();
 	pri=new primitives();	 
-	Out->drawGround(Point(0, 0, 0), 2000, 1, 2000, land);
+	Out->drawGround(Point(0, 0, 0), 2000, 1, 2000, wall4);
 
 	glPushMatrix();
 	glTranslated(250, 0, 250);
 	Out->drawWall(Point(0, 0, 0), 70, 5, 1500, wall, house_door, keys);
-	/*glPushMatrix();
-	glScaled(10, 10, 10);
-	glTranslated(0, 50, 1000);
-	tree->Draw();
-	glPopMatrix();*/
 	glPopMatrix();
 
 	drawstreet();
@@ -877,10 +916,10 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glTranslated(670, 0, 250);
 	primitives::DrawCupe(Point(0, 0, 0), 250, 70, 100, qibaliMosque);
 	glPushMatrix();
-	glTranslated(-250, -230, 0);
+	glTranslated(-250, -180, 0);
 	for(int i=0;i<6;i++)
 	{
-		pri->DrawQuad5(Point(250,200,100),Point(300,200,100),Point(300,300,100),Point(250,300,100),mosquewindow,0,0);
+		pri->DrawQuad5(Point(250,200,100),Point(300,200,100),Point(300,250,100),Point(250,250,100),mosquewindow,0,0);
 		glTranslated(40, 0, 0);
 	}
 	glPopMatrix();
@@ -915,118 +954,30 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 
 	glPushMatrix();
-	glTranslated(-150, -25, 1298);
+	glTranslated(-160, -30, 1298);
 	glRotated(90, 0, 10, 0);
-	glScaled(2,2,2);
+	glScaled(2,3,2);
 	mosque->drawQibaliMosque(150, 5, 35, mosquewindow, qibaliMosque, mosqueRoof2,
-							 mosquewindow2, mosqueRoof, mosaic, marble, house_wall, arch, carpet);
+							 mosquewindow2, mosqueRoof, mosaic, wall2, house_wall, arch, carpet);
 	glPopMatrix();
 
 
 
-	mina2.draw_minaret(Point(1750, 70, 1500), qibaliMosque, qibaliMosque, qibaliMosque, qibaliMosque);
+	mina2.draw_minaret(Point(1720, 70, 1500), wall2, wall2, wall2, wall2);
+	glPushMatrix();
+	glTranslated(1750,0,1218);
+	glRotated(-90,0,10,0);
+	drawschool();
+	glPopMatrix();
 
-	 //ro->Floor_Roof(marble);
+	glPushMatrix();
+	glTranslated(1000,0,1000);
+	drawterraces();
+    glPopMatrix();
+	LeftFace* l=new LeftFace();
+	l->FirstEntranceLeft();
 
-	//p.DrawQuad(Point(140,25,143),Point(151.5,25,143),Point(151.5,25,156.5),Point(140,25,156.5),marble);
-	//  ro->DrawBall(5,ball,Point (146,24.7,150));
-	////p.DrawCircle(-5,20,5,100);
-	//	p.DrawQuad(Point(0,20,4),Point(11.5,20,4),Point(11.5,20,16.5),Point(0,20,15.5),marble);
-	//  ro->DrawBall(5,ball,Point (6,19.7,10));
-	//glTranslated(100, 0, 100);
-	//glPushMatrix();
-	//	primitives::DrawRing(Point(10,10,10),100,100,wall);
-	//		glTranslated(400, 0, -80);
-	//		glPushMatrix();
-	//		glRotated(-90,0,10,0);
-	//		glBindTexture(GL_TEXTURE_2D,wall);
-	//		glBegin(GL_TRIANGLE_STRIP);
-	//		//glColor3b(1,1,1);
-	//		glTexCoord2f(0,0);
-	//		glVertex3d(0,0,0);
 
-	//		glTexCoord2f(1,0);
-	//		glVertex3d(80,0,0);
-
-	//		glTexCoord2f(1,1);
-	//		glVertex3d(60,12,0);
-
-	//		glTexCoord2f(0,1);
-	//		glVertex3d(80,12,0);
-	//		glEnd();
-	//		  glPopMatrix();
-	//		  glPushMatrix();
-	//		glRotated(-90,0,10,0);
-	//		glTranslated(0, 0, -50);
-	//		glBindTexture(GL_TEXTURE_2D,wall);
-	//		glBegin(GL_TRIANGLE_STRIP);
-	//		//glColor3b(1,1,1);
-	//		glTexCoord2f(0,0);
-	//		glVertex3d(0,0,0);
-
-	//		glTexCoord2f(1,0);
-	//		glVertex3d(80,0,0);
-
-	//		glTexCoord2f(1,1);
-	//		glVertex3d(60,12,0);
-
-	//		glTexCoord2f(0,1);
-	//		glVertex3d(80,12,0);
-	//		glEnd();
-	//		  glPopMatrix();
-	//		ro->DrawStrais(50,house_wall);glPushMatrix();
-	//		glPushMatrix();glTranslated(-10, -11,-10);
-	//		glRotated(-180, 0, 1, 0);
-	//	h->DrawHousewithoutDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window);
-	//		glPopMatrix();
-	//		glPushMatrix();glTranslated(160, -11,-10);
-	//		glRotated(-180, 0, 1, 0);
-	//	h->DrawHousewithoutDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window);
-	//		glPopMatrix();
-	//		glTranslated(60, 25,-50);
-	//	h->DrawHousewithDomeNOdoor(Point(0,0,0),100,40,40,40,wall,house_window,wall);
-	//		 glPopMatrix();
-	//		  glPopMatrix();
-	//		d->drawWall(Point(1, 1, 1),11,1,800,wall);
-	//			glPushMatrix();
-	//			glTranslated(0, 10, 0);
-	//		d->drawGround(Point (1, 1, 1),10,1,800,ground);
-	//	  glPushMatrix();
-	//	  glPushMatrix();
-	//	  glTranslated(600, 0, 50); ////////////////////////////////
-	//	  h->DrawHousewithDome(Point(0,0,0),100,40,40,40,house_door,wall,house_window,wall);
-	//	  glPopMatrix();                       //��������������
-	//	  glTranslated(400, 0, 500);
-	//	  ro->DrawOctagon(60, 30, bottomwall, Point (0, 0, 0));
-	//	 glPushMatrix();glTranslated(0, 30, 0);   ro->DrawOctagon(60, 50, upwall, Point (0, 0, 0));
-	//	  glPopMatrix();
-	//	 //�������������
-	//	  glPushMatrix();                                             //��������������
-	//	  glTranslated(30, 0, -72.6);
-	//	  glRotated(22.5, 0, 1, 0);
-	//	  glRotated(90, 1, 0, 0);
-	//	  ro->Floor_Roof(marble);
-	//	  glPopMatrix();
-
-	//	  glPushMatrix();
-	//	  glTranslated(30, 80, -72.6);
-	//	  glRotated(90, 1, 0, 0);
-	//	  glRotated(22.5, 0,0, 1);
-	//	  ro->Floor_Roof(marble);
-	//	  glPopMatrix();
-	//	   glPushMatrix();
-	//	   glTranslated(30, 83, -74);
-	//	   glPushMatrix();
-	//		glTranslated(0, -10, 0);
-	//	   primitives::DrawCylinderBody(Point(0,0,0),48,48,20,CylinderBody);
-	//	   glPopMatrix();
-	//	   ro->DrawBall(50,ball,Point (0,0,0));
-	//	   glPopMatrix();
-	//	   glPopMatrix();
-	//	   glPushMatrix();
-	//	   glPopMatrix();
-	//	glPopMatrix();
-	// glPopMatrix();
 
 	//Pillar pillar ;
 	//pillar.cube_cylinder_pillar(Point(0,0,0),4,marble,10,-1);
@@ -1049,7 +1000,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	
 
 	
-
 	return TRUE;
 }
 

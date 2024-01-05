@@ -23,71 +23,70 @@ class school
 
 
 		void drawWall(Point bottom_left_back, double width, double height, double depth,int texture,int door) {
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glPushMatrix();
-		glRotated(90,0,0,10);
-   primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
-    glPushMatrix();
-     glTranslated(0,0,depth);
-	   glRotated(90,10,0,0);
-	    glPushMatrix();
-   primitives::DrawWall(Point(0,0,0),width,height,125,texture);
-        glTranslated(0,0,175);
-		   primitives::DrawWall(Point(0,0,0),width,height,125,texture);
-		   	    glPushMatrix();
-				glRotated(-90,0,0,1);
-					glRotated(-90,0,1,0);
-				glTranslated(-175,-125,10);
-		   glBindTexture(GL_TEXTURE_2D,door);
-			glBegin(GL_QUADS);
-			glTexCoord2f(0,0);
-			glVertex3d(125,125,-10);
+				glBindTexture(GL_TEXTURE_2D, texture);
+				glPushMatrix();
+				glRotated(90,0,0,10);
+		   primitives::DrawWall(Point(0,0,0),width,height,180,texture);
+			glPushMatrix();
+			 glTranslated(0,0,180);
+			   glRotated(90,10,0,0);
+				glPushMatrix();
+		   primitives::DrawWall(Point(0,0,0),width,height,175,texture);
+				glTranslated(0,0,225);
+				   primitives::DrawWall(Point(0,0,0),width,height,175,texture);
+		   				glPushMatrix();
+						glRotated(-90,0,0,1);
+							glRotated(-90,0,1,0);
+						glTranslated(-175,-125,10);
+				   glBindTexture(GL_TEXTURE_2D,door);
+					glBegin(GL_QUADS);
+					glTexCoord2f(0,0);
+					glVertex3d(125,125,-10);
 
-			glTexCoord2f(1,0);
-			glVertex3d(175,125,-10);
+					glTexCoord2f(1,0);
+					glVertex3d(175,125,-10);
 
-			glTexCoord2f(1,1);
-			glVertex3d(175,175,-10);
+					glTexCoord2f(1,1);
+					glVertex3d(175,175,-10);
 
-			glTexCoord2f(0,1);
-			glVertex3d(125,175,-10);
-			glEnd();
-		    glPopMatrix();
-		    glPopMatrix();
-    glPushMatrix();
-     glTranslated(0,0,depth);
-	   glRotated(90,10,0,0);
-   primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
-     glPushMatrix();
-     glTranslated(0,0,depth);
-	   glRotated(90,10,0,0);
-   primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
-   glPopMatrix();
-   glPopMatrix();
-   glPopMatrix();
-   glPopMatrix();
+					glTexCoord2f(0,1);
+					glVertex3d(125,175,-10);
+					glEnd();
+					glPopMatrix();
+					glPopMatrix();
+			glPushMatrix();
+			 glTranslated(0,0,depth);
+			   glRotated(90,10,0,0);
+		   primitives::DrawWall(Point(0,0,0),width,height,180,texture);
+			 glPushMatrix();
+			 glTranslated(0,0,depth);
+			   glRotated(90,10,0,0);
+		   primitives::DrawWall(Point(0,0,0),width,height,depth,texture);
+		   glPopMatrix();
+		   glPopMatrix();
+		   glPopMatrix();
+		   glPopMatrix();
   
 }
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
 			glPushMatrix();
-			glTranslated(0,0,depth);
+			glTranslated(0,0,180);
 			glBindTexture(GL_TEXTURE_2D, texture);
 	  
 			glBegin(GL_QUADS);
 
 				glTexCoord2d(0,0);
-				glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z);
+			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z);
 
-				glTexCoord2d(5,0);
-				glVertex3f(bottom_left_back.x+height+ depth, bottom_left_back.y, bottom_left_back.z);
+			glTexCoord2d(10,0);
+			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y, bottom_left_back.z);
 
-				glTexCoord2d(5,5);
-				glVertex3f(bottom_left_back.x+height + depth, bottom_left_back.y , bottom_left_back.z - depth-height);
+			glTexCoord2d(10,10);
+			glVertex3f(bottom_left_back.x+ depth, bottom_left_back.y , bottom_left_back.z - width);
 
-				glTexCoord2d(0,5);
-				glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - depth-height);
-		 
+			glTexCoord2d(0,10);
+			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
 	}
