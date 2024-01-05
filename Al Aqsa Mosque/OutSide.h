@@ -14,6 +14,8 @@
 #include "texture.h"
 #include "Camera.h"
 
+#include "Pillar.h"
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
 class OutSide
 {
 	public:
@@ -42,6 +44,7 @@ class OutSide
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
+			unbind;
 	}
 
 	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture, int texture_door, bool *keys) 
@@ -96,5 +99,6 @@ class OutSide
 			glPopMatrix();
 			glPopMatrix();
 			glPopMatrix();
+			unbind;
 	}
 };

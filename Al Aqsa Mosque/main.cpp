@@ -3,6 +3,9 @@
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
 #include <glaux.h>
+#include <iostream>
+#include <string>
+#include <sstream>
 #include <fstream>
 #include <cmath>
 #include "Point.h"
@@ -19,12 +22,37 @@
 #include "school.h"
 #include "Pillar.h"
 #include "museum.h"
+#include "minaret.h"
 #include "qibaliMosque.h"
+#include "Cylinder.h"
 #include "vendor/model/Model_3DS.h"
+
 #include "OutSide.h"
 #include "minaret.h"
 
 int mouseX = 0, mouseY = 0;
+
+#include "Marwani.h"
+#include"Door.h"
+
+
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
+// Stolen From: Yassien
+#define txt(s, t) glTexCoord2d(s, t)
+#define white glColor3f(1, 1, 1)
+#define db double
+#define cull glEnable(GL_CULL_FACE)
+#define nocull glDisable(GL_CULL_FACE)
+#define frontf glCullFace(GL_FRONT)
+#define backf glCullFace(GL_BACK)
+#define pshm glPushMatrix()
+#define ppm glPopMatrix()
+
+	// const db srt = 1.414213562373095;
+	// const db pi = 3.1415926535897932384626433832795028;
+int mouseX = 0,
+		mouseY = 0;
+
 bool isClicked = 0, isRClicked = 0;
 
 HDC hDC = NULL;		 // Private GDI Device Context
@@ -39,6 +67,9 @@ Point bottom_left_back;
 int ground, wall, grass;
 int texture_wall, texture_door, CylinderBody,wall2,wall4,grass1,wooden_door,stone4,street1,wall1,wall0, green_door,street,window,logo;
 int ball, skybox, top, wall3, upwall, bottomwall,land, carpet_aqsa, blocks,alporaq,wall6;
+
+int outsideDoors;
+
 around *a;
 OutSide* Out;
 OutSide* Street;
@@ -56,6 +87,7 @@ Minaret mina2(30, 100);
 
 
 int house_door, house_window, house_wall, wallofmosque;
+
 int house_roof[4];
 int texture[6];
 int image, image2, marble;
@@ -90,13 +122,42 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+
+int Door_angle = 0 ;
+
+int image, image2, marble , wall5 ;
+int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
+
+int qibaliMosque;
+int mosquewindow;
+int carpet;
+int mosqueRoof, mosqueRoof2;
+int mosaic;
+int arch;
+int mosquewindow2;
+int marwanoCarpet;
+
+int great_door;
+
+Model_3DS *tree;
+GLTexture Bark, Leaf;
+
+Model_3DS *person;
+
+int marwanoCarpet,stone1;
+int texturess[6];
+int blackMetal;
+int marwaniWall;
+
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
+
+	glEnable(GL_TEXTURE_2D);
 	// Center the Skybox around the given x,y,z position
 	x = x - width / 2;
 	y = y - height / 2;
 	z = z - length / 2;
-	glEnable(GL_TEXTURE_2D);
 
 	// Draw Front side
 	glBindTexture(GL_TEXTURE_2D, SKYFRONT);
@@ -191,7 +252,10 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	glColor3f(1, 1, 1);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	unbind;
 }
+
 
 int InitGL(GLvoid)
 {
@@ -201,12 +265,15 @@ int InitGL(GLvoid)
 	glClearDepth(1.0f);
 	glEnable(GL_TEXTURE_2D); // Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	tree = new Model_3DS();
+
+	marble = LoadTexture("", 255);
 	marble			 = LoadTexture("images/walls/marble.bmp" , 255);
 	street			 = LoadTexture("images/walls/street1.bmp" , 255);
 	street1			 = LoadTexture("images/walls/street.bmp" , 255);
@@ -230,6 +297,14 @@ int InitGL(GLvoid)
 	green_door	 = LoadTexture("images//House/green_door.bmp",255);
 	qibaliMosque     = LoadTexture("images/mosque/wall1.bmp", 255);
 	carpet_aqsa          =LoadTexture("images/mosque/carpet.bmp", 255);
+	// this one just to fix the bug of putting the first texture on the primitive if i didn't bind any textuer to it
+	marble = LoadTexture("images/walls/marble.bmp", 255);
+
+	stone1 = LoadTexture("images/walls/stone1.bmp", 255);
+	//wall5 = LoadTexture("images/walls/wall5.bmp", 255);
+
+	ball = LoadTexture("images/mosque/ball.bmp", 255);
+
 	upwall = LoadTexture("images/mosque/up_wall.bmp", 255);
 	alporaq = LoadTexture("images/mosque/alporaq.bmp", 255);
 	bottomwall = LoadTexture("images/mosque/bottom_wall.bmp", 255);
@@ -259,7 +334,9 @@ int InitGL(GLvoid)
 	mosqueRoof2 = LoadTexture("images/mosque/mosqueroof2.bmp", 255);
 	arch = LoadTexture("images/mosque/arch2.bmp", 255);
 	mosquewindow2 = LoadTexture("images/mosque/mosquewindow2.bmp", 255);
-
+	marwaniWall = LoadTexture ("images/walls/stone2.bmp", 255);
+	marwanoCarpet = LoadTexture ("images/mosque/carpet.bmp", 255);
+	blackMetal = LoadTexture ("images/mosque/blackmetal.bmp", 255);
 	tree = new Model_3DS();
 	tree->Load("models/tree/Tree.3ds");
 	Leaf.LoadBMP("models/tree/green.bmp");
@@ -273,13 +350,47 @@ int InitGL(GLvoid)
 	tree->Materials[5].tex = Leaf;
 	tree->Materials[6].tex = Leaf;
 
+	
+	great_door = LoadTexture("images/House/GreatDoor.bmp" , 255);
+	
+	person = new Model_3DS();
+	person->Load("models/person/8.3DS");
+	person->Materials[0].tex = Bark;
+	person->Materials[1].tex = Bark;
+	person->Materials[2].tex = Bark;
+	
+	person->Materials[3].tex = Bark;
+	person->Materials[4].tex = Leaf;
+	person->Materials[5].tex = Leaf;
+	person->Materials[6].tex = Leaf;
+
+
+
 	MyCamera = Camera();
 	MyCamera.Position.x = 800;
 	MyCamera.Position.y = 10;
 	MyCamera.Position.z = 100;
 
+	texturess[0] = qibaliMosque;
+	texturess[1] = qibaliMosque;
+	texturess[2] = qibaliMosque;
+texturess[3] = qibaliMosque;
+texturess[4] = qibaliMosque;
+texturess[5] = qibaliMosque;
+
+
 	return TRUE; // Initialization Went OK
 }
+
+
+void DrawModel(Model_3DS*model , int scale = 1){
+	model->pos.x = 0 ; 
+	model->pos.y = 0 ; 
+	model->pos.z = 0 ; 
+	model->scale = scale;
+	model->Draw();
+}
+
 
 // Camera c1=Camera(keys);
 float angle = 0;
@@ -887,9 +998,172 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	MyCamera.Render();
 	Key(keys, 5);
 
-	tree->pos.x = 10 ;
-	tree->pos.y = 0  ;
-	tree->pos.z = 0  ;
+Door door(10, 10 , 2);
+int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
+{
+	unbind;
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	/*Camera c2 = Camera(c1);
+	c2.kb();
+	Point pos = Point(c2.cPos.x,c2.cPos.y,c2.cPos.z);*/
+	// pos.z-=z;
+	// if (Collision(pos))
+	// c1.move();
+
+	MyCamera.Render();
+
+	Key(keys, 5.5);
+
+//	Key(keys,2);
+
+	// MyCamera.Render();
+
+	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
+
+	Draw_Skybox(0, 0, 0, 2000, 2000, 2000);
+
+	DrawWall *d = new DrawWall();
+	DomeOfTheRock *ro = new DomeOfTheRock();
+	House *h = new House();
+	qibaliMosquee *mosque = new qibaliMosquee();
+	mosque->drawQibaliMosque(150, 5, 35, mosquewindow, qibaliMosque, mosqueRoof2,
+							 mosquewindow2, mosqueRoof, mosaic, marble, house_wall, arch, carpet, outsideDoors, house_door);
+
+	d->drawGround(Point(1, 1, 1), 1000, 2, 1000, grass);
+	primitives p;
+	glPushMatrix();
+	glTranslated(20,12,50);
+	glRotated(180,1,0,1);
+	glRotated(180,1,0,0);
+	p.Arch1(20,22,5,16,texturess);
+	glPopMatrix();
+	
+	Marwani *m = new Marwani();
+	// p.DrawCylinderBody(Point(20, 10, 10), 0.5, 0.5, 10, -1);
+	Pillar pillar(1.5, 11.5);
+	pillar.cube_cylinder_pillar(Point(150, 11, 150), marble, marble);
+	pillar.cube_cylinder_pillar(Point(140, 11, 150), marble, marble);
+	pillar.cube_cylinder_pillar(Point(145, 11, 145), marble, marble);
+	pillar.cube_cylinder_pillar(Point(145, 11, 155), marble, marble);
+
+	m->drawMarwaniMosque(Point(140, 12, 480), 420, 300, 45, 5, qibaliMosque, marwanoCarpet, marble,texturess,house_wall,marwaniWall,blackMetal);
+
+	p.DrawQuad(Point(140, 25, 143), Point(151.5, 25, 143), Point(151.5, 25, 156.5), Point(140, 25, 156.5), marble);
+	ro->DrawBall(5, ball, Point(146, 24.7, 150));
+	p.DrawQuad(Point(0, 20, 4), Point(11.5, 20, 4), Point(11.5, 20, 16.5), Point(0, 20, 15.5), marble);
+	ro->DrawBall(5, ball, Point(6, 19.7, 10));
+	glTranslated(100, 0, 100);
+	glPushMatrix();
+	primitives::DrawRing(Point(10, 10, 10), 100, 100, wall);
+	glTranslated(400, 0, -80);
+	glPushMatrix();
+	glRotated(-90, 0, 10, 0);
+	glBindTexture(GL_TEXTURE_2D, wall);
+	glBegin(GL_TRIANGLE_STRIP);
+	// glColor3b(1,1,1);
+	glTexCoord2f(0, 0);
+	glVertex3d(0, 0, 0);
+
+	glTexCoord2f(1, 0);
+	glVertex3d(80, 0, 0);
+
+	glTexCoord2f(1, 1);
+	glVertex3d(60, 12, 0);
+
+	glTexCoord2f(0, 1);
+	glVertex3d(80, 12, 0);
+	glEnd();
+	glPopMatrix();
+	glPushMatrix();
+	glRotated(-90, 0, 10, 0);
+	glTranslated(0, 0, -50);
+	glBindTexture(GL_TEXTURE_2D, wall);
+	glBegin(GL_TRIANGLE_STRIP);
+	// glColor3b(1,1,1);
+	glTexCoord2f(0, 0);
+	glVertex3d(0, 0, 0);
+
+	glTexCoord2f(1, 0);
+	glVertex3d(80, 0, 0);
+
+	glTexCoord2f(1, 1);
+	glVertex3d(60, 12, 0);
+
+	glTexCoord2f(0, 1);
+	glVertex3d(80, 12, 0);
+	glEnd();
+	glPopMatrix();
+	ro->DrawStrais(50, house_wall);
+	glPushMatrix();
+	glPushMatrix();
+	glTranslated(-10, -11, -10);
+	glRotated(-180, 0, 1, 0);
+	h->DrawHousewithoutDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(160, -11, -10);
+	glRotated(-180, 0, 1, 0);
+	h->DrawHousewithoutDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window);
+	glPopMatrix();
+	glTranslated(60, 25, -50);
+	h->DrawHousewithDomeNOdoor(Point(0, 0, 0), 100, 40, 40, 40, wall, house_window, wall);
+	glPopMatrix();
+	glPopMatrix();
+	d->drawWall(Point(1, 1, 1), 11, 1, 800, wall);
+	glPushMatrix();
+	glTranslated(0, 10, 0);
+	d->drawGround(Point(1, 1, 1), 10, 1, 800, ground);
+	glPushMatrix();
+	glPushMatrix();
+	glTranslated(600, 0, 50); ////////////////////////////////
+	h->DrawHousewithDome(Point(0, 0, 0), 100, 40, 40, 40, house_door, wall, house_window, wall);
+	glPopMatrix(); // ��������������
+	glTranslated(400, 0, 500);
+	ro->DrawOctagon(60, 30, bottomwall, Point(0, 0, 0));
+	glPushMatrix();
+	glTranslated(0, 30, 0);
+	ro->DrawOctagon(60, 50, upwall, Point(0, 0, 0));
+	glPopMatrix();
+	// �������������
+	glPushMatrix(); // ��������������
+	glTranslated(30, 0, -72.6);
+	glRotated(22.5, 0, 1, 0);
+	glRotated(90, 1, 0, 0);
+	ro->Floor_Roof(marble);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30, 80, -72.6);
+	glRotated(90, 1, 0, 0);
+	glRotated(22.5, 0, 0, 1);
+	ro->Floor_Roof(marble);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(30, 83, -74);
+	glPushMatrix();
+	glTranslated(0, -10, 0);
+	primitives::DrawCylinderBody(Point(0, 0, 0), 48, 48, 20, CylinderBody);
+	glPopMatrix();
+	ro->DrawBall(50, ball, Point(0, 0, 0));
+	glPopMatrix();
+	glPopMatrix();
+	glPushMatrix();
+	glPopMatrix();
+	glPopMatrix();
+	glPopMatrix();
+
+	// Pillar pillar ;
+	// pillar.cube_cylinder_pillar(Point(0,0,0),4,marble,10,-1);
+
+	// primitives::Draw3DHexagon(Point(0,0,-100),40,100,marble);
+	/*tree->pos.x = 0;
+	tree->pos.y = 0;
+	tree->pos.z = 0;
+	tree->scale = 2;
+	tree->Draw();*/
+
+
 	Draw_Skybox(0, 0, 0, 4000, 4000, 4000);
 	glTranslated(-600, 0, -800);
 	
@@ -1000,6 +1274,27 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	
 
 	
+
+	tree->Draw();*/
+	 /*Minaret mina2(200, 50);
+	 mina2.draw_minaret(Point(50, 0, 0), marble, marble, marble, marble);*/
+	//------------------------------------------------ delete everything under this line
+	glTranslated(-400 , 0 , 0) ;
+
+	
+	
+	door.DrawDoubledDoor(great_door , stone1 );
+	
+	//glTranslated(30 , 0 , 0 ) ; 
+	glTranslated(50 , 0 , 0) ; 
+	for(int i = 0 ; i < 10 ; i++){
+		DrawModel(tree);
+		glTranslated(20 , 0 , 0) ;
+	}
+	DrawModel(person , 10);
+	
+	door.openning_trigger(keys);
+
 	return TRUE;
 }
 

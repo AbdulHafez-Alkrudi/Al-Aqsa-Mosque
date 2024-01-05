@@ -98,6 +98,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawEntrance.cpp" />
     <ClCompile Include="EntranceOfMosque.cpp" />
     <ClCompile Include="grand.cpp" />
@@ -113,6 +115,7 @@
   <ItemGroup>
     <ClInclude Include="around.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Dome Of The Rock.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="DrawEntrance.h" />
@@ -121,6 +124,7 @@
     <ClInclude Include="grand.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="LeftFace.h" />
+    <ClInclude Include="Marwani.h" />
     <ClInclude Include="minaret.h" />
     <ClInclude Include="museum.h" />
     <ClInclude Include="OutSide.h" />
@@ -150,6 +154,7 @@
     <Image Include="Images\mosque\carpetMosque.bmp" />
     <Image Include="Images\mosque\CylinderBody.bmp" />
     <Image Include="Images\mosque\InsideEntrande.bmp" />
+    <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="Images\mosque\up_wall.bmp" />
     <Image Include="Images\walls\grass.bmp" />
     <Image Include="Images\walls\ground.bmp" />
@@ -157,6 +162,7 @@
     <Image Include="Images\walls\house_wall.bmp" />
     <Image Include="Images\walls\marble.bmp" />
     <Image Include="Images\walls\stone1.bmp" />
+    <Image Include="images\walls\stone2.bmp" />
     <Image Include="Images\walls\stone3.bmp" />
     <Image Include="Images\walls\street.bmp" />
     <Image Include="Images\walls\street1.bmp" />

@@ -2,6 +2,8 @@
 #include <cmath>
 #include "texture.h"
 #include "Point.h"
+
+#define unbind glBindTexture(GL_TEXTURE_2D, 0);
 class House 
 {
 
@@ -290,7 +292,7 @@ public:
 
 
 		
-
+		unbind;
 	};
 	
 	void DrawHousewithoutDomeoneWindow(Point bottom_left_back,float length, float depth,
@@ -705,6 +707,10 @@ public:
 		// Draw roof
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(16,texture_roof,Point(depth/2,depth,depth/2));
+
+		glPopMatrix();
+		unbind;
+
 
 	};
 	
@@ -1146,6 +1152,7 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(16,texture_roof,Point(depth/2,depth-6,depth/2));
 
+		unbind;
 	};
 };
 
