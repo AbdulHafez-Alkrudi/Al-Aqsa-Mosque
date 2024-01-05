@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cylinder.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="DrawEntrance.cpp" />
     <ClCompile Include="EntranceOfMosque.cpp" />
     <ClCompile Include="grand.cpp" />
