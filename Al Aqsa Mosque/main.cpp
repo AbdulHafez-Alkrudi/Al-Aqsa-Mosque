@@ -23,6 +23,7 @@
 #include "Marwani.h"
 #include"Door.h"
 
+
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 // Stolen From: Yassien
 #define txt(s, t) glTexCoord2d(s, t)
@@ -98,6 +99,7 @@ int arch;
 int mosquewindow2;
 int marwanoCarpet,stone1;
 int texturess[6];
+int blackMetal;
 int marwaniWall;
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
@@ -258,6 +260,8 @@ int InitGL(GLvoid)
 	arch = LoadTexture("images/mosque/arch2.bmp", 255);
 	mosquewindow2 = LoadTexture("images/mosque/mosquewindow2.bmp", 255);
 	marwaniWall = LoadTexture ("images/walls/stone2.bmp", 255);
+	marwanoCarpet = LoadTexture ("images/mosque/carpet.bmp", 255);
+	blackMetal = LoadTexture ("images/mosque/blackmetal.bmp", 255);
 	tree = new Model_3DS();
 	tree->Load("models/tree/Tree.3ds");
 	Leaf.LoadBMP("models/tree/green.bmp");
@@ -347,7 +351,11 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	// c1.move();
 
 	MyCamera.Render();
+
 	Key(keys, 5.5);
+
+//	Key(keys,2);
+
 	// MyCamera.Render();
 
 	// a= new around(Point(-20,0,-40),40,30,house_door,house_wall,house_window,house_roof);
@@ -378,7 +386,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	pillar.cube_cylinder_pillar(Point(145, 11, 145), marble, marble);
 	pillar.cube_cylinder_pillar(Point(145, 11, 155), marble, marble);
 
-	m->drawMarwaniMosque(Point(140, 12, 480), 420, 300, 45, 5, qibaliMosque, marwanoCarpet, marble,texturess,house_wall,marwaniWall);
+	m->drawMarwaniMosque(Point(140, 12, 480), 420, 300, 45, 5, qibaliMosque, marwanoCarpet, marble,texturess,house_wall,marwaniWall,blackMetal);
 
 	p.DrawQuad(Point(140, 25, 143), Point(151.5, 25, 143), Point(151.5, 25, 156.5), Point(140, 25, 156.5), marble);
 	ro->DrawBall(5, ball, Point(146, 24.7, 150));
