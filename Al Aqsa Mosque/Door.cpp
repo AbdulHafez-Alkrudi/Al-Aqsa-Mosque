@@ -1,12 +1,12 @@
 #include "Door.h"
 
-Door::Door(float length , float height , float width): length(length) , height(height) , width(width){
-	angle = 0 , opened = false ;
-}
+float Door::angle = 0 ;
+
+Door::Door(float length , float height , float width): length(length) , height(height) , width(width) , opened(false){}
 
 void Door::DrawSingleDoor(bool flip_the_openning_direction, int texture , int side_tex){
 	// the drawing will always start in 0,0,0 , so do the translate before calling the function :)
-	
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	//primitives::DrawCoordinates(false , 1);
 	if(flip_the_openning_direction){
@@ -38,11 +38,13 @@ void Door::DrawSingleDoor(bool flip_the_openning_direction, int texture , int si
 	primitives::DrawQuad(Point(0,height+safe_space,safe_space) , Point(length,height+safe_space,safe_space) , Point(length,height+safe_space,width+safe_space) , Point(0 , height +safe_space, width+safe_space) , side_tex );
 
 	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 }
 
-void Door::DrawDoubledDoor(int texture , int side_texture){
+void Door::DrawDoubledDoor( int texture , int side_texture){
 	// the same as the single one:
 
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	//angle = 45 ; 
 
@@ -50,15 +52,16 @@ void Door::DrawDoubledDoor(int texture , int side_texture){
 	this->DrawSingleDoor(true  , texture , side_texture);
 
 	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 }
 
 
-void Door::openning_trigger(bool *keys){
-		if(keys['O']){
-			angle = min(90 , angle + 1);
-		}
-		if(keys['C']){
-			angle = max(0  , angle - 1);
-		}
-}
+//void Door::openning_trigger(bool *keys){
+//		if(keys['O']){
+//			angle = min(90 , angle + 1);
+//		}
+//		if(keys['C']){
+//			angle = max(0  , angle - 1);
+//		}
+//}
 

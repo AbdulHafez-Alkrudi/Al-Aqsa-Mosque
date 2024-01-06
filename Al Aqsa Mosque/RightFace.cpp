@@ -11,6 +11,7 @@ RightFace::~RightFace(void)
 	}
 void RightFace::DrawSquare(float x1 , float y1 , float z1 , float width , int photo)
 	{
+		glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, photo);
 	glBegin(GL_QUADS);
 	glTexCoord2d( 0 , 0);
@@ -22,9 +23,11 @@ void RightFace::DrawSquare(float x1 , float y1 , float z1 , float width , int ph
 	glTexCoord2d( 0 ,width);
 	glVertex3f(x1 , y1+width , z1);
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 	}
 void RightFace::drawWall(float widthWall , float hieghtWall ,float Translatex, float Translatey , float Translatez,float RotateX , float RotateY , float RotateZ,float angle , int photo)
 	{
+		glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslated(Translatex , Translatey , Translatez);
 	glRotated(angle , RotateX , RotateY , RotateZ);
@@ -39,4 +42,5 @@ void RightFace::drawWall(float widthWall , float hieghtWall ,float Translatex, f
 			}
 	}
 	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 	}

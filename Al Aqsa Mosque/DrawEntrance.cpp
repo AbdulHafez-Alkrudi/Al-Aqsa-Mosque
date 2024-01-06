@@ -12,6 +12,7 @@ DrawEntrance::~DrawEntrance(void)
 	}
     void DrawEntrance:: DrawArch(float radius , int photo) 
 	{
+		glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, photo);
 
 		glBegin(GL_TRIANGLE_FAN);
@@ -29,5 +30,5 @@ DrawEntrance::~DrawEntrance(void)
 			glVertex2f(x, y);
 		}
 		glEnd();
-		unbind;
+		glDisable(GL_TEXTURE_2D);
 	}

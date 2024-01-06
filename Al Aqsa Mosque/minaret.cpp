@@ -4,6 +4,7 @@
  Minaret::Minaret(float width , float height): width(width) , height(height){}
 
  void Minaret::draw_minaret(Point str , int base_texture , int pillar_texture , int wall_texture , int ground_texture ){
+	 glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	 glTranslated(str.x , str.y , str.z);
 	 str = Point(0 , 0 , 0) ;
@@ -74,4 +75,5 @@
 	 //primitives::DrawCylinderBody(cylinder_center, rad , rad*0.6, cylinder_height , pillar_texture);   
 
 	 glPopMatrix();
+	 glDisable(GL_TEXTURE_2D);
  }

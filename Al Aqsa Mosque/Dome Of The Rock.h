@@ -23,6 +23,7 @@ class DomeOfTheRock
 
 	void DrawBall(float rad, int texture = -1, Point center = Point(0, 0, 0))
 	{
+		glEnable(GL_TEXTURE_2D);
 		glTranslated(center.x,center.y,center.z);
 		float lastcenter=rad*sin(3.14/2);
 		float lastr=rad*cos(3.14/2);
@@ -69,17 +70,18 @@ class DomeOfTheRock
 			lastcenter=centeri;
 		}
 		glTranslated(-center.x,-center.y,-center.z);
-
+		glDisable(GL_TEXTURE_2D);
 	};
 
 	void DrawStrais(int texture)
 	{
-		
+		glEnable(GL_TEXTURE_2D);
 		for (int i = 0; i <= 12; i++) 
 		{
 			primitives::DrawCupe(Point(0, 0, 0), 60, 3, 25 - i, texture);
 			glTranslated(0, 3, 8);
 		}
+		glDisable(GL_TEXTURE_2D);
 	}
 	
 	void DrawOctagon(float w, float h, int p, Point base = Point(0, 0, 0))
@@ -180,6 +182,7 @@ class DomeOfTheRock
 	
 	void Floor_Roof(int pic) 
 	 {                                
+		 glEnable(GL_TEXTURE_2D);
 		 //ÑÓã ÇáÇÑÖíÉ æ ÇáÓÞÝíÉ
 		 const float pi = 3.14159265358979323846;
 		 glBindTexture(GL_TEXTURE_2D, pic);
@@ -199,11 +202,12 @@ class DomeOfTheRock
 			}
 
 		 glEnd();
- 
+		glDisable(GL_TEXTURE_2D);
 	 };
 
 	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glPushMatrix();
 		glRotated(90,0,0,10);
@@ -232,10 +236,12 @@ class DomeOfTheRock
 	    glPopMatrix();
 	    glPopMatrix();
 	    glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
 	}
 
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 			glPushMatrix();
 			glTranslated(0,0,depth);
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -255,5 +261,6 @@ class DomeOfTheRock
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
+			glDisable(GL_TEXTURE_2D);
 	}
 };

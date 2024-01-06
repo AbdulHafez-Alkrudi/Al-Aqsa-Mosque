@@ -11,6 +11,7 @@ class qibaliMosquee {
 
 	void drawQibaliMosque(float lenghtOfWall,float depthOfWall,float heightOfWall,int mosquewindow,int qibaliMosque,
 		int mosqueRoof2,int mosqueWindow2,int mosqueRoof,int mosaic,int marble,int house_wall,int arch,int carpet,int door,int mainDoor){
+			glEnable(GL_TEXTURE_2D);
 	primitives p;
 	p.DrawWall(Point(180,12,200),lenghtOfWall,heightOfWall,depthOfWall,qibaliMosque);
 	 for (int i = 10; i < lenghtOfWall; i += 20) {
@@ -160,7 +161,7 @@ class qibaliMosquee {
 	 }
 	 }
 
-	 unbind;
+	 glDisable(GL_TEXTURE_2D);
 };
 
 };

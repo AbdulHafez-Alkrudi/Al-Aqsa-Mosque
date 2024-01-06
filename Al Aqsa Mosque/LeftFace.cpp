@@ -10,6 +10,7 @@ LeftFace::~LeftFace(void)
 	{
 	}
 void LeftFace::FirstEntranceLeft(){
+	glEnable(GL_TEXTURE_2D);
 	int photo = LoadTexture("images/walls/stone3.bmp" , 255);
 	int photo2 = LoadTexture("images/walls/stone1.bmp" , 255);
 	glPushMatrix();
@@ -73,5 +74,5 @@ void LeftFace::FirstEntranceLeft(){
 	DrawRectangle(0 , 0 , 7 , 3 , photo);
 	glPopMatrix();
 	
-	unbind;
+	glDisable(GL_TEXTURE_2D);
 }

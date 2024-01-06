@@ -7,6 +7,7 @@
 class Marwani {
 public: 
 	void drawMarwaniMosque(Point begin,float lenght,float width,float height,float depth,int wallTexrure,int carpet,int marble,int* texturess,int walls,int marwaniWall ,int blackMetal){
+		glEnable(GL_TEXTURE_2D);
 		primitives p1;
 		//draw outside walls
 		//back
@@ -70,5 +71,6 @@ public:
 		 space +=30;
 		 
 	 }
+	 glDisable(GL_TEXTURE_2D);
 		};
 };
