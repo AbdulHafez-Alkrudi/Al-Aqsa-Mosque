@@ -242,6 +242,21 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	unbind;
 }
 
+int currentMood = 0;  // 0 for light mood, 1 for dark mood
+
+void SetMood(int mood) {
+    if (mood == 0) {  // Light mood
+        GLfloat global_ambient_light[] = {0.1f, 0.1f, 0.1f, 1.0f};
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient_light);
+        // Additional light settings for light mood...
+    } else {  // Dark mood
+        GLfloat global_ambient_dark[] = {0.05f, 0.05f, 0.05f, 1.0f};
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient_dark);
+        // Additional light settings for dark mood...
+    }
+}
+
+
 
 int InitGL(GLvoid)
 {
@@ -249,8 +264,11 @@ int InitGL(GLvoid)
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
+	
 	glEnable(GL_TEXTURE_2D); // Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);
+
+
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -267,6 +285,7 @@ int InitGL(GLvoid)
 	SKYDOWN = LoadTexture("images/skybox/down.bmp", 255);
 
 	// walls
+	wall			 = LoadTexture("images/walls/house_wall.bmp" , 255);
 	wall1			 = LoadTexture("images/walls/wall1.bmp",255);
 	wall4			 = LoadTexture("images/walls/wall4.bmp",255);
 	wall2			 =  LoadTexture("images/walls/wall2.bmp" , 255);
@@ -286,10 +305,10 @@ int InitGL(GLvoid)
 	window      	 = LoadTexture("images//House/window2.bmp",3);
 	logo			 = LoadTexture("images/House/school_logo.bmp",255);
 	wooden_door		 = LoadTexture("images/House/wooden_door.bmp",255);
-	green_door	 = LoadTexture("images//House/green_door.bmp",255);
-	house_door = LoadTexture("images/House/door.bmp", 255);
-	house_window = LoadTexture("images//House/window.bmp", 255);
-	great_door = LoadTexture("images/House/GreatDoor.bmp" , 255);
+	green_door	     = LoadTexture("images//House/green_door.bmp",255);
+	house_door		 = LoadTexture("images/House/door.bmp", 255);
+	house_window	 = LoadTexture("images//House/window.bmp", 255);
+	great_door		 = LoadTexture("images/House/GreatDoor.bmp" , 255);
 	
 	// mosque
 	ball			 = LoadTexture("images/mosque/ball.bmp", 255);
@@ -351,6 +370,40 @@ int InitGL(GLvoid)
 	texturess[5] = qibaliMosque;
 	
 
+
+	// Light stuff 
+	 glEnable(GL_LIGHTING);
+	 glEnable(GL_LIGHT0);
+
+    // Set light position and color
+    GLfloat light_position[] = {2000.0f, 2000.0f, 2000.0f, 1.0f};
+    GLfloat light_color[] = {0.1f, 0.1f, 0.031, 1.0f};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
+
+
+	glEnable(GL_LIGHT1);
+    // Set light position and color
+	GLfloat light_position2[4] = {-2000.0f, 2000.0f, -2000.0f, 1.0f};
+    GLfloat light_color2[4] = {0.01f, 0.01f, 0.01, 1.0f};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position2);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color2);
+
+    // Set material properties
+    GLfloat material_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f};
+    GLfloat material_diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};
+    GLfloat material_specular[] = {0.5f, 0.5f, 0.5f, 1.0f};
+    glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+
+    // Set ambient light
+    GLfloat global_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+
+
+	SetMood(currentMood);
+
 	return TRUE; // Initialization Went OK
 }
 
@@ -397,6 +450,11 @@ void Key(bool *keys, float speed)
 		MyCamera.MoveUpward(1 * speed);
 	if (keys['E'])
 		MyCamera.MoveUpward(-1 * speed);
+	 if (keys['M']) {
+			currentMood = (currentMood + 1) % 2;  // Toggle between 0 and 1
+			SetMood(currentMood);
+	}
+
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 float z = 0;
@@ -967,9 +1025,12 @@ void drawPersonModel() {
 }
 
 
-GLfloat lightColor0[] = { 1.5f, 1.5f, 1.5f, 1.0f };   //Color (0.5, 0.5, 0.5)
-GLfloat lightPos0[] = { 1.0f, 1.0f, 1.0f, 1.0f };     //Positioned at (4, 0, 8)
-GLfloat ambientColor[] = { 10.2f, 0.2f, 0.2f, 1.0f }; //Color (0.2, 0.2, 0.2)
+//GLfloat lightColor0[] = { 1.5f, 1.5f, 1.5f, 1.0f };   //Color (0.5, 0.5, 0.5)
+//GLfloat lightPos0[] = { 1.0f, 1.0f, 1.0f, 1.0f };     //Positioned at (4, 0, 8)
+//GLfloat ambientColor[] = { 10.2f, 0.2f, 0.2f, 1.0f }; //Color (0.2, 0.2, 0.2)
+
+
+
 
 
 
@@ -982,17 +1043,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	
   //Add ambient light
-  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+  //glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
-  //Add positioned light
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-  glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+  ////Add positioned light
+  //glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+  //glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
   
   
 
+	
 
-
-	Door door(100 , 1000 , 10);
 
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1010,8 +1070,8 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 		  }
 	if(check)
 	{
-	 glClearColor(0.0f, 0.0f, 0.1f, 1.0f);  // Dark blue background
-	 glEnable(GL_LIGHTING);
+		 glClearColor(0.0f, 0.0f, 0.1f, 1.0f);  // Dark blue background
+		 glEnable(GL_LIGHTING);
 	}
 
 	else
@@ -1375,6 +1435,12 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 
 	case WM_KEYDOWN: // Is A Key Being Held Down?
 	{
+		 if (wParam == 'M' || wParam == 'm') {
+                currentMood = (currentMood + 1) % 2;  // Toggle between 0 and 1
+                SetMood(currentMood);
+                InvalidateRect(hWnd, NULL, TRUE);
+            }
+           
 		keys[wParam] = TRUE; // If So, Mark It As TRUE
 		return 0;			 // Jump Back
 	}
