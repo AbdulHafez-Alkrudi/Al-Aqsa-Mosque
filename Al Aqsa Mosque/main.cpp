@@ -465,26 +465,35 @@ void sound() {
 
 void Key(bool *keys, float speed)
 {
-	if (keys[VK_DOWN])
+	if(isClicked)
+	{
+	MyCamera.Render(mouseX , mouseY);
+	    //Vector3dStruct ViewPoint = MyCamera.View;
+		//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
+		//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
+		//ViewPoint.x= float((mouseX - 640)*300)/640;
+		//ViewPoint.y = float((mouseY - 480)*300)/640;
+	}
+	/*if (keys[VK_DOWN])
 		MyCamera.RotateX(-1 * speed);
 	if (keys[VK_UP])
 		MyCamera.RotateX(1 * speed);
 	if (keys[VK_RIGHT])
 		MyCamera.RotateY(-1 * speed);
-	if (keys[VK_LEFT])
-		MyCamera.RotateY(1 * speed);
+	if (keys[VK_LEFT])*/
+	//	MyCamera.RotateY(1 * speed);
 	if (keys['Z'])
 		MyCamera.RotateZ(1 * speed);
 	if (keys['X'])
 		MyCamera.RotateZ(-1 * speed);
 
-	if (keys['W'])
-		MyCamera.MoveForward(1 * speed);
-	if (keys['S'])
-		MyCamera.MoveForward(-1 * speed);
 	if (keys['D'])
-		MyCamera.MoveRight(1 * speed);
+		MyCamera.MoveForward(1 * speed);
 	if (keys['A'])
+		MyCamera.MoveForward(-1 * speed);
+	if (keys['S'])
+		MyCamera.MoveRight(1 * speed);
+	if (keys['W'])
 		MyCamera.MoveRight(-1 * speed);
 	if (keys['Q'])
 		MyCamera.MoveUpward(1 * speed);
@@ -1168,12 +1177,12 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glLoadIdentity();
 
 	sound();
+	isClicked = true;
 	Door door(100 , 1000 , 10);
-
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	MyCamera.Render();
+	MyCamera.Render(mouseX , mouseY);
 	Key(keys, 5);
 
 	if (keys['T'])
@@ -1284,7 +1293,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPushMatrix();
 	glTranslated(120, -20, 390);
 	glScaled(1, 1.5, 1.5);
-	m->drawMarwaniMosque(Point(140, 12, 480), 420, 300, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal);
+	m->drawMarwaniMosque(Point(140, 12, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal);
 	glPopMatrix();
 
 	// draw terrace_alrahma
@@ -1605,25 +1614,22 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		return 0;									   // Jump Back
 	}
 	case WM_MOUSEMOVE:
-	{
-		mouseX = (int)LOWORD(lParam);
-		mouseY = (int)HIWORD(lParam);
-		isClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
-		isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
-		break;
-	}
-	case WM_LBUTTONUP:
-		isClicked = false;
-		break;
-	case WM_RBUTTONUP:
-		isRClicked = false;
-		break;
-	case WM_LBUTTONDOWN:
-		isClicked = true;
-		break;
-	case WM_RBUTTONDOWN:
-		isRClicked = true;
-		break;
+{
+mouseX = (int)LOWORD(lParam); 
+mouseY =(int)HIWORD(lParam);
+isClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
+isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
+break;
+}
+case WM_LBUTTONUP:
+isClicked = false; break;
+case WM_RBUTTONUP:
+isRClicked = false; break;
+case WM_LBUTTONDOWN:
+isClicked = true; break;
+case WM_RBUTTONDOWN:
+isRClicked = true; break;
+       
 	}
 
 	// Pass All Unhandled Messages To DefWindowProc

@@ -145,6 +145,7 @@
     <Image Include="Images\House\school_logo.bmp" />
     <Image Include="Images\House\window.bmp" />
     <Image Include="Images\House\window2.bmp" />
+    <Image Include="images\House\wooden_door.bmp" />
     <Image Include="images\Moon_Sun\Moon.bmp" />
     <Image Include="images\Moon_Sun\Sun.bmp" />
     <Image Include="images\Moon_Sun\SunTexture.bmp" />
