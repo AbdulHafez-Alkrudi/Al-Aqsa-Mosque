@@ -11,7 +11,7 @@ grand::~grand(void)
 void grand::drawGrand(float TranslateX , float TranslateY , float TranslateZ , float width , float hieght , int Photo)
 	{
 		glEnable(GL_TEXTURE_2D);
-glPushMatrix();
+	glPushMatrix();
 	glTranslated(TranslateX ,TranslateY , TranslateZ);
 	glRotated(90 , 0 , 0 ,1);
 	int i=0 , j=hieght , num=0;

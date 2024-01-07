@@ -753,7 +753,7 @@ void drawdomeoftherock()
 	glRotated(90, 1, 0, 0);
 	dome->Floor_Roof(carpet_aqsa);
 	glPopMatrix();
-	dome->DrawOctagon(70, 40, bottomwall, Point(0, 0, 0));
+	dome->DrawOctagon(70, 40, bottomwall, great_door , Point(0, 0, 0));
 	glTranslated(0, 40, 0);
 	dome->drawOctagon(70, 40, upwall, Point(0, 0, 0));
 	glPushMatrix(); // ROOF
@@ -819,15 +819,18 @@ void drawdomeoftherock()
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 50), 150, 50, 40, 8, wall1, Bowaak);
+
+	float shifting = 5.0f ; 
+
+	domeoftherock_pillars(Point(60, 0, 50), 155, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 410), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(60, 0, 410), 105, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 280), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(60, 0, 280), 100 , 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// left
