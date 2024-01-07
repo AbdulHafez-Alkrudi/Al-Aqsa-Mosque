@@ -1,11 +1,14 @@
 #pragma once
 #include <windows.h> // Header File For Windows
+#include <mmsystem.h>
+#pragma comment(lib , "winmm.lib")
 #include <gl.h>		 // Header File For The OpenGL32 Library
 #include <glu.h>	 // Header File For The GLu32 Library
 #include <glaux.h>
 #include <iostream>
 #include <string>
-#include <sstream>
+
+
 #include <fstream>
 #include <cmath>
 #include "Point.h"
@@ -122,6 +125,9 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+
+
 
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
@@ -351,9 +357,9 @@ int InitGL(GLvoid)
 	person->Materials[6].tex = Leaf;
 
 	MyCamera = Camera();
-	MyCamera.Position.x = 1000;
+	MyCamera.Position.x = 400;
 	MyCamera.Position.y = 10;
-	MyCamera.Position.z = 100;
+	MyCamera.Position.z = -700;
 
 	texturess[0] = qibaliMosque;
 	texturess[1] = qibaliMosque;
@@ -417,6 +423,45 @@ void DrawModel(Model_3DS *model, int scale = 1)
 float angle = 0;
 float angle2 = 0;
 Point *loc = new Point(0, 0, -5);
+
+
+bool adhan= false , background= false  ; 
+
+void sound() {
+    // Calculate the distance between the listener and the sound source
+    float distance = std::sqrt(
+        std::pow(MyCamera.Position.x - 86.900124, 2) +
+        std::pow(MyCamera.Position.y - 54.732761, 2) +
+        std::pow(MyCamera.Position.z - -535.702271, 2)
+    );
+
+	float distance2 = std::sqrt(
+        std::pow(MyCamera.Position.x - -775, 2) +
+        std::pow(MyCamera.Position.y - 70 , 2) +
+        std::pow(MyCamera.Position.z - -775, 2)
+    ); 
+
+    // Set your desired radius (adjust this value as needed)
+    float radius = 500.0f;
+
+    if (distance <= radius || distance2 <= radius) {
+		if(!background){
+			PlaySound(TEXT("sounds/azan.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+			background= true;
+			adhan     = false;
+		}
+
+    }
+    else {
+		
+        // Stop the sound since it's outside the radius
+		if(!adhan){
+			PlaySound(TEXT("sounds/background.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);	
+			background = false;
+			adhan = true;
+		}
+    }
+}
 
 void Key(bool *keys, float speed)
 {
@@ -682,6 +727,7 @@ void drawschool()
 }
 void drawdomeoftherock()
 {
+	float safe_space = 1.0f ;
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslated(850, 0, 700);
@@ -693,7 +739,7 @@ void drawdomeoftherock()
 	glPushMatrix();
 	glTranslated(200, 0, 300);
 	glPushMatrix(); // FLOOR
-	glTranslated(35, 0, -84.0);
+	glTranslated(35 , safe_space, -84.0);
 	glRotated(22.5, 0, 1, 0);
 	glRotated(90, 1, 0, 0);
 	dome->Floor_Roof(carpet_aqsa);
@@ -1073,13 +1119,55 @@ void drawPersonModel()
 
 bool check = false;
 
+void DebugOutput(const std::wstring& message) {
+    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
+    OutputDebugStringW(L"\n");
+}
+
+void collision()
+{
+	// outside
+	// alqebali_right
+	if(MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 && 
+		(MyCamera.Position.z <= -940 && MyCamera.Position.z >= -980))
+	{
+		MyCamera.Position.z = -940;
+	}
+	// alqebali_left
+	if(MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 && 
+		(MyCamera.Position.z <= -640 && MyCamera.Position.z >= -680))
+	{
+		MyCamera.Position.z = -680;
+	}
+	// alqebali_front_left 
+	if(MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 && 
+		(MyCamera.Position.z <= -681 && MyCamera.Position.z >= -780))
+	{
+		MyCamera.Position.x = -580;
+	}
+	// alqebali_front_right
+	if(MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 && 
+		(MyCamera.Position.z <= -855 && MyCamera.Position.z >= -939))
+	{
+		MyCamera.Position.x = -580;
+	}
+	
+	// inside
+	// alqebali_back
+	if(MyCamera.Position.x <= -920 && MyCamera.Position.x >= -940 && 
+		(MyCamera.Position.z <= -660 && MyCamera.Position.z >= -960))
+	{
+		MyCamera.Position.x = -915;
+	}
+}
+
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-
-
+	sound();
 	Door door(100 , 1000 , 10);
 
 	unbind;
@@ -1227,9 +1315,16 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 
 	
+	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
+	std::wstring wPos(Pos.begin(), Pos.end());	
+	DebugOutput(wPos);
+    
+    glFlush();
 
 	Door::openning_trigger(keys);
 	drawPersonModel();
+
+	collision();
 
 	return TRUE;
 }
