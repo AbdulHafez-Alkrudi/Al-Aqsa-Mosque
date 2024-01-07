@@ -467,7 +467,7 @@ void Key(bool *keys, float speed)
 {
 	if(isClicked)
 	{
-	MyCamera.Render(mouseX , mouseY);
+		MyCamera.Render(mouseX , mouseY);
 	    //Vector3dStruct ViewPoint = MyCamera.View;
 		//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
 		//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
@@ -1176,7 +1176,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	sound();
+	//sound();
 	isClicked = true;
 	Door door(100 , 1000 , 10);
 	unbind;
