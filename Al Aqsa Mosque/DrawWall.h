@@ -18,6 +18,7 @@ public:
 	
 void drawGrass(double x, double y, double z, double width,double depth,int texture)
 {
+	glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glBegin(GL_QUADS);
 			glTexCoord2d(0, 0);
@@ -33,9 +34,10 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
 			glVertex3d(x, y, z-depth);
 
 		glEnd();
-		unbind;
+		glDisable(GL_TEXTURE_2D);
 }
 	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture) {
+		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glPushMatrix();
 		glRotated(90,0,0,10);
@@ -56,10 +58,11 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
    glPopMatrix();
    glPopMatrix();
    glPopMatrix();
-  unbind;
+	glDisable(GL_TEXTURE_2D);
 }
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 			glPushMatrix();
 			glTranslated(0,0,depth);
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -80,7 +83,7 @@ void drawGrass(double x, double y, double z, double width,double depth,int textu
 		 
 			glEnd();
 			glPopMatrix();
-			unbind;
+			glDisable(GL_TEXTURE_2D);
 	}
 	
 };

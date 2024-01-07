@@ -52,7 +52,7 @@ public:
 		int texture_door,int texture_wall,
 		int texture_window)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -66,18 +66,19 @@ public:
 
 		//draw wall
 		glColor3f(1,1,1);
+		//cull;
 		glBindTexture(GL_TEXTURE_2D, texture_wall);
 
 		//ABCD
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
-		glVertex3f(a.x,a.y,a.z);
-		glTexCoord2d(1, 0);
-		glVertex3f(b.x,b.y,b.z);
-		glTexCoord2d(1, 1);
-		glVertex3f(c.x,c.y,c.z);
-		glTexCoord2d(0, 1);
-		glVertex3f(d.x,d.y,d.z);
+			glVertex3f(a.x,a.y,a.z);
+			glTexCoord2d(1, 0);
+			glVertex3f(b.x,b.y,b.z);
+			glTexCoord2d(1, 1);
+			glVertex3f(c.x,c.y,c.z);
+			glTexCoord2d(0, 1);
+			glVertex3f(d.x,d.y,d.z);
 		glEnd();
 
 
@@ -107,16 +108,22 @@ public:
 
 		//ADHE
 		glBegin(GL_QUADS);
+
 		glTexCoord2d(0, 0);
 		glVertex3f(a.x,a.y,a.z);
+
 		glTexCoord2d(1, 0);
 		glVertex3f(d.x,d.y,d.z);
+
 		glTexCoord2d(1, 1);
 		glVertex3f(h.x,h.y,h.z);
+		
 		glTexCoord2d(0, 1);
 		glVertex3f(e.x,e.y,e.z);
+		
+		
 		glEnd();
-
+	//	frontf ;
 		//CBFG
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
@@ -128,7 +135,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(g.x,g.y,g.z);
 		glEnd();
-
+		
 		//DCGH
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
@@ -139,6 +146,7 @@ public:
 		glVertex3f(g.x,g.y,g.z);
 		glTexCoord2d(0, 1);
 		glVertex3f(h.x,h.y,h.z);
+	//	backf;
 		glEnd();
 
 
@@ -151,14 +159,14 @@ public:
 		// if the door in the middle and the door length is the house length/4, and the hight is house 0.7*hight
 		glTranslated(length/2-length/8,0,0);
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 0);
-		glVertex3f(0,0,0);
-		glTexCoord2d(1, 0);
-		glVertex3f(length/4,0,0);
-		glTexCoord2d(1, 1);
-		glVertex3f(length/4,hight_cube*0.7,0);
-		glTexCoord2d(0, 1);
-		glVertex3f(0,hight_cube*0.7,0);
+			glTexCoord2d(0, 0);
+			glVertex3f(0,0,0);
+			glTexCoord2d(1, 0);
+			glVertex3f(length/4,0,0);
+			glTexCoord2d(1, 1);
+			glVertex3f(length/4,hight_cube*0.7,0);
+			glTexCoord2d(0, 1);
+			glVertex3f(0,hight_cube*0.7,0);
 		glEnd();
 		glEnable(GL_DEPTH_BUFFER_BIT);
 		glPopMatrix();
@@ -289,10 +297,10 @@ public:
 		glEnd();
 		glEnable(GL_DEPTH_BUFFER_BIT);
 		glPopMatrix();
-
+		//nocull;
 
 		
-		unbind;
+		glDisable(GL_TEXTURE_2D);
 	};
 	
 	void DrawHousewithoutDomeoneWindow(Point bottom_left_back,float length, float depth,
@@ -300,7 +308,7 @@ public:
 		int texture_door,int texture_wall,
 		int texture_window)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -313,6 +321,7 @@ public:
 
 
 		//draw wall
+		
 		glColor3f(1,1,1);
 		glBindTexture(GL_TEXTURE_2D, texture_wall);
 
@@ -476,16 +485,14 @@ public:
 		glEnd();
 		glPopMatrix();
 
-
-		
-
+		glDisable(GL_TEXTURE_2D);
 	};
 	void DrawHousewithDomeNOdoor(Point bottom_left_back,float length, float depth,
 	float hight_haram, float hight_cube,
 	int texture_wall,
 		int texture_window,int texture_roof)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -496,7 +503,7 @@ public:
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
 
 
-
+		
 		//draw wall
 		glColor3f(1,1,1);
 		glBindTexture(GL_TEXTURE_2D, texture_wall);
@@ -707,9 +714,8 @@ public:
 		// Draw roof
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(16,texture_roof,Point(depth/2,depth,depth/2));
-
 		glPopMatrix();
-		unbind;
+		glDisable(GL_TEXTURE_2D);
 
 
 	};
@@ -719,7 +725,7 @@ public:
 		int texture_door,int texture_wall,
 		int texture_window,int texture_roof)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -728,7 +734,6 @@ public:
 		Point f= Point (a.x+length,a.y+hight_cube,a.z);
 		Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
-
 
 
 		//draw wall
@@ -957,17 +962,18 @@ public:
 		glEnable(GL_DEPTH_BUFFER_BIT);
 		glPopMatrix();
 
-
 		// Draw roof
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(16,texture_roof,Point(depth/2,depth-3,depth/2));
-
+		
+		glDisable(GL_TEXTURE_2D);
 	};
 	void DrawHousewithDomeonewindow(Point bottom_left_back,float length, float depth,
 	float hight_haram, float hight_cube,
 		int texture_door,int texture_wall,
 		int texture_window,int texture_roof)
 	{
+		glEnable(GL_TEXTURE_2D);
 
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
@@ -977,7 +983,6 @@ public:
 		Point f= Point (a.x+length,a.y+hight_cube,a.z);
 		Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
-
 
 
 		//draw wall
@@ -1147,12 +1152,11 @@ public:
 		
 		glPopMatrix();
 
-
 		// Draw roof
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(16,texture_roof,Point(depth/2,depth-6,depth/2));
 
-		unbind;
+		glDisable(GL_TEXTURE_2D);
 	};
 };
 

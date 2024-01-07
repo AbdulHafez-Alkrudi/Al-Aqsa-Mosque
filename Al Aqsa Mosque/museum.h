@@ -22,6 +22,7 @@ public:
 
 
 	 void drawWall(Point bottom_left_back, double width, double height, double depth,int texture,int door) {
+		 glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glPushMatrix();
 		glRotated(90,0,0,10);
@@ -65,6 +66,7 @@ public:
    glPopMatrix();
    glPopMatrix();
    glPopMatrix();
+   glDisable(GL_TEXTURE_2D);
   
 }
 

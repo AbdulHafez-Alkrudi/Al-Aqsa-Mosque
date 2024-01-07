@@ -25,6 +25,7 @@ class OutSide
 
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 			glPushMatrix();
 			glTranslated(0,0,depth);
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -44,11 +45,13 @@ class OutSide
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
-			unbind;
+			glDisable(GL_TEXTURE_2D);
 	}
 
-	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture, int texture_door, bool *keys) 
+	void drawWall(Point bottom_left_back, double width, double height, double depth,int texture, int texture_door, bool *keys, int d, int s) 
 	{
+		Door* door;
+		glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glPushMatrix();
 			glRotated(90,0,0,10);
@@ -64,7 +67,17 @@ class OutSide
 			// Front 
 			glPushMatrix();
 			primitives::DrawWall(Point(0,0,0),width, height, 1200, texture);
-			glTranslated(0, 0, 1300);
+			glTranslated(0, 0, 1200);
+			
+			glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(50, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();
+
+
+			glTranslated(0, 0, 100+0.1);
 			primitives::DrawWall(Point(0,0,0),width, height, 200, texture);
 			glPopMatrix();
 		
@@ -75,11 +88,40 @@ class OutSide
 			// Right
 			glPushMatrix();
 			primitives::DrawWall(Point(0,0,0),width, height, 50, texture);
-			glTranslated(0, 0, 120);
+
+			glTranslated(0, 0, 50);
+
+			glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(35-0.1, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();
+
+			glTranslated(0, 0, 70);
 			primitives::DrawWall(Point(0,0,0),width, height, 410, texture);
-			glTranslated(0, 0, 480);
+			glTranslated(0, 0, 410);
+
+			glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(35, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();
+
+			glTranslated(0, 0, 70);
 			primitives::DrawWall(Point(0,0,0),width, height, 630, texture);
-			glTranslated(0, 0, 700);
+			glTranslated(0, 0, 630);
+
+
+			glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(35, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();
+
+			glTranslated(0, 0, 70);
 			primitives::DrawWall(Point(0,0,0),width, height, 200, texture);
 			glPopMatrix();
 			
@@ -90,15 +132,34 @@ class OutSide
 			// Back
 			primitives::DrawWall(Point(0,0,0),width, height, 760, texture);
 			glPushMatrix();
-			glTranslated(0, 0, 830);
+			glTranslated(0, 0, 760);
+
+			/*glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(35, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();*/
+
+			glTranslated(0, 0, 70);
 			primitives::DrawWall(Point(0,0,0),width, height, 250, texture);
-			glTranslated(0, 0, 320);
+			glTranslated(0, 0, 250);
+
+			glPushMatrix();
+			glRotated(-90,10,0,0);
+			glRotated(-90,0,0,10);
+			door = new Door(35, 70, 5);
+			door->DrawDoubledDoor(d, s);
+			glPopMatrix();
+
+
+			glTranslated(0, 0, 70);
 			primitives::DrawWall(Point(0,0,0),width, height, 350, texture);
 			glPopMatrix();
 
 			glPopMatrix();
 			glPopMatrix();
 			glPopMatrix();
-			unbind;
+			glDisable(GL_TEXTURE_2D);
 	}
 };

@@ -23,6 +23,7 @@ class school
 
 
 		void drawWall(Point bottom_left_back, double width, double height, double depth,int texture,int door) {
+			glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, texture);
 				glPushMatrix();
 				glRotated(90,0,0,10);
@@ -66,10 +67,12 @@ class school
 		   glPopMatrix();
 		   glPopMatrix();
 		   glPopMatrix();
+		   glDisable(GL_TEXTURE_2D);
   
 }
 	void drawGround(Point bottom_left_back, double width, double height, double depth, int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 			glPushMatrix();
 			glTranslated(0,0,180);
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -89,6 +92,7 @@ class school
 			glVertex3f(bottom_left_back.x, bottom_left_back.y, bottom_left_back.z - width);
 			glEnd();
 			glPopMatrix();
+			glDisable(GL_TEXTURE_2D);
 	}
 
 	void DrawHousewithoutDome(Point bottom_left_back,float length, float depth,
@@ -96,6 +100,7 @@ class school
 		int texture_door,int texture_wall,
 		int texture_window)
 	{
+		glEnable(GL_TEXTURE_2D);
 
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
@@ -335,7 +340,7 @@ class school
 		glPopMatrix();
 
 
-		
+		glDisable(GL_TEXTURE_2D);
 
 	};
 		void DrawHousewithDome(Point bottom_left_back,float length, float depth,
@@ -343,7 +348,7 @@ class school
 		int texture_door,int texture_wall,
 		int texture_window,int texture_roof)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -585,6 +590,7 @@ class school
 		// Draw roof
 		glBindTexture(GL_TEXTURE_2D, texture_roof);
 		primitives::DrawBall(50,texture_roof,Point(depth/2,length-30,depth/2));
+		glDisable(GL_TEXTURE_2D);
 
 	};
 	void DrawHousewithoutDomeoneWindow(Point bottom_left_back,float length, float depth,
@@ -592,7 +598,7 @@ class school
 		int texture_door,int texture_wall,
 		int texture_window)
 	{
-
+		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
 		Point c= Point (a.x+length,a.y,a.z+depth);
@@ -770,6 +776,6 @@ class school
 
 
 		
-
+		glDisable(GL_TEXTURE_2D);
 	};
 };

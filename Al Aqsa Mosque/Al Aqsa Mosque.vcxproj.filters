@@ -8,7 +8,6 @@
     <ClCompile Include="LeftFace.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minaret.cpp" />
-    <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RightFace.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="vendor\model\3DTexture.cpp" />
@@ -42,9 +41,7 @@
     <ClInclude Include="qibaliMosque.h" />
     <ClInclude Include="museum.h" />
     <ClInclude Include="Marwani.h" />
-
     <ClInclude Include="Cylinder.h" />
-
     <ClInclude Include="Marwani.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="sphereSunAndMoon.h" />
@@ -84,15 +81,16 @@
     <Image Include="models\tree\green.bmp" />
     <Image Include="models\tree\leaf.bmp" />
     <Image Include="images\mosque\alporaq.bmp" />
-    <Image Include="images\walls\wall6.bmp" />
-
     <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="images\Moon_Sun\Moon.bmp" />
     <Image Include="images\Moon_Sun\Sun.bmp" />
     <Image Include="images\Moon_Sun\SunTexture.bmp" />
-
     <Image Include="images\walls\stone2.bmp" />
-
+    <Image Include="images\walls\wall4.bmp" />
+    <Image Include="images\walls\wall2.bmp" />
+    <Image Include="images\walls\Rkhameh.bmp" />
+    <Image Include="images\walls\land.bmp" />
+    <Image Include="images\test.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />

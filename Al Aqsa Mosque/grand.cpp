@@ -10,6 +10,7 @@ grand::~grand(void)
 	}
 void grand::drawGrand(float TranslateX , float TranslateY , float TranslateZ , float width , float hieght , int Photo)
 	{
+		glEnable(GL_TEXTURE_2D);
 glPushMatrix();
 	glTranslated(TranslateX ,TranslateY , TranslateZ);
 	glRotated(90 , 0 , 0 ,1);
@@ -25,6 +26,7 @@ glPushMatrix();
 			}
 		}
 		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
 	}
 //10 , -5 , -31
 // j = hieght =25 , i = width = 20

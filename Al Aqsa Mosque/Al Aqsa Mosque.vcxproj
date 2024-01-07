@@ -106,7 +106,6 @@
     <ClCompile Include="LeftFace.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minaret.cpp" />
-    <ClCompile Include="Pillar.cpp" />
     <ClCompile Include="RightFace.cpp" />
     <ClCompile Include="sphereSunAndMoon.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -149,7 +148,6 @@
     <Image Include="images\Moon_Sun\Moon.bmp" />
     <Image Include="images\Moon_Sun\Sun.bmp" />
     <Image Include="images\Moon_Sun\SunTexture.bmp" />
-
     <Image Include="images\mosque\alporaq.bmp" />
     <Image Include="Images\mosque\Arch.bmp" />
     <Image Include="Images\mosque\ball.bmp" />
@@ -162,19 +160,23 @@
     <Image Include="Images\mosque\InsideEntrande.bmp" />
     <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="Images\mosque\up_wall.bmp" />
+    <Image Include="images\test.bmp" />
     <Image Include="Images\walls\grass.bmp" />
     <Image Include="Images\walls\ground.bmp" />
     <Image Include="Images\walls\ground2.bmp" />
     <Image Include="Images\walls\house_wall.bmp" />
+    <Image Include="images\walls\land.bmp" />
     <Image Include="Images\walls\marble.bmp" />
+    <Image Include="images\walls\Rkhameh.bmp" />
     <Image Include="Images\walls\stone1.bmp" />
     <Image Include="images\walls\stone2.bmp" />
     <Image Include="Images\walls\stone3.bmp" />
     <Image Include="Images\walls\street.bmp" />
     <Image Include="Images\walls\street1.bmp" />
     <Image Include="Images\walls\wall1.bmp" />
+    <Image Include="images\walls\wall2.bmp" />
+    <Image Include="images\walls\wall4.bmp" />
     <Image Include="Images\walls\wall5.bmp" />
-    <Image Include="images\walls\wall6.bmp" />
     <Image Include="Images\walls\wall_of_mosque.bmp" />
     <Image Include="models\tree\bark.bmp" />
     <Image Include="models\tree\bark_loo.jpg" />

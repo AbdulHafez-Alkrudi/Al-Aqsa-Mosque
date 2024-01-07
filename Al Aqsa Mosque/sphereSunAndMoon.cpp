@@ -10,6 +10,7 @@ sphereSunAndMoon::~sphereSunAndMoon(void)
 	}
 void sphereSunAndMoon::drawShpere(float radius, int slices, int stacks , int texture)
 	{
+		glEnable(GL_TEXTURE_2D);
 glBindTexture(GL_TEXTURE_2D, texture);
     for (int i = 0; i < stacks; ++i) {
         float phi1 = static_cast<float>(3.14) * static_cast<float>(i) / stacks;
@@ -51,6 +52,7 @@ glBindTexture(GL_TEXTURE_2D, texture);
             glEnd();
         }
     }
+	glDisable(GL_TEXTURE_2D);
 	}
 // float radiusMovment = 1000 , radiusSunAndMoon = 30; 
 // int slices = 50, int stacks = 100;
@@ -61,6 +63,7 @@ void sphereSunAndMoon::DisplaySunAndMoon(float radiusMovment, float radiusSunAnd
 										 double translateXMoon , double translateYMoon , double translateZMoon)//radius is the radius of circuler movment , slices is the number of the squere you want to draw squere always is 
 //DisplaySunAndMoon(30 , 50 , 100 , sun , moon ,0 ,0 , 0 , -200 , 200 , -200 ,-200 , 150 , -200)
 	{
+		glEnable(GL_TEXTURE_2D);
 	if(angleMovment>=(2*6.28))
 			angleMovment=0;
 		 if(angleMovment>=0&&angleMovment<=4.71){
@@ -85,4 +88,5 @@ void sphereSunAndMoon::DisplaySunAndMoon(float radiusMovment, float radiusSunAnd
 		moveY = radiusMovment *sin(angleMovment);
 		angleMovment+=0.01;
 			}
+		 glDisable(GL_TEXTURE_2D);
 	}
