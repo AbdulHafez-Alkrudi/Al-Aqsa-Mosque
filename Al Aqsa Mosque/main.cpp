@@ -465,35 +465,35 @@ void sound() {
 
 void Key(bool *keys, float speed)
 {
-	if(isClicked)
-	{
-		MyCamera.Render(mouseX , mouseY);
-	    //Vector3dStruct ViewPoint = MyCamera.View;
-		//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
-		//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
-		//ViewPoint.x= float((mouseX - 640)*300)/640;
-		//ViewPoint.y = float((mouseY - 480)*300)/640;
-	}
-	/*if (keys[VK_DOWN])
+	//if(isClicked)
+	//{
+	//	//MyCamera.Render(mouseX , mouseY);
+	//    //Vector3dStruct ViewPoint = MyCamera.View;
+	//	//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
+	//	//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
+	//	//ViewPoint.x= float((mouseX - 640)*300)/640;
+	//	//ViewPoint.y = float((mouseY - 480)*300)/640;
+	//}
+	if (keys[VK_DOWN])
 		MyCamera.RotateX(-1 * speed);
 	if (keys[VK_UP])
 		MyCamera.RotateX(1 * speed);
 	if (keys[VK_RIGHT])
 		MyCamera.RotateY(-1 * speed);
-	if (keys[VK_LEFT])*/
-	//	MyCamera.RotateY(1 * speed);
+	if (keys[VK_LEFT])
+		MyCamera.RotateY(1 * speed);
 	if (keys['Z'])
 		MyCamera.RotateZ(1 * speed);
 	if (keys['X'])
 		MyCamera.RotateZ(-1 * speed);
 
-	if (keys['D'])
-		MyCamera.MoveForward(1 * speed);
-	if (keys['A'])
-		MyCamera.MoveForward(-1 * speed);
-	if (keys['S'])
-		MyCamera.MoveRight(1 * speed);
 	if (keys['W'])
+		MyCamera.MoveForward(1 * speed);
+	if (keys['S'])
+		MyCamera.MoveForward(-1 * speed);
+	if (keys['D'])
+		MyCamera.MoveRight(1 * speed);
+	if (keys['A'])
 		MyCamera.MoveRight(-1 * speed);
 	if (keys['Q'])
 		MyCamera.MoveUpward(1 * speed);
@@ -1181,8 +1181,8 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	Door door(100 , 1000 , 10);
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	MyCamera.Render(mouseX , mouseY);
+	//glLoadIdentity();
+	MyCamera.Render();
 	Key(keys, 5);
 
 	if (keys['T'])
@@ -1319,7 +1319,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPushMatrix();
 	glScaled(6, 6, 6);
 	glTranslated(-10, 0, 10);
-	tree->Draw();
+	//tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
 

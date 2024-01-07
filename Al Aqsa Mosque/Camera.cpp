@@ -144,6 +144,19 @@ void Camera::Render( int mouseX , int mouseY)
 
 }
 
+void Camera::Render( void )
+{
+	//calculate view point
+	Vector3dStruct ViewPoint = Position+View;
+
+	
+	gluLookAt(Position.x,Position.y,Position.z,
+				ViewPoint.x,ViewPoint.y,ViewPoint.z,
+				Up.x,Up.y,Up.z);
+
+}
+
+
 void Camera::MoveForward( GLfloat Distance )
 {
 	Position = Position + (View*Distance);
