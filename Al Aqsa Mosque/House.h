@@ -63,7 +63,7 @@ public:
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
 
 
-
+		float safe_space = 1.0f  ;
 		//draw wall
 		glColor3f(1,1,1);
 		//cull;
@@ -155,9 +155,9 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture_door);
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the door in the middle and the door length is the house length/4, and the hight is house 0.7*hight
-		glTranslated(length/2-length/8,0,0);
+		glTranslated(length/2-length/8+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 			glTexCoord2d(0, 0);
 			glVertex3f(0,0,0);
@@ -177,9 +177,9 @@ public:
 		//front
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/20,hight_cube/4,0);
+		glTranslated(length/20+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -190,7 +190,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(13*length/20,0,0);
+		glTranslated(13*length/20+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -204,12 +204,13 @@ public:
 		glEnable(GL_DEPTH_BUFFER_BIT);
 		glPopMatrix();
 
+		safe_space *= -1 ;
 		//back
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/4-length/8,hight_cube/4,0);
+		glTranslated(length/4-length/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -220,7 +221,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(length/2,0,0);
+		glTranslated(length/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -234,14 +235,14 @@ public:
 		glEnable(GL_DEPTH_BUFFER_BIT);
 		glPopMatrix();
 
-
+		safe_space *= -1 ;
 		//left
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -252,7 +253,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -270,10 +271,10 @@ public:
 		//right
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(b.x,b.y,b.z);
+		glTranslated(b.x+ safe_space,b.y+ safe_space,b.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -284,7 +285,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -318,7 +319,7 @@ public:
 		Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
 
-
+		float safe_space = 1 ; 
 
 		//draw wall
 		
@@ -404,9 +405,9 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture_door);
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x + safe_space,d.y + safe_space,d.z+ safe_space);
 		// if the door in the middle and the door length is the house length/4, and the hight is house 0.7*hight
-		glTranslated(length/2-length/8,0,0);
+		glTranslated(length/2-length/8+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -427,9 +428,9 @@ public:
 		//back
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/4-length/8,hight_cube/4,0);
+		glTranslated(length/4-length/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -447,10 +448,10 @@ public:
 		//left
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -469,10 +470,10 @@ public:
 		//right
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(b.x,b.y,b.z);
+		glTranslated(b.x+ safe_space,b.y+ safe_space,b.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -492,6 +493,7 @@ public:
 	int texture_wall,
 		int texture_window,int texture_roof)
 	{
+
 		glEnable(GL_TEXTURE_2D);
 		Point a= bottom_left_back;
 		Point b= Point (a.x+length,a.y,a.z);
@@ -502,7 +504,7 @@ public:
 		Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
 
-
+		float safe_space = -1.0f ;
 		
 		//draw wall
 		glColor3f(1,1,1);
@@ -589,9 +591,9 @@ public:
 		//front
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/20,hight_cube/4,0);
+		glTranslated(length/20+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -602,7 +604,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(13*length/20,0,0);
+		glTranslated(13*length/20+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -619,9 +621,9 @@ public:
 		//back
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/4-length/8,hight_cube/4,0);
+		glTranslated(length/4-length/8+ safe_space,hight_cube/4+ safe_space,0 + safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -632,7 +634,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(length/2,0,0);
+		glTranslated(length/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -650,10 +652,10 @@ public:
 		//left
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0 + safe_space );
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -664,7 +666,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0 + safe_space,0 + safe_space );
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -682,10 +684,10 @@ public:
 		//right
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(b.x,b.y,b.z);
+		glTranslated(b.x + safe_space ,b.y + safe_space ,b.z + safe_space );
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8 + safe_space ,hight_cube/4 + safe_space ,0 + safe_space );
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -696,7 +698,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2 + safe_space ,0 + safe_space ,0 + safe_space );
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -735,6 +737,7 @@ public:
 		Point g= Point (a.x+length,a.y+hight_cube,a.z+depth);
 		Point h= Point (a.x,a.y+hight_cube,a.z+depth);
 
+		float safe_space = 1.0f ;
 
 		//draw wall
 		glColor3f(1,1,1);
@@ -819,7 +822,7 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture_door);
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the door in the middle and the door length is the house length/4, and the hight is house 0.7*hight
 		glTranslated(length/2-length/8,0,0);
 		glBegin(GL_QUADS);
@@ -841,9 +844,9 @@ public:
 		//front
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/20,hight_cube/4,0);
+		glTranslated(length/20+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -854,7 +857,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(13*length/20,0,0);
+		glTranslated(13*length/20+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -871,9 +874,9 @@ public:
 		//back
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/4-length/8,hight_cube/4,0);
+		glTranslated(length/4-length/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -884,7 +887,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(length/2,0,0);
+		glTranslated(length/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -905,7 +908,7 @@ public:
 		glTranslated(a.x,a.y,a.z);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -916,7 +919,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -934,10 +937,10 @@ public:
 		//right
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(b.x,b.y,b.z);
+		glTranslated(b.x+ safe_space,b.y+ safe_space,b.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -948,7 +951,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -988,7 +991,7 @@ public:
 		//draw wall
 		glColor3f(1,1,1);
 		glBindTexture(GL_TEXTURE_2D, texture_wall);
-
+		float safe_space = 1.0f ;
 		//ABCD
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
@@ -1068,9 +1071,9 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture_door);
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(d.x,d.y,d.z);
+		glTranslated(d.x+ safe_space,d.y+ safe_space,d.z+ safe_space);
 		// if the door in the middle and the door length is the house length/4, and the hight is house 0.7*hight
-		glTranslated(length/2-length/8,0,0);
+		glTranslated(length/2-length/8+ safe_space,0+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -1091,9 +1094,9 @@ public:
 		//back
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(length/4-length/8,hight_cube/4,0);
+		glTranslated(length/4-length/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -1104,7 +1107,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(length/2,0,0);
+		glTranslated(length/2+ safe_space,0+ safe_space,0+ safe_space);
 		
 		glPopMatrix();
 
@@ -1112,10 +1115,10 @@ public:
 		//left
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(a.x,a.y,a.z);
+		glTranslated(a.x+ safe_space,a.y+ safe_space,a.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -1126,7 +1129,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		
 		glPopMatrix();
 
@@ -1134,10 +1137,10 @@ public:
 		//right
 		glPushMatrix();
 		glDisable(GL_DEPTH_BUFFER_BIT);
-		glTranslated(b.x,b.y,b.z);
+		glTranslated(b.x+ safe_space,b.y+ safe_space,b.z+ safe_space);
 		glRotated(-90,0,1,0);
 		// if the window in the middle of the right part of door and the window length is the house length/4, and the hight is house hight/2.5
-		glTranslated(depth/4-depth/8,hight_cube/4,0);
+		glTranslated(depth/4-depth/8+ safe_space,hight_cube/4+ safe_space,0+ safe_space);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);
 		glVertex3f(0,0,0);
@@ -1148,7 +1151,7 @@ public:
 		glTexCoord2d(0, 1);
 		glVertex3f(0,hight_cube/2.5,0);
 		glEnd();
-		glTranslated(depth/2,0,0);
+		glTranslated(depth/2+ safe_space,0+ safe_space,0+ safe_space);
 		
 		glPopMatrix();
 
