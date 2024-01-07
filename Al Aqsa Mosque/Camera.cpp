@@ -93,7 +93,7 @@ Camera::Camera()
 	Up = Vector3dCreate (0.0, 1.0, 0.0);
 
 
-	RotatedX = RotatedY = RotatedZ = 0.0;
+	//RotatedX = RotatedY = RotatedZ = 0.0;
 }
 
 void Camera::Move (Vector3dStruct Direction)
@@ -130,16 +130,17 @@ void Camera::RotateZ (GLfloat Angle)
 	//now compute the new UpVector (by cross product)
 	Up = CrossProduct(&View, &RightVector)*-1;
 }
-
-void Camera::Render( void )
+//int mouseX=0 , mouseY=0;
+void Camera::Render( int mouseX , int mouseY)
 {
 	//calculate view point
 	Vector3dStruct ViewPoint = Position+View;
-
-	
+	ViewPoint.x= float((mouseX - 1080)*300)/640;
+	ViewPoint.y = float((mouseY - 720)*300)/640;
+	//ViewPoint.z = float((mouseY - 480)*300)/640;
 	gluLookAt(	Position.x,Position.y,Position.z,
-				ViewPoint.x,ViewPoint.y,ViewPoint.z,
-				Up.x,Up.y,Up.z);
+		ViewPoint.x,ViewPoint.y,-50,
+		Up.x,Up.y,Up.z);
 
 }
 
