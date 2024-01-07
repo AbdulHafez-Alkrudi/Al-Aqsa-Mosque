@@ -1055,7 +1055,7 @@ void drawMuseum()
 	m=new museum();
 	mina2.draw_minaret(Point(-30, 70, 100), qibaliMosque, qibaliMosque, qibaliMosque, qibaliMosque);
 	sch->drawGround(Point(0,0,0),250,1,250,wall4);
-	m->drawWall(Point(0,0,0),40,1,250,wall2,wooden_door);
+	m->drawWall(Point(0,0,0),40,1,250,wall2,green_door);
 	sch->DrawHousewithoutDome(Point(1,0,1),125,100,0,100,house_door,wall1,window);
 	sch->DrawHousewithDome(Point(127,0,1),125,100,0,100,wall1,wall1,window,wall1);
 	glPushMatrix();
