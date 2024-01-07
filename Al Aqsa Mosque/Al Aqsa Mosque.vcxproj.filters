@@ -91,6 +91,7 @@
     <Image Include="images\walls\Rkhameh.bmp" />
     <Image Include="images\walls\land.bmp" />
     <Image Include="images\test.bmp" />
+    <Image Include="images\House\wooden_door.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Al Aqsa Mosque.lastbuildstate" />
