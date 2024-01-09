@@ -4,16 +4,27 @@
 #include "texture.h"
 #include <cmath>
 #include "Point.h"
+#include "Door.h"
+
 class Marwani {
 public: 
-	void drawMarwaniMosque(Point begin,float lenght,float width,float height,float depth,int wallTexrure,int carpet,int marble,int* texturess,int walls,int marwaniWall ,int blackMetal){
-		glEnable(GL_TEXTURE_2D);
-		primitives p1;
+
+	void drawMarwaniMosque(Point begin,float lenght,float width,float height,float depth,int wallTexrure,int carpet,
+		int marble,int* texturess,int walls,int marwaniWall ,int blackMetal,int mainDoor){
+			glEnable(GL_TEXTURE_2D);
+		Door* d = new Door(30,height,depth);
+			glPushMatrix();
+		glTranslated(begin.x+width/2-30,begin.y,begin.z);
+		d->DrawDoubledDoor(mainDoor);
+		glPopMatrix();
+		primitives p1;		
 		//draw outside walls
 		//back
-		p1.DrawWall(begin,width,height,depth,marwaniWall);
+		p1.DrawWall(Point(begin.x,begin.y,begin.z),width/2-30,height,depth,marwaniWall);
+		p1.DrawWall(Point(begin.x+width/2+30,begin.y,begin.z),width/2-30,height,depth,marwaniWall);
 		//front
 		p1.DrawWall(Point(begin.x,begin.y,begin.z+lenght),width+depth,height,depth,marwaniWall);
+		
 		//left
 		p1.DrawWall(begin,depth,height,lenght,marwaniWall);
 		//right
@@ -26,8 +37,10 @@ public:
 		p1.DrawQuad(Point(begin.x+depth,begin.y,begin.z+depth),Point(begin.x+width,begin.y,begin.z+depth),
 			Point(begin.x+width,begin.y,begin.z+lenght),Point(begin.x+depth,begin.y,begin.z+lenght),carpet);
 		//back
-		p1.DrawQuad(Point(begin.x+depth,begin.y,begin.z+depth+0.2),Point(begin.x+width,begin.y,begin.z+depth+0.2),
-			Point(begin.x+width,begin.y+height,begin.z+depth+0.2),Point(begin.x+depth,begin.y+height,begin.z+depth+0.2),wallTexrure);
+		p1.DrawQuad(Point(begin.x+depth,begin.y,begin.z+depth+0.2),Point(begin.x+width/2-30,begin.y,begin.z+depth+0.2),
+			Point(begin.x+width/2-30,begin.y+height,begin.z+depth+0.2),Point(begin.x+depth,begin.y+height,begin.z+depth+0.2),wallTexrure);
+		p1.DrawQuad(Point(begin.x+depth+width/2+30,begin.y,begin.z+depth+0.2),Point(begin.x+width,begin.y,begin.z+depth+0.2),
+			Point(begin.x+width,begin.y+height,begin.z+depth+0.2),Point(begin.x+depth+width/2+30,begin.y+height,begin.z+depth+0.2),wallTexrure);
 		//front
 		p1.DrawQuad(Point(begin.x+depth,begin.y,begin.z-0.1+lenght),Point(begin.x+width,begin.y,begin.z-0.1+lenght),
 			Point(begin.x+width,begin.y+height,begin.z-0.1+lenght),Point(begin.x+depth,begin.y+height,begin.z-0.1+lenght),wallTexrure);
@@ -44,8 +57,19 @@ public:
 		
 		//draw pillars inside mosque and wall above them
 	 Pillar mosquePillar(2,height/2.6-(0.02*height/2.6));
-	 for(int j = depth+20;j<=width-10-depth;j+=40){
-		 for (int i =depth+20 ;i<lenght-depth-10;i+=40){	 
+	 for(int j = depth+15;j<width/2-30-depth;j+=50){
+		 for (int i =depth+20 ;i<lenght-depth-10;i+=40){	
+				glPushMatrix();
+				glTranslated(begin.x+j,begin.y+height/2.1-(0.02*height/2.1),begin.z+i);
+				glRotated(180,1,0,1);
+				glRotated(180,1,0,0);
+				p1.Arch1(20,22,5,16,texturess);
+				glPopMatrix();
+			 mosquePillar.cube_cylinder_pillar(Point(begin.x+j-0.5,begin.y, begin.z+i+19),marble,marble);
+	 }}
+
+	 for(int j = width/2+30;j<=width-depth;j+=40){
+		 for (int i =depth+20 ;i<lenght-depth-10;i+=40){	
 				glPushMatrix();
 				glTranslated(begin.x+j,begin.y+height/2.1-(0.02*height/2.1),begin.z+i);
 				glRotated(180,1,0,1);
@@ -57,13 +81,8 @@ public:
 	 for (int i = 5;i<height-10;i+=5){
 		 p1.DrawWall(Point(begin.x+30,begin.y+i,begin.z+depth),32,1,8,blackMetal);
 	 }
-	 for (int i = 5;i<height-10;i+=5){
-		 p1.DrawWall(Point(begin.x+70,begin.y+i,begin.z+depth),32,1,8,blackMetal);
-	 }
 	 float space = 30;
-	 for (int i = 0;i<4;i++){
-		 if(i==3)
-			 space = 100;
+	 for (int i = 0;i<2;i++){
 		 p1.DrawWall(Point(begin.x+space,begin.y,begin.z+depth),2,30,8,blackMetal);
 		 if(i==1)
 			 space+=10;
