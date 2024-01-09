@@ -33,6 +33,7 @@
 #include "Door.h"
 #include "OutSide.h"
 #include "minaret.h"
+#include "sphereSunAndMoon.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 // Stolen From: Yassien
@@ -254,7 +255,7 @@ void SetMood(int mood)
 		// Additional light settings for dark mood...
 	}
 }
-
+int sun , moon;
 int InitGL(GLvoid)
 {
 
@@ -332,7 +333,9 @@ int InitGL(GLvoid)
 	mosquewindow2 = LoadTexture("images/mosque/mosquewindow2.bmp", 255);
 	marwanoCarpet = LoadTexture("images/mosque/carpet.bmp", 255);
 	blackMetal = LoadTexture("images/mosque/blackmetal.bmp", 255);
-
+	//sun and moon
+	sun = LoadTexture("images/Moon_Sun/SunTexture.bmp" , 255);
+	moon = LoadTexture("images/Moon_Sun/Moon.bmp" , 255);
 	tree = new Model_3DS();
 	tree->Load("models/tree/Tree.3ds");
 	Leaf.LoadBMP("models/tree/green.bmp");
@@ -423,10 +426,7 @@ void DrawModel(Model_3DS *model, int scale = 1)
 float angle = 0;
 float angle2 = 0;
 Point *loc = new Point(0, 0, -5);
-void DebugOutput(const std::wstring& message) {
-    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
-    OutputDebugStringW(L"\n");
-}
+
 
 bool adhan= false , background= false  ; 
 
@@ -468,15 +468,7 @@ void sound() {
 
 void Key(bool *keys, float speed)
 {
-	//if(isClicked)
-	//{
-	//	//MyCamera.Render(mouseX , mouseY);
-	//    //Vector3dStruct ViewPoint = MyCamera.View;
-	//	//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
-	//	//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
-	//	//ViewPoint.x= float((mouseX - 640)*300)/640;
-	//	//ViewPoint.y = float((mouseY - 480)*300)/640;
-	//}
+	
 	if (keys[VK_DOWN])
 		MyCamera.RotateX(-1 * speed);
 	if (keys[VK_UP])
@@ -490,13 +482,13 @@ void Key(bool *keys, float speed)
 	if (keys['X'])
 		MyCamera.RotateZ(-1 * speed);
 
-	if (keys['W'])
-		MyCamera.MoveForward(1 * speed);
 	if (keys['S'])
+		MyCamera.MoveForward(1 * speed);
+	if (keys['W'])
 		MyCamera.MoveForward(-1 * speed);
-	if (keys['D'])
-		MyCamera.MoveRight(1 * speed);
 	if (keys['A'])
+		MyCamera.MoveRight(1 * speed);
+	if (keys['D'])
 		MyCamera.MoveRight(-1 * speed);
 	if (keys['Q'])
 		MyCamera.MoveUpward(1 * speed);
@@ -1114,13 +1106,12 @@ void drawterraces()
 	primitives::DrawCupe(Point(0, 0, 0), 100, 10, 220, wall1);
 	glDisable(GL_TEXTURE_2D);
 }
-
+float moveXPerson , moveYPerson;
 void drawPersonModel()
 {
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glLoadIdentity();
-
 	glTranslatef(0.0f, -5.0f, -12);
 	glRotated(180, 0, 1, 0);
 	DrawModel(person, 5);
@@ -1134,7 +1125,10 @@ void drawPersonModel()
 
 bool check = false;
 
-
+void DebugOutput(const std::wstring& message) {
+    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
+    OutputDebugStringW(L"\n");
+}
 
 void collision()
 {
@@ -1172,19 +1166,25 @@ void collision()
 		MyCamera.Position.x = -915;
 	}
 }
-
+sphereSunAndMoon sunAndMoon; // object from class sphereSunAndMoon
+ float radiusMovment = 2000 , radiusSunAndMoon = 100; 
+ int slices = 50, stacks = 100;
+double angleMovment = 0 , moveX = 0 , moveY =0 , translateXSun = 0 , translateYSun = 300 , translateZSun =0 , translateXMoon = 0, translateYMoon = 0 , translateZMoon = 0; 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
-	sound();
+	
+	//sound();
 	isClicked = true;
 	Door door(100 , 1000 , 10);
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glLoadIdentity();
+	glLoadIdentity();
+	moveXPerson= float((mouseX - 640)*200)/640;
+	moveYPerson = float((mouseY - 480)*200)/640;
+	MyCamera.Render(moveXPerson , moveYPerson);
 	MyCamera.Render();
 	Key(keys, 5);
 
@@ -1214,6 +1214,31 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glTranslated(-600, 0, -800);
 
 	Out = new OutSide();
+	glEnable(GL_TEXTURE_2D);
+	if(angleMovment>=(2*6.28))
+			angleMovment=0;
+		 if(angleMovment>=0&&angleMovment<=4.71){
+			glPushMatrix(); // display sphere sun
+			glTranslated(translateXSun , translateYSun , translateZSun);
+		glTranslated(-moveX, moveY,0);
+		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);		
+		glPopMatrix();
+		moveX =(radiusMovment *cos(angleMovment));
+		moveY = (radiusMovment *sin(angleMovment));
+		angleMovment+=0.01;
+			}
+		else
+			{
+			// spherMoon;
+			glPushMatrix();
+			glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
+				glTranslated(moveX, moveY,0);
+				sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);			
+		glPopMatrix();
+		moveX = radiusMovment *cos(angleMovment);
+		moveY = radiusMovment *sin(angleMovment);
+		angleMovment+=0.01;
+			}
 	Street = new OutSide();
 	h = new House();
 	dw = new DrawWall();
@@ -1231,7 +1256,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	drawHouse();
 	hallway();
 
-	// alporaq mosque
+	 //alporaq mosque
 	glPushMatrix();
 	glTranslated(670, 0, 250);
 	primitives::DrawCupe(Point(0, 0, 0), 250, 70, 100, qibaliMosque);
@@ -1257,7 +1282,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 	glPopMatrix();
 
-	// women's mosque
+	 //women's mosque
 	glPushMatrix();
 	glTranslated(250, 0, 650);
 	glRotated(90, 0, 1, 0);
@@ -1315,27 +1340,26 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 	glPopMatrix();
 
-	// draw terraces_algwanima
+	 //draw terraces_algwanima
 	glPushMatrix();
 	glTranslated(1570, 0, 550);
 	primitives::Draw3dQuad(Point(0, 0, 0), 180, 550, 180, 540, 10, wall1);
 	glPushMatrix();
 	glScaled(6, 6, 6);
 	glTranslated(-10, 0, 10);
-	//tree->Draw();
+	tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
 
 	
 	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
 	std::wstring wPos(Pos.begin(), Pos.end());	
-	//DebugOutput(wPos);
+	DebugOutput(wPos);
     
     glFlush();
 
 	Door::openning_trigger(keys);
 	drawPersonModel();
-
 	collision();
 
 	return TRUE;
