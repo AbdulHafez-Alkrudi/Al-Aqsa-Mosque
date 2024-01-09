@@ -38,20 +38,7 @@ public:
 				glRotated(-90,0,0,1);
 					glRotated(-90,0,1,0);
 				glTranslated(-90,-40,40);
-		   glBindTexture(GL_TEXTURE_2D,door);
-			glBegin(GL_QUADS);
-			glTexCoord2f(0,0);
-			glVertex3d(40,40,-40);
-
-			glTexCoord2f(1,0);
-			glVertex3d(90,40,-40);
-
-			glTexCoord2f(1,1);
-			glVertex3d(90,90,-40);
-
-			glTexCoord2f(0,1);
-			glVertex3d(40,90,-40);
-			glEnd();
+			primitives::DrawQuad(Point(40,40,-40),Point(90,40,-40),Point(90,90,-40),Point(40,90,-40), door, 0, 0);
 		    glPopMatrix();
 		    glPopMatrix();
     glPushMatrix();

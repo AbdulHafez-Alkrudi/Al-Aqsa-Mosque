@@ -84,7 +84,7 @@ class DomeOfTheRock
 		glDisable(GL_TEXTURE_2D);
 	}
 	
-	void DrawOctagon(float w, float h, int p, Point base = Point(0, 0, 0))
+	void DrawOctagon(float w, float h, int p, int door_texture = 0 , Point base = Point(0, 0, 0) )
 	{         
 		  glEnable(GL_TEXTURE_2D);
 		  glPushMatrix();
@@ -100,16 +100,24 @@ class DomeOfTheRock
 					  glVertex3d(base.x, base.y, base.z);
 				  
 					  glTexCoord2d(1, 0);
-					  glVertex3d(base.x + 25, base.y, base.z);
+					  glVertex3d(base.x + w/3, base.y, base.z);
 				  
 					  glTexCoord2d(1, 1);
-					  glVertex3d(base.x + 25, base.y + h, base.z);
+					  glVertex3d(base.x + w/3, base.y + h, base.z);
 				  
 					  glTexCoord2d(0, 1);
 					  glVertex3d(base.x, base.y + h, base.z);
 				  glEnd();
+				  unbind;
+				  glTranslated(w/3+0.1 , 0 , 0) ;
+				  Door *door = new Door(w/3 , h , 1);
+				  door->DrawSingleDoor(false , door_texture);
+				  glEnable(GL_TEXTURE_2D);
+				  unbind;
 
-				  glTranslated(45, 0, 0);
+				  glTranslated(w/3, 0, 0);
+
+				  //primitives::DrawCoordinates(true);
 				  glBindTexture(GL_TEXTURE_2D, p);
 			  
 				  glBegin(GL_QUADS);
@@ -117,10 +125,10 @@ class DomeOfTheRock
 					  glVertex3d(base.x, base.y, base.z);
 				  
 					  glTexCoord2d(1, 0);
-					  glVertex3d(base.x + 25, base.y, base.z);
+					  glVertex3d(base.x + w/3, base.y, base.z);
 				  
 					  glTexCoord2d(1, 1);
-					  glVertex3d(base.x + 25, base.y + h, base.z);
+					  glVertex3d(base.x + w/3, base.y + h, base.z);
 				  
 					  glTexCoord2d(0, 1);
 					  glVertex3d(base.x, base.y + h, base.z);
@@ -128,6 +136,7 @@ class DomeOfTheRock
 				  glPopMatrix();
 				  glTranslated(w, 0, 0);
 				  glRotated(45, 0, 1, 0);
+				  unbind ;
 			  }
 			  else 
 			  {
@@ -148,6 +157,7 @@ class DomeOfTheRock
 				  glEnd();
 				  glTranslated(w, 0, 0);
 				  glRotated(45, 0, 1, 0);
+				 unbind ;
 			  }
 		  }
 		  glPopMatrix();

@@ -39,20 +39,7 @@ class school
 						glRotated(-90,0,0,1);
 							glRotated(-90,0,1,0);
 						glTranslated(-175,-125,10);
-				   glBindTexture(GL_TEXTURE_2D,door);
-					glBegin(GL_QUADS);
-					glTexCoord2f(0,0);
-					glVertex3d(125,125,-10);
-
-					glTexCoord2f(1,0);
-					glVertex3d(175,125,-10);
-
-					glTexCoord2f(1,1);
-					glVertex3d(175,175,-10);
-
-					glTexCoord2f(0,1);
-					glVertex3d(125,175,-10);
-					glEnd();
+						primitives::DrawQuad(Point(125,125,-10),Point(175,125,-10),Point(175,175,-10),Point(125,175,-10), door, 0, 0);
 					glPopMatrix();
 					glPopMatrix();
 			glPushMatrix();

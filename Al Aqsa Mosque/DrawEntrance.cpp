@@ -13,7 +13,7 @@ DrawEntrance::~DrawEntrance(void)
     void DrawEntrance:: DrawArch(float radius , int photo) 
 	{
 		glEnable(GL_TEXTURE_2D);
-      glBindTexture(GL_TEXTURE_2D, photo);
+	     glBindTexture(GL_TEXTURE_2D, photo);
 
 		glBegin(GL_TRIANGLE_FAN);
 		glTexCoord2f(0.5, 0.5);  // Center of texture

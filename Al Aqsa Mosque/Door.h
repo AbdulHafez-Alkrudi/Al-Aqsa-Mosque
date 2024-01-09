@@ -16,10 +16,10 @@ public:
 
 	static void openning_trigger(bool *keys){
 		if(keys['O']){
-			angle = min(90 , angle + 1);
+			angle = min(90 , angle + 5);
 		}
 		if(keys['C']){
-			angle = max(0  , angle - 1);
+			angle = max(0  , angle - 5);
 		}
 	}
 };
