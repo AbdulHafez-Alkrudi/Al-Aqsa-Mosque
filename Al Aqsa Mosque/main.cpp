@@ -1236,22 +1236,17 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslated(-160, -30, 1298);
+	glTranslated(-130, -30, 1298);
 	glPushMatrix();
 	glScaled(8, 8, 8);
 	glTranslated(60, 5, -30);
-	tree->Draw();
-	glPopMatrix();
-	glPushMatrix();
-	glScaled(8, 8, 8);
-	glTranslated(60, 5, -40);
-	tree->Draw();
+	//tree->Draw();
 	glPopMatrix();
 	glRotated(90, 0, 10, 0);
 	glScaled(2, 3, 2);
-	mosque->drawQibaliMosque(150, 5, 35, mosquewindow, qibaliMosque, mosqueRoof2,
-							 mosquewindow2, mosqueRoof, mosaic, wall2, house_wall, arch, carpet, great_door, great_door);
+	mosque->drawQibaliMosque(145, 5, 35, mosquewindow, qibaliMosque, mosqueRoof2,
+		mosquewindow2, mosqueRoof, mosaic, wall2, house_wall, arch, carpet, secondryDoors, great_door);
+	glPopMatrix();
 	glPopMatrix();
 
 	mina2.draw_minaret(Point(1720, 70, 1500), wall2, wall2, wall2, wall2);
@@ -1263,9 +1258,9 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	Marwani *m = new Marwani();
 	glPushMatrix();
-	glTranslated(70, -20, -100);
-	glScaled(1.5, 1.7, 2.5);
-	m->drawMarwaniMosque(Point(140, 12, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal);
+	glTranslated(120, -20, 390);
+	glScaled(1, 1.5, 1.5);
+	m->drawMarwaniMosque(Point(140, 15, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal,great_door);
 	glPopMatrix();
 
 	// draw terrace_alrahma
