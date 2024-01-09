@@ -456,21 +456,19 @@ void Key(bool *keys, float speed)
 void domeoftherock_pillars(Point begin, float lenght, float width, float height, float depth, int marble, int *texturess)
 {
 	primitives p1;
-	Pillar mosquePillar(3, height / 2.6 - (0.03 * height / 2.6));
-	mosquePillar.cube_cylinder_pillar(Point(begin.x, begin.y, begin.z), marble, marble);
-	for (int j = depth; j <= width - 10 - depth; j += 40)
-	{
-		for (int i = depth; i < lenght - depth - 10; i += 40)
-		{
-			glPushMatrix();
-			glTranslated(begin.x + j, begin.y + height / 2.1 - (0.01 * height / 2.1), begin.z + i);
-			glRotated(180, 1, 0, 1);
-			glRotated(180, 1, 0, 0);
-			p1.Arch1(20, 22, 5, 16, texturess);
-			glPopMatrix();
-			mosquePillar.cube_cylinder_pillar(Point(begin.x + j - 0.5, begin.y, begin.z + i + 19), marble, marble);
-		}
-	}
+	 Pillar mosquePillar(2,height/2.6-(0.02*height/2.6));
+	  mosquePillar.cube_cylinder_pillar(Point(begin.x+0.5,begin.y, begin.z+19),marble,marble);
+	 for(int j = depth+20;j<width-depth;j+=30){
+		 for (int i =depth+20 ;i<lenght-depth;i+=40){	 
+				glPushMatrix();
+				glTranslated(begin.x+j,begin.y+height/2.1-(0.02*height/2.1),begin.z+i);
+				glRotated(180,1,0,1);
+				glRotated(180,1,0,0);
+				p1.Arch1(20,22,5,16,texturess);
+				glPopMatrix();
+			 mosquePillar.cube_cylinder_pillar(Point(begin.x+j-0.5,begin.y, begin.z+i+19),marble,marble);
+	 }
+}  
 }
 void partofStrais()
 {
@@ -1107,7 +1105,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
   glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
   
 
-	MyCamera.Render();
+	MyCamera.Render(mouseX,mouseX);
 	Key(keys, 30);
 	tree->pos.x = 10 ;
 	tree->pos.y = 0  ;
