@@ -423,7 +423,10 @@ void DrawModel(Model_3DS *model, int scale = 1)
 float angle = 0;
 float angle2 = 0;
 Point *loc = new Point(0, 0, -5);
-
+void DebugOutput(const std::wstring& message) {
+    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
+    OutputDebugStringW(L"\n");
+}
 
 bool adhan= false , background= false  ; 
 
@@ -1131,10 +1134,7 @@ void drawPersonModel()
 
 bool check = false;
 
-void DebugOutput(const std::wstring& message) {
-    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
-    OutputDebugStringW(L"\n");
-}
+
 
 void collision()
 {
@@ -1179,7 +1179,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	//sound();
+	sound();
 	isClicked = true;
 	Door door(100 , 1000 , 10);
 	unbind;
@@ -1329,7 +1329,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	
 	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
 	std::wstring wPos(Pos.begin(), Pos.end());	
-	DebugOutput(wPos);
+	//DebugOutput(wPos);
     
     glFlush();
 

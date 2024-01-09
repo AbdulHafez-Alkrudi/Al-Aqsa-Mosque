@@ -47,8 +47,10 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;${SolutionDir)\Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories);D:\Projects\OpenGL\Al Aqsa Mosque\Al Aqsa Mosque\Dependencies\Assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -63,8 +65,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;${SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories);D:\Projects\OpenGL\Al Aqsa Mosque\Al Aqsa Mosque\Dependencies\Assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
