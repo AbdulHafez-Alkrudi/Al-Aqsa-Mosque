@@ -1260,7 +1260,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPushMatrix();
 	glTranslated(120, -20, 390);
 	glScaled(1, 1.5, 1.5);
-	m->drawMarwaniMosque(Point(140, 15, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal,great_door);
+	m->drawMarwaniMosque(Point(410, 15, 620), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, marble, texturess, house_wall, marwaniWall, blackMetal,great_door);
 	glPopMatrix();
 
 	// draw terrace_alrahma
