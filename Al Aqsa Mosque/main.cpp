@@ -126,6 +126,20 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();
 }
 
+GLfloat lightColor[] = { 0.5f , 0.5f , 0.5f , 1.0f };   //Color (0.5, 0.5, 0.5)
+
+//GLfloat light_position[] = {693.109619f, 2655, 250.683975f, 1.0f};
+GLfloat light_position[] = {-1.0f , -1.0f , -1.0f , 0.0f};
+
+GLfloat light_amb[] = {0.3f , 0.3f , 0.3f , 1.0f} ;
+GLfloat light_diff[] = {0.4f , 0.4f , 0.4f , 0.5f};
+GLfloat light_spac[] = {0.4f , 0.4f , 0.4f , 1.0f};
+
+GLfloat material_ambient[] = {0.4f , 0.4f , 0.4f , 1.0f};
+GLfloat material_diffuse[] = {0.6f , 0.6f , 0.6f , 1.0f};
+GLfloat material_specular[] = {0.2f , 0.2f , 0.2f , 1.0f};
+GLfloat material_sh[] = {128.0/2.0f} ;
+GLfloat global_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
 
 
 
@@ -237,27 +251,40 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	unbind;
 }
 
-int currentMood = 0; // 0 for light mood, 1 for dark mood
+void Light(){
+	
 
-void SetMood(int mood)
-{
-	if (mood == 0)
-	{ // Light mood
-		GLfloat global_ambient_light[] = {0.1f, 0.1f, 0.1f, 1.0f};
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient_light);
-		// Additional light settings for light mood...
-	}
-	else
-	{ // Dark mood
-		GLfloat global_ambient_dark[] = {0.05f, 0.05f, 0.05f, 1.0f};
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient_dark);
-		// Additional light settings for dark mood...
-	}
+	// Set light position and color
+	
+	glLightfv(GL_LIGHT0 , GL_POSITION ,  light_position);
+	glLightfv(GL_LIGHT0 , GL_COLOR ,   lightColor);
+
+	glLightfv(GL_LIGHT0 , GL_AMBIENT  ,  light_amb);
+	glLightfv(GL_LIGHT0 , GL_DIFFUSE  ,  light_diff);
+	glLightfv(GL_LIGHT0 , GL_SPECULAR ,  light_spac);
+
+
+	// Set material properties
+	
+	
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+	//glMaterialfv(GL_FRONT, GL_SPECULAR, material_sh);
+
+
+	//// Set ambient light
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+	//glEnable(GL_COLOR_MATERIAL);
 }
+
+
 
 int InitGL(GLvoid)
 {
-
+	
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
@@ -357,9 +384,9 @@ int InitGL(GLvoid)
 	person->Materials[6].tex = Leaf;
 
 	MyCamera = Camera();
-	MyCamera.Position.x = 400;
-	MyCamera.Position.y = 10;
-	MyCamera.Position.z = -700;
+	MyCamera.Position.x = 600;
+	MyCamera.Position.y = 200;
+	MyCamera.Position.z = 400;
 
 	texturess[0] = qibaliMosque;
 	texturess[1] = qibaliMosque;
@@ -375,36 +402,9 @@ int InitGL(GLvoid)
 	Bowaak[4] = wall1;
 	Bowaak[5] = wall1;
 
-	// Light stuff
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	
+	Light();
 
-	// Set light position and color
-	GLfloat light_position[] = {2000.0f, 2000.0f, 2000.0f, 1.0f};
-	GLfloat light_color[] = {0.1f, 0.1f, 0.031, 1.0f};
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color);
-
-	glEnable(GL_LIGHT1);
-	// Set light position and color
-	GLfloat light_position2[4] = {-2000.0f, 2000.0f, -2000.0f, 1.0f};
-	GLfloat light_color2[4] = {0.01f, 0.01f, 0.01, 1.0f};
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position2);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_color2);
-
-	// Set material properties
-	GLfloat material_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f};
-	GLfloat material_diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};
-	GLfloat material_specular[] = {0.5f, 0.5f, 0.5f, 1.0f};
-	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-
-	// Set ambient light
-	GLfloat global_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-
-	SetMood(currentMood);
 
 	return TRUE; // Initialization Went OK
 }
@@ -429,6 +429,8 @@ void DebugOutput(const std::wstring& message) {
 }
 
 bool adhan= false , background= false  ; 
+
+
 
 void sound() {
     // Calculate the distance between the listener and the sound source
@@ -502,11 +504,7 @@ void Key(bool *keys, float speed)
 		MyCamera.MoveUpward(1 * speed);
 	if (keys['E'])
 		MyCamera.MoveUpward(-1 * speed);
-	if (keys['M'])
-	{
-		currentMood = (currentMood + 1) % 2; // Toggle between 0 and 1
-		SetMood(currentMood);
-	}
+	
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void domeoftherock_pillars(Point begin, float lenght, float width, float height, float depth, int marble, int *texturess)
@@ -1173,6 +1171,9 @@ void collision()
 	}
 }
 
+
+int lightX = 700 , lightY = 1955 , lightZ = 250 ; 
+
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 
@@ -1198,14 +1199,36 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	}
 	if (check)
 	{
+		Light();
 		glClearColor(0.0f, 0.0f, 0.1f, 1.0f); // Dark blue background
-		glEnable(GL_LIGHTING);
+
+		//glEnable(GL_LIGHTING);
+
 	}
 
 	else
 	{
 		glDisable(GL_LIGHTING);
 	}
+	if(keys['I'])
+			lightY+=100;
+	if(keys['K'])
+			lightY-=100;
+	if(keys['L'])
+			lightX+=100;
+	if(keys['J'])
+			lightX-=100;
+	if(keys['M'])
+			lightZ+=100;
+	if(keys['N'])
+			lightZ-=100;
+	std::string Pos = std::to_string(lightX) + ' ' +  std::to_string(lightY) + ' ' +  std::to_string(lightZ) ;
+	std::wstring wPos(Pos.begin(), Pos.end());	
+	DebugOutput(wPos);
+	light_position[0] = lightX;
+	light_position[1] = lightY;
+	light_position[2] = lightZ;
+	glLightfv(GL_LIGHT0 , GL_POSITION ,  light_position);
 
 	Draw_Skybox(0, 0, 0, 4000, 4000, 4000);
 
@@ -1330,15 +1353,14 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 
 	
-	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
+	/*std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
 	std::wstring wPos(Pos.begin(), Pos.end());	
-	//DebugOutput(wPos);
+	DebugOutput(wPos);*/
     
     glFlush();
 
 	Door::openning_trigger(keys);
 	drawPersonModel();
-
 	collision();
 
 	return TRUE;
@@ -1597,13 +1619,6 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 
 	case WM_KEYDOWN: // Is A Key Being Held Down?
 	{
-		if (wParam == 'M' || wParam == 'm')
-		{
-			currentMood = (currentMood + 1) % 2; // Toggle between 0 and 1
-			SetMood(currentMood);
-			InvalidateRect(hWnd, NULL, TRUE);
-		}
-
 		keys[wParam] = TRUE; // If So, Mark It As TRUE
 		return 0;			 // Jump Back
 	}
