@@ -47,8 +47,10 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;${SolutionDir)\Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories);D:\Projects\OpenGL\Al Aqsa Mosque\Al Aqsa Mosque\Dependencies\Assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -63,8 +65,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;${SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories);D:\Projects\OpenGL\Al Aqsa Mosque\Al Aqsa Mosque\Dependencies\Assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Glut\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GLAUX.lib;GLU32.lib;OPENGL32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>
+      </ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -142,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\House\door.bmp" />
+    <Image Include="images\House\new_door.bmp" />
     <Image Include="Images\House\school_logo.bmp" />
     <Image Include="Images\House\window.bmp" />
     <Image Include="Images\House\window2.bmp" />
@@ -149,26 +154,18 @@
     <Image Include="images\Moon_Sun\Moon.bmp" />
     <Image Include="images\Moon_Sun\Sun.bmp" />
     <Image Include="images\Moon_Sun\SunTexture.bmp" />
-    <Image Include="images\mosque\alporaq.bmp" />
     <Image Include="Images\mosque\Arch.bmp" />
     <Image Include="Images\mosque\ball.bmp" />
-    <Image Include="Images\mosque\BigEntrance.bmp" />
-    <Image Include="Images\mosque\BigEntranceOuter.bmp" />
     <Image Include="Images\mosque\bottom_wall.bmp" />
     <Image Include="Images\mosque\carpet.bmp" />
     <Image Include="Images\mosque\carpetMosque.bmp" />
     <Image Include="Images\mosque\CylinderBody.bmp" />
-    <Image Include="Images\mosque\InsideEntrande.bmp" />
-    <Image Include="images\mosque\outsidedoors2.bmp" />
     <Image Include="Images\mosque\up_wall.bmp" />
-    <Image Include="images\test.bmp" />
     <Image Include="Images\walls\grass.bmp" />
     <Image Include="Images\walls\ground.bmp" />
-    <Image Include="Images\walls\ground2.bmp" />
     <Image Include="Images\walls\house_wall.bmp" />
     <Image Include="images\walls\land.bmp" />
     <Image Include="Images\walls\marble.bmp" />
-    <Image Include="images\walls\Rkhameh.bmp" />
     <Image Include="Images\walls\stone1.bmp" />
     <Image Include="images\walls\stone2.bmp" />
     <Image Include="Images\walls\stone3.bmp" />
@@ -178,14 +175,8 @@
     <Image Include="images\walls\wall2.bmp" />
     <Image Include="images\walls\wall4.bmp" />
     <Image Include="Images\walls\wall5.bmp" />
-    <Image Include="Images\walls\wall_of_mosque.bmp" />
     <Image Include="models\tree\bark.bmp" />
-    <Image Include="models\tree\bark_loo.jpg" />
-    <Image Include="models\tree\blatt1.jpg" />
-    <Image Include="models\tree\blatt1_a.jpg" />
-    <Image Include="models\tree\empty_leaf.bmp" />
     <Image Include="models\tree\green.bmp" />
-    <Image Include="models\tree\leaf.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
