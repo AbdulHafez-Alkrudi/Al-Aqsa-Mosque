@@ -146,7 +146,7 @@ class qibaliMosquee {
 	 p.DrawWall(Point(180+lenghtOfWall-depthOfWall,12,200+lenghtOfWall),depthOfWall*2,heightOfWall,lenghtOfFront,qibaliMosque);
 	 //pillars of Entrance
 	 double lenghtOfFrontPillar = 28.5;
-	 Pillar frontPillar(6,heightOfWall-(heightOfWall*0.22));
+	 Pillar frontPillar(6,heightOfWall-(heightOfWall*0.3));
 	 for(int i =0;i<=120;i+=20){
 		 if(i == 60)
 			 continue;
@@ -158,7 +158,7 @@ class qibaliMosquee {
 	 for(int j = 0;j<=90;j+=30){
 		 p.DrawWall(Point(210+j-0.5,16+heightOfWall/1.5-(0.02*heightOfWall/1.5),200+depthOfWall),3,13-depthOfWall,lenghtOfWall-depthOfWall,qibaliMosque);
 		 p.DrawWall(Point(210+j-0.5,16+heightOfWall/1.5-(0.02*heightOfWall/1.5)-1,200+depthOfWall),3,1,lenghtOfWall-depthOfWall,mosaic);
-	 for (int i =0 ;i<lenghtOfWall-10;i+=20){	 
+	 for (int i =0 ;i<lenghtOfWall-10;i+=30){	 
 		 mosquePillar.cube_cylinder_pillar(Point(210+j, 12, 210+i),marble,marble);
 	 }
 	 }
