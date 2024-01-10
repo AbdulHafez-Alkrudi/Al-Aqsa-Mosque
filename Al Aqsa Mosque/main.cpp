@@ -35,7 +35,6 @@
 #include "minaret.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
-// Stolen From: Yassien
 #define txt(s, t) glTexCoord2d(s, t)
 #define white glColor3f(1, 1, 1)
 #define db double
@@ -303,10 +302,6 @@ int InitGL(GLvoid)
 	// texture_door = LoadTexture("images/door.bmp", 255);
 	wall0 = LoadTexture("images/walls/old_wall.bmp", 255);
 	grass1 = LoadTexture("images/walls/grass1.bmp", 255);
-
-	// this one just to fix the bug of putting the first texture on the primitive if i didn't bind any textuer to it
-
-	wall = LoadTexture("images/walls/house_wall.bmp", 255);
 
 	// skybox
 	SKYFRONT = LoadTexture("images/skybox/front.bmp", 255);
@@ -1254,7 +1249,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	drawMuseum();
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-8, 0, 8);
+	glTranslated(10, 0, 8);
 	tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
@@ -1308,12 +1303,12 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	primitives::Draw3dQuad(Point(0, 0, 0), 550, 260, 500, 260, 10, wall1);
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 8);
+	glTranslated(0, 0, 8);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 20);
+	glTranslated(0, 0, 20);
 	tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
@@ -1322,11 +1317,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPushMatrix();
 	glTranslated(1570, 0, 550);
 	primitives::Draw3dQuad(Point(0, 0, 0), 180, 550, 180, 540, 10, wall1);
-	glPushMatrix();
-	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 10);
-	//tree->Draw();
-	glPopMatrix();
 	glPopMatrix();
 
 	
