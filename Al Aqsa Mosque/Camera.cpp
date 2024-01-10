@@ -135,11 +135,10 @@ void Camera::Render( int mouseX , int mouseY)
 {
 	//calculate view point
 	Vector3dStruct ViewPoint = Position+View;
-	ViewPoint.x= float((mouseX - 1080)*300)/640;
-	ViewPoint.y = float((mouseY - 720)*300)/640;
+
 	//ViewPoint.z = float((mouseY - 480)*300)/640;
 	gluLookAt(	Position.x,Position.y,Position.z,
-		ViewPoint.x,ViewPoint.y,-50,
+		mouseX,mouseY,-50,
 		Up.x,Up.y,Up.z);
 
 }
@@ -148,12 +147,9 @@ void Camera::Render( void )
 {
 	//calculate view point
 	Vector3dStruct ViewPoint = Position+View;
-
-	
 	gluLookAt(Position.x,Position.y,Position.z,
 				ViewPoint.x,ViewPoint.y,ViewPoint.z,
 				Up.x,Up.y,Up.z);
-
 }
 
 

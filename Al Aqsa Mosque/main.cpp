@@ -33,6 +33,7 @@
 #include "Door.h"
 #include "OutSide.h"
 #include "minaret.h"
+#include "sphereSunAndMoon.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
 #define txt(s, t) glTexCoord2d(s, t)
@@ -278,9 +279,7 @@ void Light(){
 	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
 	//glEnable(GL_COLOR_MATERIAL);
 }
-
-
-
+int sun , moon;
 int InitGL(GLvoid)
 {
 	
@@ -355,7 +354,9 @@ int InitGL(GLvoid)
 	mosquewindow2 = LoadTexture("images/mosque/mosquewindow2.bmp", 255);
 	marwanoCarpet = LoadTexture("images/mosque/carpet.bmp", 255);
 	blackMetal = LoadTexture("images/mosque/blackmetal.bmp", 255);
-
+	//sun and moon
+	sun = LoadTexture("images/Moon_Sun/SunTexture.bmp" , 255);
+	moon = LoadTexture("images/Moon_Sun/Moon.bmp" , 255);
 	tree = new Model_3DS();
 	tree->Load("models/tree/Tree.3ds");
 	Leaf.LoadBMP("models/tree/green.bmp");
@@ -466,15 +467,7 @@ void sound() {
 
 void Key(bool *keys, float speed)
 {
-	//if(isClicked)
-	//{
-	//	//MyCamera.Render(mouseX , mouseY);
-	//    //Vector3dStruct ViewPoint = MyCamera.View;
-	//	//MyCamera.RotatedX(-1*speed)||MyCamera.RotatedX(1*speed);
-	//	//MyCamera.RotatedY(-1*speed)||MyCamera.RotatedY(1*speed);
-	//	//ViewPoint.x= float((mouseX - 640)*300)/640;
-	//	//ViewPoint.y = float((mouseY - 480)*300)/640;
-	//}
+	
 	if (keys[VK_DOWN])
 		MyCamera.RotateX(-1 * speed);
 	if (keys[VK_UP])
@@ -1088,12 +1081,22 @@ void drawMuseum()
 	}
 	glDisable(GL_TEXTURE_2D);
 }
+<<<<<<< HEAD
+=======
+
+void drawterraces()
+{
+	glEnable(GL_TEXTURE_2D);
+	primitives::DrawCupe(Point(0, 0, 0), 100, 10, 220, wall1);
+	glDisable(GL_TEXTURE_2D);
+}
+float moveXPerson , moveYPerson;
+>>>>>>> 6ff2c4904d2766208f6266870c92a5f149ef05ef
 void drawPersonModel()
 {
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glLoadIdentity();
-
 	glTranslatef(0.0f, -5.0f, -12);
 	glRotated(180, 0, 1, 0);
 	DrawModel(person, 5);
@@ -1145,10 +1148,10 @@ void collision()
 		MyCamera.Position.x = -915;
 	}
 }
-
-
-int lightX = 700 , lightY = 1955 , lightZ = 250 ; 
-
+sphereSunAndMoon sunAndMoon; // object from class sphereSunAndMoon
+ float radiusMovment = 2000 , radiusSunAndMoon = 100; 
+ int slices = 50, stacks = 100;
+double angleMovment = 0 , moveX = 0 , moveY =0 , translateXSun = 0 , translateYSun = 300 , translateZSun =0 , translateXMoon = 0, translateYMoon = 0 , translateZMoon = 0; 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 
@@ -1160,7 +1163,10 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	Door door(100 , 1000 , 10);
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glLoadIdentity();
+	glLoadIdentity();
+	//moveXPerson= float((mouseX - 640)*200)/;
+	//moveYPerson = float((mouseY - 480)*200)/100;
+	//MyCamera.Render(moveXPerson , moveYPerson);
 	MyCamera.Render();
 	Key(keys, 15);
 
@@ -1172,45 +1178,85 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	{
 		check = false;
 	}
-	if (check)
-	{
-		Light();
-		glClearColor(0.0f, 0.0f, 0.1f, 1.0f); // Dark blue background
-
-		//glEnable(GL_LIGHTING);
-
-	}
-
-	else
-	{
-		glDisable(GL_LIGHTING);
-	}
-	if(keys['I'])
-			lightY+=100;
-	if(keys['K'])
-			lightY-=100;
-	if(keys['L'])
-			lightX+=100;
-	if(keys['J'])
-			lightX-=100;
-	if(keys['M'])
-			lightZ+=100;
-	if(keys['N'])
-			lightZ-=100;
-	std::string Pos = std::to_string(lightX) + ' ' +  std::to_string(lightY) + ' ' +  std::to_string(lightZ) ;
-	std::wstring wPos(Pos.begin(), Pos.end());	
-	DebugOutput(wPos);
-	light_position[0] = lightX;
-	light_position[1] = lightY;
-	light_position[2] = lightZ;
-	glLightfv(GL_LIGHT0 , GL_POSITION ,  light_position);
-
 	Draw_Skybox(0, 0, 0, 4000, 4000, 4000);
 
 	glTranslated(-600, 0, -800);
 
 
 	Out = new OutSide();
+	glEnable(GL_TEXTURE_2D);
+	if (check)
+	{
+		glClearColor(0.0f, 0.0f, 0.1f, 1.0f); // Dark blue background
+		glEnable(GL_LIGHTING);
+glEnable(GL_LIGHT0);  // Assuming you are using the first light source
+	glPushMatrix();
+GLfloat light_position[] = { 0.0, 0.0, 1.0, 0.0 };  // Directional light from behind
+GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0 };
+GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+
+glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+// Set material properties of the sphere
+GLfloat material_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
+GLfloat material_diffuse[] = { 0.8, 0.8, 0.8, 1.0 };
+GLfloat material_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat material_shininess = 100.0;
+
+glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
+			glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
+				glTranslated(-moveX, moveY,0);
+				sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);			
+		glPopMatrix();
+		moveX = radiusMovment *cos(angleMovment);
+		moveY = radiusMovment *sin(angleMovment);
+		angleMovment+=0.01;
+	}
+
+	else
+	{
+		glDisable(GL_LIGHTING);
+				glPushMatrix(); // display sphere sun
+			glTranslated(translateXSun , translateYSun , translateZSun);
+		glTranslated(-moveX, moveY,0);
+		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);		
+		glPopMatrix();
+		moveX =(radiusMovment *cos(angleMovment));
+		moveY = (radiusMovment *sin(angleMovment));
+		angleMovment+=0.01;
+	}
+
+	//if(angleMovment>=(2*6.28))
+	//		angleMovment=0;
+	//	 if(angleMovment>=0&&angleMovment<=4.71){
+	//		glPushMatrix(); // display sphere sun
+	//		glTranslated(translateXSun , translateYSun , translateZSun);
+	//	glTranslated(-moveX, moveY,0);
+	//	sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);		
+	//	glPopMatrix();
+	//	moveX =(radiusMovment *cos(angleMovment));
+	//	moveY = (radiusMovment *sin(angleMovment));
+	//	angleMovment+=0.01;
+			//}
+		//else
+		//	{
+		//	// spherMoon;
+		//	glPushMatrix();
+		//	glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
+		//		glTranslated(-moveX, moveY,0);
+		//		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);			
+		//glPopMatrix();
+		//moveX = radiusMovment *cos(angleMovment);
+		//moveY = radiusMovment *sin(angleMovment);
+		//angleMovment+=0.01;
+		//	}
 	Street = new OutSide();
 	h = new House();
 	dw = new DrawWall();
@@ -1228,7 +1274,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	drawHouse();
 	hallway();
 
-	// alporaq mosque
+	 //alporaq mosque
 	glPushMatrix();
 	glTranslated(670, 0, 250);
 	primitives::DrawCupe(Point(0, 0, 0), 250, 70, 100, qibaliMosque);
@@ -1254,7 +1300,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 	glPopMatrix();
 
-	// women's mosque
+	 //women's mosque
 	glPushMatrix();
 	glTranslated(250, 0, 650);
 	glRotated(90, 0, 1, 0);
@@ -1313,10 +1359,18 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 	glPopMatrix();
 
-	// draw terraces_algwanima
+	 //draw terraces_algwanima
 	glPushMatrix();
 	glTranslated(1570, 0, 550);
 	primitives::Draw3dQuad(Point(0, 0, 0), 180, 550, 180, 540, 10, wall1);
+<<<<<<< HEAD
+=======
+	glPushMatrix();
+	glScaled(6, 6, 6);
+	glTranslated(-10, 0, 10);
+	tree->Draw();
+	glPopMatrix();
+>>>>>>> 6ff2c4904d2766208f6266870c92a5f149ef05ef
 	glPopMatrix();
 
 	
