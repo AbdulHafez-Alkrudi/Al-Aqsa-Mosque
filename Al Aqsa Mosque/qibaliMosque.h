@@ -3,6 +3,7 @@
 #include "primitives.h"
 #include "DrawWall.h"
 #include "texture.h"
+#include "Door.h";
 #include <cmath>
 #include "Point.h"
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
@@ -36,12 +37,12 @@ class qibaliMosquee {
 	 p.DrawQuad(Point(180+depthOfWall+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall-depthOfWall,12,200+lenghtOfWall+0.1+depthOfWall),
 		 Point(180+lenghtOfWall-depthOfWall,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),Point(180+depthOfWall+lenghtOfWall/4.5+lenghtOfWall/2+depthOfWall+10,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),door,1,0);
 	 
-	 //draw main door
-	 p.DrawQuad(Point(180+lenghtOfWall/2.3,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/2.3-5,12,200+lenghtOfWall+0.1+depthOfWall+12.5),
-		 Point(180+lenghtOfWall/2.3-5,12+heightOfWall,200+lenghtOfWall+0.1+12.5+depthOfWall),Point(180+lenghtOfWall/2.3,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),mainDoor,1,0);
-	 p.DrawQuad(Point(180+lenghtOfWall/2+15,12,200+lenghtOfWall+0.1+depthOfWall),Point(180+lenghtOfWall/2+15+5,12,200+lenghtOfWall+0.1+12.5+depthOfWall),
-		 Point(180+lenghtOfWall/2+15+5,12+heightOfWall,200+lenghtOfWall+0.1+12.5+depthOfWall),Point(180+lenghtOfWall/2+15,12+heightOfWall,200+lenghtOfWall+0.1+depthOfWall),mainDoor,1,0);
-	 
+	 Door* d = new Door(15,heightOfWall,depthOfWall);
+	 glPushMatrix();
+	 glTranslated(180+lenghtOfWall/2.3,12,200+lenghtOfWall);
+	 d->DrawDoubledDoor(mainDoor);
+	 glPopMatrix();
+
 	 //left
     p.DrawWall(Point(180,12,200),depthOfWall,heightOfWall,lenghtOfWall,qibaliMosque);
 	 for (int i = 10; i < lenghtOfWall; i += 20) {

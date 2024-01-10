@@ -384,9 +384,9 @@ int InitGL(GLvoid)
 	person->Materials[6].tex = Leaf;
 
 	MyCamera = Camera();
-	MyCamera.Position.x = 600;
-	MyCamera.Position.y = 200;
-	MyCamera.Position.z = 400;
+	MyCamera.Position.x = -583.713135;
+	MyCamera.Position.y = 57;
+	MyCamera.Position.z = -803.210693;
 
 	texturess[0] = qibaliMosque;
 	texturess[1] = qibaliMosque;
@@ -1126,10 +1126,6 @@ void drawPersonModel()
 	glDisable(GL_TEXTURE_2D);
 }
 
-// GLfloat lightColor0[] = { 1.5f, 1.5f, 1.5f, 1.0f };   //Color (0.5, 0.5, 0.5)
-// GLfloat lightPos0[] = { 1.0f, 1.0f, 1.0f, 1.0f };     //Positioned at (4, 0, 8)
-// GLfloat ambientColor[] = { 10.2f, 0.2f, 0.2f, 1.0f }; //Color (0.2, 0.2, 0.2)
-
 bool check = false;
 
 
@@ -1172,7 +1168,6 @@ void collision()
 }
 
 
-int lightX = 700 , lightY = 1955 , lightZ = 250 ; 
 
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
@@ -1210,26 +1205,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	{
 		glDisable(GL_LIGHTING);
 	}
-	if(keys['I'])
-			lightY+=100;
-	if(keys['K'])
-			lightY-=100;
-	if(keys['L'])
-			lightX+=100;
-	if(keys['J'])
-			lightX-=100;
-	if(keys['M'])
-			lightZ+=100;
-	if(keys['N'])
-			lightZ-=100;
-	std::string Pos = std::to_string(lightX) + ' ' +  std::to_string(lightY) + ' ' +  std::to_string(lightZ) ;
-	std::wstring wPos(Pos.begin(), Pos.end());	
-	DebugOutput(wPos);
-	light_position[0] = lightX;
-	light_position[1] = lightY;
-	light_position[2] = lightZ;
-	glLightfv(GL_LIGHT0 , GL_POSITION ,  light_position);
-
 	Draw_Skybox(0, 0, 0, 4000, 4000, 4000);
 
 	glTranslated(-600, 0, -800);
@@ -1353,9 +1328,9 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glPopMatrix();
 
 	
-	/*std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
+	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
 	std::wstring wPos(Pos.begin(), Pos.end());	
-	DebugOutput(wPos);*/
+	DebugOutput(wPos);
     
     glFlush();
 
