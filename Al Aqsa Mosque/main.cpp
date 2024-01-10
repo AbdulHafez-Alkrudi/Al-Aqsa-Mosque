@@ -268,7 +268,8 @@ int InitGL(GLvoid)
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
@@ -305,12 +306,12 @@ int InitGL(GLvoid)
 	marwaniWall = LoadTexture("images/walls/stone2.bmp", 255);
 
 	// house
-	window = LoadTexture("images//House/window2.bmp", 3);
+	window = LoadTexture("images//House/window2.bmp", -80);
 	logo = LoadTexture("images/House/school_logo.bmp", 255);
 	wooden_door = LoadTexture("images/House/wooden_door.bmp", 255);
 	green_door = LoadTexture("images//House/green_door.bmp", 255);
 	house_door = LoadTexture("images/House/door.bmp", 255);
-	house_window = LoadTexture("images//House/window.bmp", 255);
+	house_window = LoadTexture("images//House/window.bmp", -80);
 	great_door = LoadTexture("images/House/GreatDoor.bmp", 255);
 
 	// mosque
@@ -553,7 +554,7 @@ void hallway()
 	glPushMatrix();
 
 	glTranslated(1650, 0, 250);
-	mina2.draw_minaret(Point(70, 70, 60), wall4, wall4, wall4, wall4);
+	mina2.draw_minaret(Point(70, 70, 60), wall1, wall1, wall1, wall1);
 	h->DrawHousewithoutDomeoneWindow(Point(0, 0, 0), 100, 100, 0, 70, green_door, wall, house_window);
 	pri->DrawBall(40, wall, Point(0, 57, 50));
 	glTranslated(-100, 0, 0);
@@ -561,8 +562,8 @@ void hallway()
 
 	glPushMatrix();
 	glTranslated(-560, 62, 0);
-	primitives::DrawCupe(Point(0, 0, 0), 560, 8, 100, wall4);
-	mina2.draw_minaret(Point(0, 0, 0), wall4, wall4, wall4, wall4);
+	primitives::DrawCupe(Point(0, 0, 0), 560, 8, 100, wall1);
+	mina2.draw_minaret(Point(0, 0, 0), wall1, wall1, wall1, wall1);
 	glPopMatrix();
 
 	glTranslated(0, 0, 90);
@@ -570,7 +571,7 @@ void hallway()
 	for (int i = 1; i <= 10; i++)
 	{
 		glTranslated(-56, 0, 0);
-		pillar->cube_cylinder_pillar(Point(0, 0, 0), wall4, wall4);
+		pillar->cube_cylinder_pillar(Point(0, 0, 0), wall1, wall1);
 	}
 
 	glPopMatrix();
@@ -708,20 +709,7 @@ void drawschool()
 	sch->DrawHousewithoutDome(Point(201, 0, 1), 100, 70, 0, 80, wall2, wall2, window);
 	glPushMatrix();
 	glTranslated(147, 130, 70);
-	glBindTexture(GL_TEXTURE_2D, logo);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3d(0, 0, 0);
-
-	glTexCoord2f(1, 0);
-	glVertex3d(50, 0, 0);
-
-	glTexCoord2f(1, 1);
-	glVertex3d(50, 30, 0);
-
-	glTexCoord2f(0, 1);
-	glVertex3d(0, 30, 0);
-	glEnd();
+	primitives::DrawQuad(Point(0, 0, 0),Point(50, 0, 0),Point(50, 30, 0),Point(0, 30, 0), logo, 1, 0);
 	glPopMatrix();
 	glPushMatrix();
 	glTranslated(0, -20, 100);
@@ -775,7 +763,7 @@ void drawdomeoftherock()
 	glTranslated(200, 0, -200);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(13, -5, 10);
+	glTranslated(20, -5, 10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -825,15 +813,15 @@ void drawdomeoftherock()
 
 	float shifting = 5.0f ; 
 
-	domeoftherock_pillars(Point(60, 0, 50), 155, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 50), 155, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 410), 105, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 410), 105, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 280), 100 , 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 280), 100 , 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// left
@@ -841,7 +829,7 @@ void drawdomeoftherock()
 	glTranslated(600, -40, 380);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-20, 0, -25);
+	glTranslated(-10, 0, -25);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -876,10 +864,10 @@ void drawdomeoftherock()
 	glPopMatrix();
 	glPopMatrix();
 	glPushMatrix();
-	domeoftherock_pillars(Point(480, 0, 200), 100, 50, 40, 10, wall1, Bowaak);
+	domeoftherock_pillars(Point(490, 0, 200), 100, 50, 40, 10, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
-	domeoftherock_pillars(Point(480, 0, 350), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(490, 0, 350), 100, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// back
@@ -887,7 +875,7 @@ void drawdomeoftherock()
 	glTranslated(200, -40, 600);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(15, 0, -10);
+	glTranslated(30, 0, -10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -911,7 +899,7 @@ void drawdomeoftherock()
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(-530, 0, 150), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(-480, 0, 80), 100, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// right
@@ -919,22 +907,22 @@ void drawdomeoftherock()
 	glTranslated(-100, -40, 460);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -10);
+	glTranslated(10, 0, -10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -20);
+	glTranslated(10, 0, -20);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -40);
+	glTranslated(10, 0, -40);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -50);
+	glTranslated(10, 0, -50);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -1107,14 +1095,6 @@ void drawMuseum()
 	}
 	glDisable(GL_TEXTURE_2D);
 }
-
-void drawterraces()
-{
-	glEnable(GL_TEXTURE_2D);
-	primitives::DrawCupe(Point(0, 0, 0), 100, 10, 220, wall1);
-	glDisable(GL_TEXTURE_2D);
-}
-
 void drawPersonModel()
 {
 	glEnable(GL_TEXTURE_2D);
@@ -1186,7 +1166,7 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glLoadIdentity();
 	MyCamera.Render();
-	Key(keys, 5);
+	Key(keys, 15);
 
 	if (keys['T'])
 	{
@@ -1211,7 +1191,6 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	glTranslated(-600, 0, -800);
 
-	glTranslated(-600, 0, -800);
 
 	Out = new OutSide();
 	Street = new OutSide();
@@ -1295,11 +1274,9 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 	Marwani *m = new Marwani();
 	glPushMatrix();
 	glTranslated(120, -20, 390);
-	glScaled(1, 1.5, 1.5);
-	m->drawMarwaniMosque(Point(140, 12, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, 
+	glScaled(1.5, 1.5, 2.5);
+	m->drawMarwaniMosque(Point(90, 12, 280), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, 
 		marble, texturess, house_wall, marwaniWall, blackMetal , great_door);
-
-	
 	glPopMatrix();
 
 	// draw terrace_alrahma
