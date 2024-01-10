@@ -61,7 +61,7 @@ void sphereSunAndMoon::DisplaySunAndMoon(float radiusMovment, float radiusSunAnd
 										 double angleMovment , double moveX , double moveY , 
 										 double transletXSun ,double translateYSun, double translateZSun , 
 										 double translateXMoon , double translateYMoon , double translateZMoon)//radius is the radius of circuler movment , slices is the number of the squere you want to draw squere always is 
-//DisplaySunAndMoon(30 , 50 , 100 , sun , moon ,0 ,0 , 0 , -200 , 200 , -200 ,-200 , 150 , -200)
+//DisplaySunAndMoon(30 , 50 , 100 , sun , moon ,0 ,0 , 0 , -200 , 200 , -200 ,-200 , 150 , -200 , -200)
 	{
 		glEnable(GL_TEXTURE_2D);
 	if(angleMovment>=(2*6.28))
