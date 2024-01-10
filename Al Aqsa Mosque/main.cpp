@@ -1,13 +1,12 @@
 #pragma once
 #include <windows.h> // Header File For Windows
 #include <mmsystem.h>
-#pragma comment(lib , "winmm.lib")
-#include <gl.h>		 // Header File For The OpenGL32 Library
-#include <glu.h>	 // Header File For The GLu32 Library
+#pragma comment(lib, "winmm.lib")
+#include <gl.h>	 // Header File For The OpenGL32 Library
+#include <glu.h> // Header File For The GLu32 Library
 #include <glaux.h>
 #include <iostream>
 #include <string>
-
 
 #include <fstream>
 #include <cmath>
@@ -36,7 +35,6 @@
 #include "sphereSunAndMoon.h"
 
 #define unbind glBindTexture(GL_TEXTURE_2D, 0);
-// Stolen From: Yassien
 #define txt(s, t) glTexCoord2d(s, t)
 #define white glColor3f(1, 1, 1)
 #define db double
@@ -127,22 +125,20 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height) // Resize And Initialize The
 	glLoadIdentity();
 }
 
-GLfloat lightColor[] = { 0.5f , 0.5f , 0.5f , 1.0f };   //Color (0.5, 0.5, 0.5)
+GLfloat lightColor[] = {0.5f, 0.5f, 0.5f, 1.0f}; // Color (0.5, 0.5, 0.5)
 
-//GLfloat light_position[] = {693.109619f, 2655, 250.683975f, 1.0f};
-GLfloat light_position[] = {-1.0f , -1.0f , -1.0f , 0.0f};
+// GLfloat light_position[] = {693.109619f, 2655, 250.683975f, 1.0f};
+GLfloat light_position[] = {-1.0f, -1.0f, -1.0f, 0.0f};
 
-GLfloat light_amb[] = {0.3f , 0.3f , 0.3f , 1.0f} ;
-GLfloat light_diff[] = {0.4f , 0.4f , 0.4f , 0.5f};
-GLfloat light_spac[] = {0.4f , 0.4f , 0.4f , 1.0f};
+GLfloat light_amb[] = {0.3f, 0.3f, 0.3f, 1.0f};
+GLfloat light_diff[] = {0.4f, 0.4f, 0.4f, 0.5f};
+GLfloat light_spac[] = {0.4f, 0.4f, 0.4f, 1.0f};
 
-GLfloat material_ambient[] = {0.4f , 0.4f , 0.4f , 1.0f};
-GLfloat material_diffuse[] = {0.6f , 0.6f , 0.6f , 1.0f};
-GLfloat material_specular[] = {0.2f , 0.2f , 0.2f , 1.0f};
-GLfloat material_sh[] = {128.0/2.0f} ;
+GLfloat material_ambient[] = {0.4f, 0.4f, 0.4f, 1.0f};
+GLfloat material_diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
+GLfloat material_specular[] = {0.2f, 0.2f, 0.2f, 1.0f};
+GLfloat material_sh[] = {128.0 / 2.0f};
 GLfloat global_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
-
-
 
 void Draw_Skybox(float x, float y, float z, float width, float height, float length)
 {
@@ -252,38 +248,35 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	unbind;
 }
 
-void Light(){
-	
+void Light()
+{
 
 	// Set light position and color
-	
-	glLightfv(GL_LIGHT0 , GL_POSITION ,  light_position);
-	glLightfv(GL_LIGHT0 , GL_COLOR ,   lightColor);
 
-	glLightfv(GL_LIGHT0 , GL_AMBIENT  ,  light_amb);
-	glLightfv(GL_LIGHT0 , GL_DIFFUSE  ,  light_diff);
-	glLightfv(GL_LIGHT0 , GL_SPECULAR ,  light_spac);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_COLOR, lightColor);
 
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_amb);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diff);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_spac);
 
 	// Set material properties
-	
-	
+
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, material_sh);
-
+	// glMaterialfv(GL_FRONT, GL_SPECULAR, material_sh);
 
 	//// Set ambient light
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-	//glEnable(GL_COLOR_MATERIAL);
+	// glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+	// glEnable(GL_COLOR_MATERIAL);
 }
-int sun , moon;
+int sun, moon;
 int InitGL(GLvoid)
 {
-	
+
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
@@ -294,17 +287,14 @@ int InitGL(GLvoid)
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	// texture_door = LoadTexture("images/door.bmp", 255);
 	wall0 = LoadTexture("images/walls/old_wall.bmp", 255);
 	grass1 = LoadTexture("images/walls/grass1.bmp", 255);
-
-	// this one just to fix the bug of putting the first texture on the primitive if i didn't bind any textuer to it
-
-	wall = LoadTexture("images/walls/house_wall.bmp", 255);
 
 	// skybox
 	SKYFRONT = LoadTexture("images/skybox/front.bmp", 255);
@@ -331,12 +321,12 @@ int InitGL(GLvoid)
 	marwaniWall = LoadTexture("images/walls/stone2.bmp", 255);
 
 	// house
-	window = LoadTexture("images//House/window2.bmp", 3);
+	window = LoadTexture("images//House/window2.bmp", -80);
 	logo = LoadTexture("images/House/school_logo.bmp", 255);
 	wooden_door = LoadTexture("images/House/wooden_door.bmp", 255);
 	green_door = LoadTexture("images//House/green_door.bmp", 255);
 	house_door = LoadTexture("images/House/door.bmp", 255);
-	house_window = LoadTexture("images//House/window.bmp", 255);
+	house_window = LoadTexture("images//House/window.bmp", -80);
 	great_door = LoadTexture("images/House/GreatDoor.bmp", 255);
 
 	// mosque
@@ -358,9 +348,9 @@ int InitGL(GLvoid)
 	mosquewindow2 = LoadTexture("images/mosque/mosquewindow2.bmp", 255);
 	marwanoCarpet = LoadTexture("images/mosque/carpet.bmp", 255);
 	blackMetal = LoadTexture("images/mosque/blackmetal.bmp", 255);
-	//sun and moon
-	sun = LoadTexture("images/Moon_Sun/SunTexture.bmp" , 255);
-	moon = LoadTexture("images/Moon_Sun/Moon.bmp" , 255);
+	// sun and moon
+	sun = LoadTexture("images/Moon_Sun/SunTexture.bmp", 255);
+	moon = LoadTexture("images/Moon_Sun/Moon.bmp", 255);
 	tree = new Model_3DS();
 	tree->Load("models/tree/Tree.3ds");
 	Leaf.LoadBMP("models/tree/green.bmp");
@@ -403,9 +393,7 @@ int InitGL(GLvoid)
 	Bowaak[4] = wall1;
 	Bowaak[5] = wall1;
 
-	
 	Light();
-
 
 	return TRUE; // Initialization Went OK
 }
@@ -424,54 +412,55 @@ void DrawModel(Model_3DS *model, int scale = 1)
 float angle = 0;
 float angle2 = 0;
 Point *loc = new Point(0, 0, -5);
-void DebugOutput(const std::wstring& message) {
-    OutputDebugStringW(message.c_str());  // Note the 'W' at the end for wide string
-    OutputDebugStringW(L"\n");
+void DebugOutput(const std::wstring &message)
+{
+	OutputDebugStringW(message.c_str()); // Note the 'W' at the end for wide string
+	OutputDebugStringW(L"\n");
 }
 
-bool adhan= false , background= false  ; 
+bool adhan = false, background = false;
 
-
-
-void sound() {
-    // Calculate the distance between the listener and the sound source
-    float distance = std::sqrt(
-        std::pow(MyCamera.Position.x - 86.900124, 2) +
-        std::pow(MyCamera.Position.y - 54.732761, 2) +
-        std::pow(MyCamera.Position.z - -535.702271, 2)
-    );
+void sound()
+{
+	// Calculate the distance between the listener and the sound source
+	float distance = std::sqrt(
+		std::pow(MyCamera.Position.x - 86.900124, 2) +
+		std::pow(MyCamera.Position.y - 54.732761, 2) +
+		std::pow(MyCamera.Position.z - -535.702271, 2));
 
 	float distance2 = std::sqrt(
-        std::pow(MyCamera.Position.x - -775, 2) +
-        std::pow(MyCamera.Position.y - 70 , 2) +
-        std::pow(MyCamera.Position.z - -775, 2)
-    ); 
+		std::pow(MyCamera.Position.x - -775, 2) +
+		std::pow(MyCamera.Position.y - 70, 2) +
+		std::pow(MyCamera.Position.z - -775, 2));
 
-    // Set your desired radius (adjust this value as needed)
-    float radius = 300.0f;
+	// Set your desired radius (adjust this value as needed)
+	float radius = 300.0f;
 
-    if (distance <= radius || distance2 <= radius) {
-		if(!background){
+	if (distance <= radius || distance2 <= radius)
+	{
+		if (!background)
+		{
 			PlaySound(TEXT("sounds/azan.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-			background= true;
-			adhan     = false;
+			background = true;
+			adhan = false;
 		}
+	}
+	else
+	{
 
-    }
-    else {
-		
-        // Stop the sound since it's outside the radius
-		if(!adhan){
-			PlaySound(TEXT("sounds/background.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);	
+		// Stop the sound since it's outside the radius
+		if (!adhan)
+		{
+			PlaySound(TEXT("sounds/background.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 			background = false;
 			adhan = true;
 		}
-    }
+	}
 }
 
 void Key(bool *keys, float speed)
 {
-	
+
 	if (keys[VK_DOWN])
 		MyCamera.RotateX(-1 * speed);
 	if (keys[VK_UP])
@@ -497,7 +486,6 @@ void Key(bool *keys, float speed)
 		MyCamera.MoveUpward(1 * speed);
 	if (keys['E'])
 		MyCamera.MoveUpward(-1 * speed);
-	
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void domeoftherock_pillars(Point begin, float lenght, float width, float height, float depth, int marble, int *texturess)
@@ -544,7 +532,7 @@ void hallway()
 	glPushMatrix();
 
 	glTranslated(1650, 0, 250);
-	mina2.draw_minaret(Point(70, 70, 60), wall4, wall4, wall4, wall4);
+	mina2.draw_minaret(Point(70, 70, 60), wall1, wall1, wall1, wall1);
 	h->DrawHousewithoutDomeoneWindow(Point(0, 0, 0), 100, 100, 0, 70, green_door, wall, house_window);
 	pri->DrawBall(40, wall, Point(0, 57, 50));
 	glTranslated(-100, 0, 0);
@@ -552,8 +540,8 @@ void hallway()
 
 	glPushMatrix();
 	glTranslated(-560, 62, 0);
-	primitives::DrawCupe(Point(0, 0, 0), 560, 8, 100, wall4);
-	mina2.draw_minaret(Point(0, 0, 0), wall4, wall4, wall4, wall4);
+	primitives::DrawCupe(Point(0, 0, 0), 560, 8, 100, wall1);
+	mina2.draw_minaret(Point(0, 0, 0), wall1, wall1, wall1, wall1);
 	glPopMatrix();
 
 	glTranslated(0, 0, 90);
@@ -561,7 +549,7 @@ void hallway()
 	for (int i = 1; i <= 10; i++)
 	{
 		glTranslated(-56, 0, 0);
-		pillar->cube_cylinder_pillar(Point(0, 0, 0), wall4, wall4);
+		pillar->cube_cylinder_pillar(Point(0, 0, 0), wall1, wall1);
 	}
 
 	glPopMatrix();
@@ -699,20 +687,7 @@ void drawschool()
 	sch->DrawHousewithoutDome(Point(201, 0, 1), 100, 70, 0, 80, wall2, wall2, window);
 	glPushMatrix();
 	glTranslated(147, 130, 70);
-	glBindTexture(GL_TEXTURE_2D, logo);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3d(0, 0, 0);
-
-	glTexCoord2f(1, 0);
-	glVertex3d(50, 0, 0);
-
-	glTexCoord2f(1, 1);
-	glVertex3d(50, 30, 0);
-
-	glTexCoord2f(0, 1);
-	glVertex3d(0, 30, 0);
-	glEnd();
+	primitives::DrawQuad(Point(0, 0, 0), Point(50, 0, 0), Point(50, 30, 0), Point(0, 30, 0), logo, 1, 0);
 	glPopMatrix();
 	glPushMatrix();
 	glTranslated(0, -20, 100);
@@ -730,7 +705,7 @@ void drawschool()
 }
 void drawdomeoftherock()
 {
-	float safe_space = 1.0f ;
+	float safe_space = 1.0f;
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslated(850, 0, 700);
@@ -742,12 +717,12 @@ void drawdomeoftherock()
 	glPushMatrix();
 	glTranslated(200, 0, 300);
 	glPushMatrix(); // FLOOR
-	glTranslated(35 , safe_space, -84.0);
+	glTranslated(35, safe_space, -84.0);
 	glRotated(22.5, 0, 1, 0);
 	glRotated(90, 1, 0, 0);
 	dome->Floor_Roof(carpet_aqsa);
 	glPopMatrix();
-	dome->DrawOctagon(70, 40, bottomwall, great_door , Point(0, 0, 0));
+	dome->DrawOctagon(70, 40, bottomwall, great_door, Point(0, 0, 0));
 	glTranslated(0, 40, 0);
 	dome->drawOctagon(70, 40, upwall, Point(0, 0, 0));
 	glPushMatrix(); // ROOF
@@ -766,7 +741,7 @@ void drawdomeoftherock()
 	glTranslated(200, 0, -200);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(13, -5, 10);
+	glTranslated(20, -5, 10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -814,17 +789,17 @@ void drawdomeoftherock()
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
 
-	float shifting = 5.0f ; 
+	float shifting = 5.0f;
 
-	domeoftherock_pillars(Point(60, 0, 50), 155, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 50), 155, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 410), 105, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 410), 105, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(60, 0, 280), 100 , 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(70, 0, 280), 100, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// left
@@ -832,7 +807,7 @@ void drawdomeoftherock()
 	glTranslated(600, -40, 380);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-20, 0, -25);
+	glTranslated(-10, 0, -25);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -867,10 +842,10 @@ void drawdomeoftherock()
 	glPopMatrix();
 	glPopMatrix();
 	glPushMatrix();
-	domeoftherock_pillars(Point(480, 0, 200), 100, 50, 40, 10, wall1, Bowaak);
+	domeoftherock_pillars(Point(490, 0, 200), 100, 50, 40, 10, wall1, Bowaak);
 	glPopMatrix();
 	glPushMatrix();
-	domeoftherock_pillars(Point(480, 0, 350), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(490, 0, 350), 100, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// back
@@ -878,7 +853,7 @@ void drawdomeoftherock()
 	glTranslated(200, -40, 600);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(15, 0, -10);
+	glTranslated(30, 0, -10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -902,7 +877,7 @@ void drawdomeoftherock()
 	glPopMatrix();
 	glPushMatrix();
 	glRotated(90, 0, 10, 0);
-	domeoftherock_pillars(Point(-530, 0, 150), 100, 50, 40, 8, wall1, Bowaak);
+	domeoftherock_pillars(Point(-480, 0, 80), 100, 50, 40, 8, wall1, Bowaak);
 	glPopMatrix();
 
 	// right
@@ -910,22 +885,22 @@ void drawdomeoftherock()
 	glTranslated(-100, -40, 460);
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -10);
+	glTranslated(10, 0, -10);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -20);
+	glTranslated(10, 0, -20);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -40);
+	glTranslated(10, 0, -40);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(8, 8, 8);
-	glTranslated(-5, 0, -50);
+	glTranslated(10, 0, -50);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
@@ -1105,7 +1080,7 @@ void drawterraces()
 	primitives::DrawCupe(Point(0, 0, 0), 100, 10, 220, wall1);
 	glDisable(GL_TEXTURE_2D);
 }
-float moveXPerson , moveYPerson;
+float moveXPerson, moveYPerson;
 void drawPersonModel()
 {
 	glEnable(GL_TEXTURE_2D);
@@ -1120,48 +1095,46 @@ void drawPersonModel()
 
 bool check = false;
 
-
-
 void collision()
 {
 	// outside
 	// alqebali_right
-	if(MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 && 
+	if (MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 &&
 		(MyCamera.Position.z <= -940 && MyCamera.Position.z >= -980))
 	{
 		MyCamera.Position.z = -940;
 	}
 	// alqebali_left
-	if(MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 && 
+	if (MyCamera.Position.x <= -600 && MyCamera.Position.x >= -900 &&
 		(MyCamera.Position.z <= -640 && MyCamera.Position.z >= -680))
 	{
 		MyCamera.Position.z = -680;
 	}
-	// alqebali_front_left 
-	if(MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 && 
+	// alqebali_front_left
+	if (MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 &&
 		(MyCamera.Position.z <= -681 && MyCamera.Position.z >= -780))
 	{
 		MyCamera.Position.x = -580;
 	}
 	// alqebali_front_right
-	if(MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 && 
+	if (MyCamera.Position.x <= -590 && MyCamera.Position.x >= -625 &&
 		(MyCamera.Position.z <= -855 && MyCamera.Position.z >= -939))
 	{
 		MyCamera.Position.x = -580;
 	}
-	
+
 	// inside
 	// alqebali_back
-	if(MyCamera.Position.x <= -920 && MyCamera.Position.x >= -940 && 
+	if (MyCamera.Position.x <= -920 && MyCamera.Position.x >= -940 &&
 		(MyCamera.Position.z <= -660 && MyCamera.Position.z >= -960))
 	{
 		MyCamera.Position.x = -915;
 	}
 }
 sphereSunAndMoon sunAndMoon; // object from class sphereSunAndMoon
- float radiusMovment = 2000 , radiusSunAndMoon = 100; 
- int slices = 50, stacks = 100;
-double angleMovment = 0 , moveX = 0 , moveY =0 , translateXSun = 0 , translateYSun = 300 , translateZSun =0 , translateXMoon = 0, translateYMoon = 0 , translateZMoon = 0; 
+float radiusMovment = 2000, radiusSunAndMoon = 100;
+int slices = 50, stacks = 100;
+double angleMovment = 0, moveX = 0, moveY = 0, translateXSun = 0, translateYSun = 300, translateZSun = 0, translateXMoon = 0, translateYMoon = 0, translateZMoon = 0;
 int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 {
 
@@ -1170,15 +1143,15 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	sound();
 	isClicked = true;
-	Door door(100 , 1000 , 10);
+	Door door(100, 1000, 10);
 	unbind;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	//moveXPerson= float((mouseX - 640)*200)/;
-	//moveYPerson = float((mouseY - 480)*200)/100;
-	//MyCamera.Render(moveXPerson , moveYPerson);
+	// moveXPerson= float((mouseX - 640)*200)/;
+	// moveYPerson = float((mouseY - 480)*200)/100;
+	// MyCamera.Render(moveXPerson , moveYPerson);
 	MyCamera.Render();
-	Key(keys, 5);
+	Key(keys, 15);
 
 	if (keys['T'])
 	{
@@ -1192,82 +1165,80 @@ int DrawGLScene(GLvoid) // Here's Where We Do All The Drawing
 
 	glTranslated(-600, 0, -800);
 
-	glTranslated(-600, 0, -800);
-
 	Out = new OutSide();
 	glEnable(GL_TEXTURE_2D);
 	if (check)
 	{
 		glClearColor(0.0f, 0.0f, 0.1f, 1.0f); // Dark blue background
 		glEnable(GL_LIGHTING);
-glEnable(GL_LIGHT0);  // Assuming you are using the first light source
-	glPushMatrix();
-GLfloat light_position[] = { 0.0, 0.0, 1.0, 0.0 };  // Directional light from behind
-GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0 };
-GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+		glEnable(GL_LIGHT0); // Assuming you are using the first light source
+		glPushMatrix();
+		GLfloat light_position[] = {0.0, 0.0, 1.0, 0.0}; // Directional light from behind
+		GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
+		GLfloat diffuse[] = {1.0, 1.0, 1.0, 1.0};
+		GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
 
-glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
-// Set material properties of the sphere
-GLfloat material_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
-GLfloat material_diffuse[] = { 0.8, 0.8, 0.8, 1.0 };
-GLfloat material_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-GLfloat material_shininess = 100.0;
+		// Set material properties of the sphere
+		GLfloat material_ambient[] = {0.7, 0.7, 0.7, 1.0};
+		GLfloat material_diffuse[] = {0.8, 0.8, 0.8, 1.0};
+		GLfloat material_specular[] = {1.0, 1.0, 1.0, 1.0};
+		GLfloat material_shininess = 100.0;
 
-glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
-glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
-glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
-			glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
-				glTranslated(-moveX, moveY,0);
-				sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);			
+		glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
+		glTranslated(translateXMoon, translateYMoon, translateZMoon); // x = -200 , y = 150 , z = -200
+		glTranslated(-moveX, moveY, 0);
+		sunAndMoon.drawShpere(radiusSunAndMoon, slices, stacks, moon);
 		glPopMatrix();
-		moveX = radiusMovment *cos(angleMovment);
-		moveY = radiusMovment *sin(angleMovment);
-		angleMovment+=0.01;
+		moveX = radiusMovment * cos(angleMovment);
+		moveY = radiusMovment * sin(angleMovment);
+		angleMovment += 0.01;
 	}
 
 	else
 	{
 		glDisable(GL_LIGHTING);
-				glPushMatrix(); // display sphere sun
-			glTranslated(translateXSun , translateYSun , translateZSun);
-		glTranslated(-moveX, moveY,0);
-		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);		
+		glPushMatrix(); // display sphere sun
+		glTranslated(translateXSun, translateYSun, translateZSun);
+		glTranslated(-moveX, moveY, 0);
+		sunAndMoon.drawShpere(radiusSunAndMoon, slices, stacks, sun);
 		glPopMatrix();
-		moveX =(radiusMovment *cos(angleMovment));
-		moveY = (radiusMovment *sin(angleMovment));
-		angleMovment+=0.01;
+		moveX = (radiusMovment * cos(angleMovment));
+		moveY = (radiusMovment * sin(angleMovment));
+		angleMovment += 0.01;
 	}
 
-	//if(angleMovment>=(2*6.28))
+	// if(angleMovment>=(2*6.28))
 	//		angleMovment=0;
 	//	 if(angleMovment>=0&&angleMovment<=4.71){
 	//		glPushMatrix(); // display sphere sun
 	//		glTranslated(translateXSun , translateYSun , translateZSun);
 	//	glTranslated(-moveX, moveY,0);
-	//	sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);		
+	//	sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , sun);
 	//	glPopMatrix();
 	//	moveX =(radiusMovment *cos(angleMovment));
 	//	moveY = (radiusMovment *sin(angleMovment));
 	//	angleMovment+=0.01;
-			//}
-		//else
-		//	{
-		//	// spherMoon;
-		//	glPushMatrix();
-		//	glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
-		//		glTranslated(-moveX, moveY,0);
-		//		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);			
-		//glPopMatrix();
-		//moveX = radiusMovment *cos(angleMovment);
-		//moveY = radiusMovment *sin(angleMovment);
-		//angleMovment+=0.01;
-		//	}
+	// }
+	// else
+	//	{
+	//	// spherMoon;
+	//	glPushMatrix();
+	//	glTranslated(translateXMoon , translateYMoon , translateZMoon); //x = -200 , y = 150 , z = -200
+	//		glTranslated(-moveX, moveY,0);
+	//		sunAndMoon.drawShpere(radiusSunAndMoon , slices , stacks , moon);
+	// glPopMatrix();
+	// moveX = radiusMovment *cos(angleMovment);
+	// moveY = radiusMovment *sin(angleMovment);
+	// angleMovment+=0.01;
+	//	}
 	Street = new OutSide();
 	h = new House();
 	dw = new DrawWall();
@@ -1285,7 +1256,7 @@ glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
 	drawHouse();
 	hallway();
 
-	 //alporaq mosque
+	// alporaq mosque
 	glPushMatrix();
 	glTranslated(670, 0, 250);
 	primitives::DrawCupe(Point(0, 0, 0), 250, 70, 100, qibaliMosque);
@@ -1306,12 +1277,12 @@ glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
 	drawMuseum();
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-8, 0, 8);
+	glTranslated(10, 0, 8);
 	tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
 
-	 //women's mosque
+	// women's mosque
 	glPushMatrix();
 	glTranslated(250, 0, 650);
 	glRotated(90, 0, 1, 0);
@@ -1349,11 +1320,9 @@ glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
 	Marwani *m = new Marwani();
 	glPushMatrix();
 	glTranslated(120, -20, 390);
-	glScaled(1, 1.5, 1.5);
-	m->drawMarwaniMosque(Point(140, 12, 480), 250, 220, 45, 5, qibaliMosque, marwanoCarpet, 
-		marble, texturess, house_wall, marwaniWall, blackMetal , great_door);
-
-	
+	glScaled(1.5, 1.5, 2.5);
+	m->drawMarwaniMosque(Point(90, 12, 280), 250, 220, 45, 5, qibaliMosque, marwanoCarpet,
+						 marble, texturess, house_wall, marwaniWall, blackMetal, great_door);
 	glPopMatrix();
 
 	// draw terrace_alrahma
@@ -1362,33 +1331,27 @@ glMaterialf(GL_FRONT, GL_SHININESS, material_shininess);
 	primitives::Draw3dQuad(Point(0, 0, 0), 550, 260, 500, 260, 10, wall1);
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 8);
+	glTranslated(0, 0, 8);
 	tree->Draw();
 	glPopMatrix();
 	glPushMatrix();
 	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 20);
+	glTranslated(0, 0, 20);
 	tree->Draw();
 	glPopMatrix();
 	glPopMatrix();
 
-	 //draw terraces_algwanima
+	// draw terraces_algwanima
 	glPushMatrix();
 	glTranslated(1570, 0, 550);
 	primitives::Draw3dQuad(Point(0, 0, 0), 180, 550, 180, 540, 10, wall1);
-	glPushMatrix();
-	glScaled(6, 6, 6);
-	glTranslated(-10, 0, 10);
-	tree->Draw();
-	glPopMatrix();
 	glPopMatrix();
 
-	
-	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' +  std::to_string(MyCamera.Position.y) + ' ' +  std::to_string(MyCamera.Position.z) ;
-	std::wstring wPos(Pos.begin(), Pos.end());	
+	std::string Pos = std::to_string(MyCamera.Position.x) + ' ' + std::to_string(MyCamera.Position.y) + ' ' + std::to_string(MyCamera.Position.z);
+	std::wstring wPos(Pos.begin(), Pos.end());
 	DebugOutput(wPos);
-    
-    glFlush();
+
+	glFlush();
 
 	Door::openning_trigger(keys);
 	drawPersonModel();
@@ -1666,22 +1629,25 @@ LRESULT CALLBACK WndProc(HWND hWnd,		// Handle For This Window
 		return 0;									   // Jump Back
 	}
 	case WM_MOUSEMOVE:
-{
-mouseX = (int)LOWORD(lParam); 
-mouseY =(int)HIWORD(lParam);
-isClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
-isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
-break;
-}
-case WM_LBUTTONUP:
-isClicked = false; break;
-case WM_RBUTTONUP:
-isRClicked = false; break;
-case WM_LBUTTONDOWN:
-isClicked = true; break;
-case WM_RBUTTONDOWN:
-isRClicked = true; break;
-       
+	{
+		mouseX = (int)LOWORD(lParam);
+		mouseY = (int)HIWORD(lParam);
+		isClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;
+		isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;
+		break;
+	}
+	case WM_LBUTTONUP:
+		isClicked = false;
+		break;
+	case WM_RBUTTONUP:
+		isRClicked = false;
+		break;
+	case WM_LBUTTONDOWN:
+		isClicked = true;
+		break;
+	case WM_RBUTTONDOWN:
+		isRClicked = true;
+		break;
 	}
 
 	// Pass All Unhandled Messages To DefWindowProc

@@ -723,7 +723,10 @@ static void DrawQuad(Point bottom_left, Point bottom_right, Point up_right, Poin
     glBindTexture(GL_TEXTURE_2D, texture);
     glBegin(GL_QUADS);
     double t = repeat;
+<<<<<<< HEAD
    
+=======
+>>>>>>> c23a3e1757aacfc516e1dc261a71915ebd84e289
     if (reverse == 1)
     {
         // Reverse the order of vertices when reverse is 1
